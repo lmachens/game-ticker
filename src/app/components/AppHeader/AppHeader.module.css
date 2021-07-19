@@ -1,0 +1,9 @@
+.header {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  background-color: brown;
+}
+
+.title {
+  margin: 0;
+}
