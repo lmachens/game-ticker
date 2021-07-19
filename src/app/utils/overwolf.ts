@@ -22,3 +22,44 @@ export function waitForOverwolf(): Promise<void> {
     }
   });
 }
+
+function getCurrentWindow(): Promise<overwolf.windows.WindowInfo> {
+  return new Promise((resolve, reject) => {
+    overwolf.windows.getCurrentWindow((currentWindowResult) => {
+      if (currentWindowResult.success) {
+        resolve(currentWindowResult.window);
+      } else {
+        reject(currentWindowResult.error);
+      }
+    });
+  });
+}
+
+function obtainDeclaredWindow(
+  windowName: string
+): Promise<overwolf.windows.WindowInfo> {
+  return new Promise((resolve, reject) => {
+    overwolf.windows.obtainDeclaredWindow(windowName, (currentWindowResult) => {
+      if (currentWindowResult.success) {
+        resolve(currentWindowResult.window);
+      } else {
+        reject(currentWindowResult.error);
+      }
+    });
+  });
+}
+
+export async function dragMoveWindow(): Promise<void> {
+  const currentWindow = await getCurrentWindow();
+  overwolf.windows.dragMove(currentWindow.id);
+}
+
+export async function minimizeWindow(): Promise<void> {
+  const currentWindow = await getCurrentWindow();
+  overwolf.windows.minimize(currentWindow.id);
+}
+
+export async function closeMainWindow(): Promise<void> {
+  const backgroundWindow = await obtainDeclaredWindow('background');
+  overwolf.windows.close(backgroundWindow.id);
+}
