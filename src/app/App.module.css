@@ -1,0 +1,12 @@
+.container {
+  display: grid;
+  place-items: center;
+  height: 100vh;
+  background: #222;
+  color: #fff;
+}
+
+.logo {
+  height: 40vmin;
+  pointer-events: none;
+}
