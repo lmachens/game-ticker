@@ -45,7 +45,8 @@
         "size": {
           "width": 1212,
           "height": 699
-        }
+        },
+        "resizable": true
       }
     },
     "game_targeting": {

@@ -4,8 +4,17 @@ function AppHeader(): JSX.Element {
   return (
     <header className={classes.header}>
       <h1 className={classes.title}>Game Ticker</h1>
-      <button>_</button>
-      <button>x</button>
+      <button className={classes.button}>
+        <svg viewBox="0 0 10 10" stroke="currentColor">
+          <line x1="0" y1="10" x2="10" y2="10" />
+        </svg>
+      </button>
+      <button className={`${classes.button} ${classes['button--danger']}`}>
+        <svg viewBox="0 0 10 10" stroke="currentColor">
+          <line x1="0" y1="0" x2="10" y2="10" />
+          <line x1="10" y1="0" x2="0" y2="10" />
+        </svg>
+      </button>
     </header>
   );
 }
