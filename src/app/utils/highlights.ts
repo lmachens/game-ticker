@@ -106,3 +106,46 @@ export function startCaptureHighlights(): void {
     }
   });
 }
+
+function loadFromLocal(src: string): Promise<Blob> {
+  return new Promise((resolve, reject) => {
+    const xhr = new XMLHttpRequest();
+
+    xhr.onreadystatechange = () => {
+      if (xhr.readyState === 4) {
+        if (xhr.status === 200) {
+          resolve(xhr.response);
+        } else {
+          reject(xhr.statusText);
+        }
+      }
+    };
+
+    xhr.open('GET', src, true);
+    xhr.responseType = 'blob';
+    xhr.send();
+  });
+}
+
+async function uploadToCloudinary(file: Blob): Promise<string> {
+  const formData = new FormData();
+  formData.append('file', file);
+  formData.append('upload_preset', 'llo9r91u');
+
+  const response = await fetch(
+    'https://api.cloudinary.com/v1_1/dzegtb57h/video/upload',
+    {
+      method: 'POST',
+      body: formData,
+    }
+  );
+  const result = await response.json();
+  console.log(result);
+  return result.secure_url;
+}
+
+export async function uploadHighlight(src: string): Promise<string> {
+  const file = await loadFromLocal(src);
+  const url = await uploadToCloudinary(file);
+  return url;
+}
