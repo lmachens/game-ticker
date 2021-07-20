@@ -41,11 +41,16 @@ export async function turnOnReplay(
           },
         },
         (event) => {
-          resolve(event);
+          if (event.success) {
+            console.log('turned on', event);
+            resolve(event);
+          } else {
+            console.log('replay failed', event);
+            reject(null);
+          }
         }
       );
     }
-    reject(null);
   });
 }
 
@@ -68,17 +73,14 @@ export function startCaptureHighlights(): void {
   });
 
   overwolf.games.getRunningGameInfo(async (result) => {
+    console.log('check if game is already running');
     if (!result) {
       overwolf.games.onGameLaunched.addListener(async (event) => {
         console.log('onGameLaunched', event);
 
         if (event.classId === GAME_ID) {
           const highlights = await getHighlights(GAME_ID);
-          const result = await turnOnReplay(highlights);
-
-          if (result) {
-            console.log('turned on', result);
-          }
+          await turnOnReplay(highlights);
         }
       });
     }
@@ -89,11 +91,7 @@ export function startCaptureHighlights(): void {
     if (classId === GAME_ID) {
       console.log('game already running');
       const highlights = await getHighlights(GAME_ID);
-      const result = await turnOnReplay(highlights);
-
-      if (result) {
-        console.log('turned on', result);
-      }
+      await turnOnReplay(highlights);
     }
   });
 
