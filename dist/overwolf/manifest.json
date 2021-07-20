@@ -13,7 +13,7 @@
     "launcher_icon": "icons/desktopIcon.ico",
     "window_icon": "icons/taskbarIcon.png"
   },
-  "permissions": [],
+  "permissions": ["VideoCaptureSettings"],
   "data": {
     "start_window": "background",
     "windows": {
@@ -37,7 +37,8 @@
         "min_size": {
           "width": 1212,
           "height": 699
-        }
+        },
+        "allow_local_file_access": true
       },
       "development": {
         "file": "build/development.html",
@@ -46,7 +47,8 @@
           "width": 1212,
           "height": 699
         },
-        "resizable": true
+        "resizable": true,
+        "allow_local_file_access": true
       }
     },
     "game_targeting": {
