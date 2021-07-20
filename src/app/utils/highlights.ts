@@ -3,6 +3,52 @@
 // 2) turnOf capturing on game end
 // 3) Record highlights if app is started after a game
 
+// League of Legends Config
+const GAME_ID = 5426;
+
+export async function getHighlights(
+  id: number
+): Promise<string[] | undefined | null> {
+  return new Promise((resolve, reject) => {
+    overwolf.media.replays.getHighlightsFeatures(id, (event) => {
+      console.log('getHighlightsFeatures', event);
+      if (event.success) {
+        resolve(event.features);
+      }
+      reject(null);
+    });
+  });
+}
+
+export async function turnOnReplay(
+  highlights: string[] | null | undefined
+): Promise<overwolf.media.replays.TurnOnResult | null> {
+  const requiredHighlights =
+    highlights && highlights.length ? highlights : ['*'];
+
+  return new Promise((resolve, reject) => {
+    if (highlights) {
+      overwolf.media.replays.turnOn(
+        {
+          settings: {
+            video: {
+              buffer_length: 30000,
+            },
+          },
+          highlights: {
+            enable: true,
+            requiredHighlights,
+          },
+        },
+        (event) => {
+          resolve(event);
+        }
+      );
+    }
+    reject(null);
+  });
+}
+
 export function startCaptureHighlights(): void {
   console.log('startCaptureHighlights');
   overwolf.media.replays.onCaptureError.addListener((event) => {
@@ -21,29 +67,46 @@ export function startCaptureHighlights(): void {
     console.log('onHighlightsCaptured', event);
   });
 
-  overwolf.games.onGameLaunched.addListener((event) => {
-    console.log('onGameLaunched', event);
+  overwolf.games.getRunningGameInfo(async (result) => {
+    if (!result) {
+      overwolf.games.onGameLaunched.addListener(async (event) => {
+        console.log('onGameLaunched', event);
 
-    overwolf.media.replays.getHighlightsFeatures(event.classId, (event) => {
-      console.log('getHighlightsFeatures', event);
-      if (event.success) {
-        overwolf.media.replays.turnOn(
-          {
-            settings: {
-              video: {
-                buffer_length: 30000,
-              },
-            },
-            highlights: {
-              enable: true,
-              requiredHighlights: ['*'],
-            },
-          },
-          (event) => {
-            console.log('turnOn', event);
+        if (event.classId === GAME_ID) {
+          const highlights = await getHighlights(GAME_ID);
+          const result = await turnOnReplay(highlights);
+
+          if (result) {
+            console.log('turned on', result);
           }
-        );
+        }
+      });
+    }
+
+    const classId =
+      !Array.isArray(result) && result?.classId ? result.classId : null;
+
+    if (classId === GAME_ID) {
+      console.log('game already running');
+      const highlights = await getHighlights(GAME_ID);
+      const result = await turnOnReplay(highlights);
+
+      if (result) {
+        console.log('turned on', result);
       }
-    });
+    }
+  });
+
+  overwolf.games.onGameInfoUpdated.addListener((event) => {
+    console.log('game info changed', event.gameInfo);
+    if (!event.gameInfo?.isRunning) {
+      overwolf.media.replays.turnOff((event) => {
+        if (event.success) {
+          console.log('replay turned off', event);
+        } else {
+          console.log('replay turnOff error', event.error);
+        }
+      });
+    }
   });
 }
