@@ -8,10 +8,18 @@ type UploadProps = {
 function Upload({ src }: UploadProps): JSX.Element {
   const [url, setUrl] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
+  const [total, setTotal] = useState(0);
+  const [loaded, setLoaded] = useState(0);
 
   async function handleUpload() {
     try {
-      const url = await uploadHighlight(src);
+      const url = await uploadHighlight({
+        src,
+        onProgress: ({ loaded, total }) => {
+          setTotal(total);
+          setLoaded(loaded);
+        },
+      });
       setUrl(url);
     } catch (error) {
       console.error(error);
@@ -26,6 +34,12 @@ function Upload({ src }: UploadProps): JSX.Element {
       <a href={url} target="_blank">
         {url}
       </a>
+      <label>
+        Upload Progress{' '}
+        <progress max={total} value={loaded}>
+          {(loaded / total) * 100}%
+        </progress>{' '}
+      </label>
       <p>{errorMessage}</p>
     </>
   );

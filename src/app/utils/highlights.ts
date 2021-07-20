@@ -126,26 +126,66 @@ function loadFromLocal(src: string): Promise<Blob> {
     xhr.send();
   });
 }
+type OnProgressProps = {
+  loaded: number;
+  total: number;
+};
 
-async function uploadToCloudinary(file: Blob): Promise<string> {
-  const formData = new FormData();
-  formData.append('file', file);
-  formData.append('upload_preset', 'llo9r91u');
+type OnProgress = ({ loaded, total }: OnProgressProps) => void;
 
-  const response = await fetch(
-    'https://api.cloudinary.com/v1_1/dzegtb57h/video/upload',
-    {
-      method: 'POST',
-      body: formData,
-    }
-  );
-  const result = await response.json();
-  console.log(result);
-  return result.secure_url;
+type UploadToCloudinaryProps = {
+  file: Blob;
+  onProgress: OnProgress;
+};
+
+async function uploadToCloudinary({
+  file,
+  onProgress,
+}: UploadToCloudinaryProps): Promise<string> {
+  return new Promise((resolve, reject) => {
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('upload_preset', 'llo9r91u');
+
+    const xhr = new XMLHttpRequest();
+
+    xhr.onreadystatechange = () => {
+      if (xhr.readyState === 4) {
+        if (xhr.status === 200) {
+          const { secure_url } = xhr.response;
+          resolve(secure_url);
+        } else {
+          reject(xhr.statusText);
+        }
+      }
+    };
+
+    xhr.upload.onprogress = (event) => {
+      onProgress({
+        loaded: event.loaded,
+        total: event.total,
+      });
+    };
+
+    xhr.open(
+      'POST',
+      'https://api.cloudinary.com/v1_1/dzegtb57h/video/upload',
+      true
+    );
+    xhr.responseType = 'json';
+    xhr.send(formData);
+  });
 }
 
-export async function uploadHighlight(src: string): Promise<string> {
+type UploadHighlightProps = {
+  src: string;
+  onProgress: OnProgress;
+};
+export async function uploadHighlight({
+  src,
+  onProgress,
+}: UploadHighlightProps): Promise<string> {
   const file = await loadFromLocal(src);
-  const url = await uploadToCloudinary(file);
+  const url = await uploadToCloudinary({ file, onProgress });
   return url;
 }
