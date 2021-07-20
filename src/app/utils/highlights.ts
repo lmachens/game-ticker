@@ -149,15 +149,17 @@ async function uploadToCloudinary({
 
     const xhr = new XMLHttpRequest();
 
-    xhr.onreadystatechange = () => {
-      if (xhr.readyState === 4) {
-        if (xhr.status === 200) {
-          const { secure_url } = xhr.response;
-          resolve(secure_url);
-        } else {
-          reject(xhr.statusText);
-        }
+    xhr.onload = () => {
+      if (xhr.status === 200) {
+        const { secure_url } = xhr.response;
+        resolve(secure_url);
+      } else {
+        reject(xhr.statusText);
       }
+    };
+
+    xhr.onerror = () => {
+      reject(xhr.statusText);
     };
 
     xhr.upload.onprogress = (event) => {
