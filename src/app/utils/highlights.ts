@@ -1,6 +1,7 @@
 // Todo:
 // 1) Promisfy to reduce nesting (callback hell)
 // 2) turnOf capturing on game end
+// 3) Record highlights if app is started after a game
 
 export function startCaptureHighlights(): void {
   console.log('startCaptureHighlights');
