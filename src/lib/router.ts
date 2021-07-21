@@ -59,7 +59,8 @@ router.post('/matches/:id/highlights', async (req, res, next) => {
   try {
     const result = await getMatchesCollection().findOneAndUpdate(
       { _id: new ObjectId(id) },
-      { $push: { highlights: newHighlight } }
+      { $push: { highlights: newHighlight } },
+      { returnDocument: 'after' }
     );
 
     if (!result) {

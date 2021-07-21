@@ -6,11 +6,7 @@ export type Match = {
   gameId: number;
   username: string;
   createdAt: Date;
-  highlights: {
-    timestamp: number;
-    type: string;
-    videoSrc: string;
-  }[];
+  highlights: MatchHighlight[];
 };
 
 export type MatchHighlight = {
