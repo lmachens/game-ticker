@@ -77,12 +77,6 @@ router.get('/matches', async (_req, res, next) => {
   try {
     const data = await getMatchesCollection().find({});
     const result = await data.toArray();
-
-    if (!result.length) {
-      res.status(404).send('no matches found');
-      return;
-    }
-
     res.status(200).json(result);
   } catch (error) {
     next(error);
