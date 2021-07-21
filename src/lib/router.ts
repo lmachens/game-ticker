@@ -32,14 +32,20 @@ router.post('/matches', async (request, response, next) => {
   }
 });
 
-router.post('/matches/:id/highlights', async (request, response, next) => {
+router.post('/matches/:matchId/highlights', async (request, response, next) => {
   try {
     const { timestamp, type, videoSrc } = request.body;
-    const { id } = request.params;
+    const { matchId } = request.params;
+    const matchIdIsInvalid = !ObjectId.isValid(matchId);
     const requestIsInvalid =
       typeof timestamp !== 'number' ||
       typeof type !== 'string' ||
       typeof videoSrc !== 'string';
+
+    if (matchIdIsInvalid) {
+      response.status(400).send('Invalid match id');
+      return;
+    }
 
     if (requestIsInvalid) {
       response.status(400).send('Invalid payload');
@@ -53,16 +59,18 @@ router.post('/matches/:id/highlights', async (request, response, next) => {
     };
 
     const matchesCollection = await getMatchesCollection();
-    const inserted = await matchesCollection.updateOne(
-      { _id: ObjectId.createFromHexString(id) },
-      { $push: { highlights: highlight } }
+    const result = await matchesCollection.findOneAndUpdate(
+      { _id: new ObjectId(matchId) },
+      { $push: { highlights: highlight } },
+      { returnDocument: 'after' }
     );
+    const { value: updatedMatch } = result;
 
-    if (!inserted.matchedCount) {
+    if (!updatedMatch) {
       response.status(404).send('Error pushing highlight: Match not found.');
       return;
     }
-    response.status(200).json(highlight);
+    response.status(200).json(updatedMatch);
   } catch (error) {
     next(error);
   }
