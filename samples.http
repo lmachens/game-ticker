@@ -28,7 +28,7 @@ Content-Type: application/json
 
 
 ### Add highlight to existing match
-POST {{baseUrl}}/matches/1/highlights HTTP/1.1
+POST {{baseUrl}}/matches/59156/highlights HTTP/1.1
 Content-Type: application/json
 
 {
