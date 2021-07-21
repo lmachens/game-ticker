@@ -1,3 +1,4 @@
+import { ObjectId } from 'bson';
 import express from 'express';
 import { getMatchesCollection, MatchHighlight, Match } from './matches';
 
@@ -19,7 +20,8 @@ router.post('/matches', async (request, response, next) => {
       highlights: [],
     };
 
-    const inserted = await getMatchesCollection().insertOne(match);
+    const matchesCollection = await getMatchesCollection();
+    const inserted = await matchesCollection.insertOne(match);
     if (!inserted.acknowledged) {
       response.status(500).send('Error inserting match');
       return;
@@ -30,16 +32,16 @@ router.post('/matches', async (request, response, next) => {
   }
 });
 
-router.post('/matches/:gameId/highlights', async (request, response, next) => {
+router.post('/matches/:id/highlights', async (request, response, next) => {
   try {
     const { timestamp, type, videoSrc } = request.body;
-    const { gameId } = request.params;
-    const requestisInvalid =
+    const { id } = request.params;
+    const requestIsInvalid =
       typeof timestamp !== 'number' ||
       typeof type !== 'string' ||
       typeof videoSrc !== 'string';
 
-    if (requestisInvalid) {
+    if (requestIsInvalid) {
       response.status(400).send('Invalid payload');
       return;
     }
@@ -50,8 +52,9 @@ router.post('/matches/:gameId/highlights', async (request, response, next) => {
       videoSrc,
     };
 
-    const inserted = await getMatchesCollection().updateOne(
-      { gameId: Number(gameId) },
+    const matchesCollection = await getMatchesCollection();
+    const inserted = await matchesCollection.updateOne(
+      { _id: ObjectId.createFromHexString(id) },
       { $push: { highlights: highlight } }
     );
 
