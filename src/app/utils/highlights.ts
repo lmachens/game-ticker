@@ -125,14 +125,23 @@ type UploadToCloudinaryProps = {
   onProgress: OnProgress;
 };
 
-async function uploadToCloudinary({
+const { VITE_CLOUDINARY_PRESET, VITE_CLOUDINARY_CLOUD_NAME } = import.meta.env;
+
+if (
+  typeof VITE_CLOUDINARY_PRESET !== 'string' ||
+  typeof VITE_CLOUDINARY_CLOUD_NAME !== 'string'
+) {
+  throw new Error('Missing environment variable');
+}
+
+const uploadToCloudinary = async ({
   file,
   onProgress,
-}: UploadToCloudinaryProps): Promise<string> {
+}: UploadToCloudinaryProps): Promise<string> => {
   return new Promise((resolve, reject) => {
     const formData = new FormData();
     formData.append('file', file);
-    formData.append('upload_preset', 'llo9r91u');
+    formData.append('upload_preset', VITE_CLOUDINARY_PRESET);
 
     const xhr = new XMLHttpRequest();
 
@@ -158,13 +167,13 @@ async function uploadToCloudinary({
 
     xhr.open(
       'POST',
-      'https://api.cloudinary.com/v1_1/dzegtb57h/video/upload',
+      `https://api.cloudinary.com/v1_1/${VITE_CLOUDINARY_CLOUD_NAME}/video/upload`,
       true
     );
     xhr.responseType = 'json';
     xhr.send(formData);
   });
-}
+};
 
 type UploadHighlightProps = {
   src: string;
