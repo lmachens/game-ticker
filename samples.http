@@ -36,3 +36,6 @@ Content-Type: application/json
     "type": "kill",
     "videoSrc": "https://cloudinary.com/video/1"
 }
+
+### Return all matches
+GET {{baseUrl}}/matches HTTP/1.1
