@@ -1,0 +1,38 @@
+@baseUrl = http://localhost:3001/api
+
+### Insert new match
+POST {{baseUrl}}/matches HTTP/1.1
+Content-Type: application/json
+
+{
+    "gameId": 59156,
+    "username": "alexisOver9000"
+}
+
+### Insert new match which should fail due to missing username
+POST {{baseUrl}}/matches HTTP/1.1
+Content-Type: application/json
+
+{
+    "gameId": 59156
+}
+
+### Insert new match which should fail due to invalid gameId
+POST {{baseUrl}}/matches HTTP/1.1
+Content-Type: application/json
+
+{
+    "gameId": "59156",
+    "username": "alexisOver9000"
+}
+
+
+### Add highlight to existing match
+POST {{baseUrl}}/matches/1/highlights HTTP/1.1
+Content-Type: application/json
+
+{
+    "timestamp": 360,
+    "type": "kill",
+    "videoSrc": "https://cloudinary.com/video/1"
+}
