@@ -3,6 +3,7 @@ import { ObjectId } from 'mongodb';
 import { getMatchesCollection, Match } from './matches';
 
 const router = express.Router();
+const { isValid } = ObjectId;
 
 router.post('/matches', async (req, res, next) => {
   try {
@@ -41,7 +42,7 @@ router.post('/matches/:id/highlights', async (req, res, next) => {
   const id = req.params.id;
   const { timestamp, type, videoSrc } = req.body;
 
-  if (typeof Number(id) !== 'number') {
+  if (!isValid(id)) {
     res.status(400).send('Invalid match id');
     return;
   }
