@@ -33,7 +33,7 @@ function Upload({ src }: UploadProps): JSX.Element {
     <>
       <p>{src}</p>
       <button onClick={handleUpload}>Upload</button>
-      <a href={url} target="_blank">
+      <a href={url} target="_blank" rel="noopener noreferrer">
         {url}
       </a>
       <label>
