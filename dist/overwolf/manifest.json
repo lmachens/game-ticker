@@ -13,18 +13,16 @@
     "launcher_icon": "icons/desktopIcon.ico",
     "window_icon": "icons/taskbarIcon.png"
   },
-  "permissions": [],
+  "permissions": ["VideoCaptureSettings"],
   "data": {
     "start_window": "background",
     "windows": {
       "background": {
         "file": "build/background.html",
-        "debug_url": "http://localhost:3000/background.html",
         "is_background_page": true
       },
       "desktop": {
         "file": "build/index.html",
-        "debug_url": "http://localhost:3000/index.html",
         "desktop_only": true,
         "native_window": true,
         "resizable": true,
@@ -37,16 +35,17 @@
         "min_size": {
           "width": 1212,
           "height": 699
-        }
+        },
+        "allow_local_file_access": true
       },
       "development": {
         "file": "build/development.html",
-        "debug_url": "http://localhost:3000/development.html",
         "size": {
           "width": 1212,
           "height": 699
         },
-        "resizable": true
+        "resizable": true,
+        "allow_local_file_access": true
       }
     },
     "game_targeting": {
