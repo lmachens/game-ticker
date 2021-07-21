@@ -107,25 +107,12 @@ export function startCaptureHighlights(): void {
   });
 }
 
-function loadFromLocal(src: string): Promise<Blob> {
-  return new Promise((resolve, reject) => {
-    const xhr = new XMLHttpRequest();
-
-    xhr.onreadystatechange = () => {
-      if (xhr.readyState === 4) {
-        if (xhr.status === 200) {
-          resolve(xhr.response);
-        } else {
-          reject(xhr.statusText);
-        }
-      }
-    };
-
-    xhr.open('GET', src, true);
-    xhr.responseType = 'blob';
-    xhr.send();
-  });
+async function loadFromLocal(src: string): Promise<Blob> {
+  const response = await fetch(src);
+  const blob = await response.blob();
+  return blob;
 }
+
 type OnProgressProps = {
   loaded: number;
   total: number;
