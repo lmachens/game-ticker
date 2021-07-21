@@ -1,35 +1,33 @@
 import express from 'express';
+import { getMatchesCollection, Match } from './matches';
 
 const router = express.Router();
 
-type Match = {
-  _id?: string;
-  gameId: number;
-  username: string;
-  createdAt: Date;
-  highlights: {
-    timestamp: number;
-    type: string;
-    videoSrc: string;
-  }[];
-};
+router.post('/matches', async (req, res, next) => {
+  try {
+    const { username, gameId } = req.body;
 
-router.post('/matches', async (req, res) => {
-  const { username, gameId } = req.body;
+    if (typeof username !== 'string' || typeof gameId !== 'number') {
+      res.status(400).send('Invalid payload');
+      return;
+    }
 
-  if (typeof username !== 'string' || typeof gameId !== 'number') {
-    res.status(400).send('Invalid payload');
-    return;
+    const match: Match = {
+      gameId: gameId,
+      username: username,
+      createdAt: new Date(),
+      highlights: [],
+    };
+
+    const inserted = await getMatchesCollection().insertOne(match);
+    if (!inserted.acknowledged) {
+      res.status(500).send('Error inserting match');
+      return;
+    }
+    res.status(200).json(match);
+  } catch (error) {
+    next(error);
   }
-
-  const match: Match = {
-    gameId: gameId,
-    username: username,
-    createdAt: new Date(),
-    highlights: [],
-  };
-
-  res.status(200).json(match);
 });
 
 export default router;
