@@ -1,6 +1,6 @@
 import express from 'express';
 import { ObjectId } from 'mongodb';
-import { getMatchesCollection, Match } from './matches';
+import { getMatchesCollection, Match, MatchHighlight } from './matches';
 
 const router = express.Router();
 const { isValid } = ObjectId;
@@ -32,12 +32,6 @@ router.post('/matches', async (req, res, next) => {
   }
 });
 
-type Highlight = {
-  timestamp: number;
-  type: string;
-  videoSrc: string;
-};
-
 router.post('/matches/:id/highlights', async (req, res, next) => {
   const id = req.params.id;
   const { timestamp, type, videoSrc } = req.body;
@@ -56,42 +50,40 @@ router.post('/matches/:id/highlights', async (req, res, next) => {
     return;
   }
 
-  const newHighlight: Highlight = {
+  const newHighlight: MatchHighlight = {
     timestamp,
     type,
     videoSrc,
   };
 
   try {
-    const updated = await getMatchesCollection().updateOne(
+    const result = await getMatchesCollection().findOneAndUpdate(
       { _id: new ObjectId(id) },
       { $push: { highlights: newHighlight } }
     );
 
-    if (!updated.acknowledged || updated.modifiedCount === 0) {
-      res.status(404).send('match identifier incorrect');
+    if (!result) {
+      res.status(404).send("didn't found match to update");
       return;
     }
 
-    const result = await getMatchesCollection().findOne({
-      _id: new ObjectId(id),
-    });
-    res.status(200).send(result);
+    res.status(200).json(result);
   } catch (error) {
     next(error);
   }
 });
 
-router.get('/matches', async (_, res, next) => {
+router.get('/matches', async (_req, res, next) => {
   try {
-    const result = await getMatchesCollection().find({});
-    if (!result) {
+    const data = await getMatchesCollection().find({});
+    const result = await data.toArray();
+
+    if (!result.length) {
       res.status(404).send('no matches found');
       return;
     }
 
-    const data = await result.toArray();
-    res.status(200).json(data);
+    res.status(200).json(result);
   } catch (error) {
     next(error);
   }

@@ -13,6 +13,12 @@ export type Match = {
   }[];
 };
 
+export type MatchHighlight = {
+  timestamp: number;
+  type: string;
+  videoSrc: string;
+};
+
 export function getMatchesCollection(): Collection<Match> {
   return getCollection<Match>('matches');
 }
