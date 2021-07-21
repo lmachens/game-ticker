@@ -39,7 +39,7 @@ function Upload({ src }: UploadProps): JSX.Element {
       <label>
         Upload Progress{' '}
         <progress max={total} value={loaded}>
-          {(loaded / total) * 100}%
+          {Math.floor((loaded / total) * 100)}%
         </progress>{' '}
       </label>
       <p>{errorMessage}</p>
