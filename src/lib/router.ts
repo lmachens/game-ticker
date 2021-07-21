@@ -82,4 +82,19 @@ router.post('/matches/:id/highlights', async (req, res, next) => {
   }
 });
 
+router.get('/matches', async (_, res, next) => {
+  try {
+    const result = await getMatchesCollection().find({});
+    if (!result) {
+      res.status(404).send('no matches found');
+      return;
+    }
+
+    const data = await result.toArray();
+    res.status(200).json(data);
+  } catch (error) {
+    next(error);
+  }
+});
+
 export default router;
