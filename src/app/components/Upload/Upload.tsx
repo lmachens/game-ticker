@@ -23,7 +23,9 @@ function Upload({ src }: UploadProps): JSX.Element {
       setUrl(url);
     } catch (error) {
       console.error(error);
-      setErrorMessage(error.message);
+     if (error instanceof Error) {
+        setErrorMessage(error.message);
+      }
     }
   }
 
