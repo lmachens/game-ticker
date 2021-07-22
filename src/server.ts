@@ -2,6 +2,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 import express from 'express';
+import compression from 'compression';
 import { connectToMongoDb } from './lib/db';
 import router from './lib/router';
 
@@ -16,6 +17,9 @@ if (typeof MONGODB_URI !== 'string') {
 }
 
 const app = express();
+
+// Middleware (dependency) to automatically compress responses
+app.use(compression());
 
 // Middleware that parses json and looks at requests where the Content-Type header matches the type option.
 app.use(express.json());
