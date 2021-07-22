@@ -5,7 +5,7 @@ import { defineConfig } from 'vite';
 import reactRefresh from '@vitejs/plugin-react-refresh';
 import { resolve } from 'path';
 
-const { PORT = 3001 } = process.env;
+const { PORT } = process.env;
 
 // https://vitejs.dev/config/
 export default defineConfig({

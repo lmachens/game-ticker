@@ -25,11 +25,6 @@ npm run dev
 
 Boom! These scripts run your client and server in development mode.
 
-The default PORTS are:
-
-- `3001` for the server
-- `3000` for the client
-
 If you don't like to call all scripts at once, you can also run:
 
 ```shell
@@ -39,9 +34,12 @@ npm run client:dev
 
 You can configure the server port by setting the `PORT` environment variable. Creating a `.env` file is supported.
 
-| KEY  | VALUE                                                         |
-| ---- | ------------------------------------------------------------- |
-| PORT | (Optional) Port for the server environment (defaults to 3001) |
+| KEY                        | VALUE                                  |
+| -------------------------- | -------------------------------------- |
+| PORT                       | Port for the server environment        |
+| MONGODB_URI                | URI for the MongoDB server             |
+| VITE_CLOUDINARY_CLOUD_NAME | Cloudinary cloud name                  |
+| VITE_CLOUDINARY_PRESET     | Cloudinary preset (has to be unsigned) |
 
 ## Building
 
