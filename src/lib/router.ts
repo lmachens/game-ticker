@@ -86,12 +86,12 @@ type PaginatedMatches = {
 };
 
 const getSortOrder = (sort: string): Sort => {
-  if (!sort || typeof sort !== 'string') {
-    return { createdAt: -1 };
+  if (sort.toLowerCase() === 'asc' || sort === '1') {
+    return { createdAt: 1 };
   }
 
-  if (sort.toLowerCase() === 'asc') {
-    return { createdAt: 1 };
+  if (sort.toLowerCase() === 'desc' || sort === '-1') {
+    return { createdAt: -1 };
   }
 
   return { createdAt: -1 };
