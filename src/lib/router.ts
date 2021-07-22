@@ -1,6 +1,7 @@
 import { Filter, ObjectId } from 'mongodb';
 import express from 'express';
 import { getMatchesCollection, MatchHighlight, Match } from './matches';
+import { ParsedQs } from 'qs';
 
 const router = express.Router();
 
@@ -85,9 +86,12 @@ type PaginatedMatches = {
   results: Match[];
 };
 
-type Query = { [key: string]: string | number | null };
-
-const generateQuery = (options: Query): Filter<Match> => {
+const generateQuery = (query: ParsedQs): Filter<Match> => {
+  const { username, gameId } = query;
+  const options = {
+    username: typeof username === 'string' ? username : null,
+    gameId: Number(gameId) || null,
+  };
   return Object.fromEntries(
     Object.entries(options).filter((option) => option[1] !== null)
   );
@@ -95,12 +99,7 @@ const generateQuery = (options: Query): Filter<Match> => {
 
 router.get('/matches', async (request, response, next) => {
   try {
-    const { username, gameId } = request.query;
-
-    const query: Filter<Match> = generateQuery({
-      username: typeof username === 'string' ? username : null,
-      gameId: Number(gameId) || null,
-    });
+    const query: Filter<Match> = generateQuery(request.query);
     const page = Number(request.query.page) || 1;
     const itemsPerPage = Number(request.query.itemsPerPage) || 10;
     const matchesCollection = getMatchesCollection();
