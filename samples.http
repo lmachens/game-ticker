@@ -8,7 +8,7 @@ Content-Type: application/json
 
 {
     "gameId": 59156,
-    "username": "lukasOver9000"
+    "username": "monaOver9000"
 }
 
 ### Insert new match which should fail due to missing username
@@ -73,7 +73,7 @@ GET {{baseUrl}}/matches?page=5&itemsPerPage=2 HTTP/1.1
 GET {{baseUrl}}/matches?page=5&itemsPerPage=2&gameId=59156 HTTP/1.1
 
 ### Return matches based on username
-GET {{baseUrl}}/matches?page=5&itemsPerPage=2&username=monaOver9000 HTTP/1.1
+GET {{baseUrl}}/matches?username=monaOver9000 HTTP/1.1
 
 ### Return matches based on gameId and username
-GET {{baseUrl}}/matches?page=5&itemsPerPage=2&gameId=59156&username=monaOver9000 HTTP/1.1
+GET {{baseUrl}}/matches?gameId=123123&username=lukasOver9000 HTTP/1.1

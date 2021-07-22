@@ -1,6 +1,7 @@
-import { ObjectId } from 'mongodb';
+import { Filter, ObjectId } from 'mongodb';
 import express from 'express';
 import { getMatchesCollection, MatchHighlight, Match } from './matches';
+import { ParsedQs } from 'qs';
 
 const router = express.Router();
 
@@ -85,12 +86,25 @@ type PaginatedMatches = {
   results: Match[];
 };
 
+function createMatchesQuery(requestQuery: ParsedQs): Filter<Match> {
+  const query: Filter<Match> = {};
+  if (typeof requestQuery.username === 'string') {
+    query.username = requestQuery.username;
+  }
+  const gameId = Number(requestQuery.gameId);
+  if (gameId) {
+    query.gameId = gameId;
+  }
+  return query;
+}
+
 router.get('/matches', async (request, response, next) => {
   try {
     const page = Number(request.query.page) || 1;
     const itemsPerPage = Number(request.query.itemsPerPage) || 10;
     const matchesCollection = getMatchesCollection();
-    const cursor = matchesCollection.find({});
+    const query: Filter<Match> = createMatchesQuery(request.query);
+    const cursor = matchesCollection.find(query).sort({ createdAt: -1 });
     const total = await cursor.count();
     const matches = await cursor
       .skip((page - 1) * itemsPerPage)
