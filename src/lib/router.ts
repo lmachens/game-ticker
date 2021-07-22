@@ -1,4 +1,4 @@
-import { ObjectId, Sort } from 'mongodb';
+import { FindCursor, ObjectId, Sort } from 'mongodb';
 import express from 'express';
 import { getMatchesCollection, MatchHighlight, Match } from './matches';
 
@@ -97,13 +97,39 @@ const getSortOrder = (sort: string): Sort => {
   return { createdAt: -1 };
 };
 
+type Query = {
+  username?: string;
+  gameId?: number;
+  createdAt?: Date;
+  highlights?: MatchHighlight[];
+};
+
+const generateQuery = (options: Query) => {
+  const query: Query = {};
+  const { username, gameId } = options;
+
+  if (username) {
+    query.username = String(username);
+  }
+
+  if (gameId && Number(gameId)) {
+    query.gameId = Number(gameId);
+  }
+
+  return query;
+};
+
 router.get('/matches', async (request, response, next) => {
   try {
     const sort = String(request.query.sort);
+    const query = {
+      username: request.query.username,
+      gameId: request.query.gameId,
+    };
     const page = Number(request.query.page) || 1;
     const itemsPerPage = Number(request.query.itemsPerPage) || 10;
     const matchesCollection = getMatchesCollection();
-    const cursor = matchesCollection.find({});
+    const cursor = matchesCollection.find(generateQuery(query));
     const total = await cursor.count();
     const matches = await cursor
       .skip((page - 1) * itemsPerPage)
