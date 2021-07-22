@@ -89,8 +89,8 @@ router.get('/matches', async (request, response, next) => {
   try {
     const page = Number(request.query.page) || 1;
     const itemsPerPage = Number(request.query.itemsPerPage) || 10;
-    const matchesCollection = await getMatchesCollection();
-    const cursor = await matchesCollection.find({});
+    const matchesCollection = getMatchesCollection();
+    const cursor = matchesCollection.find({});
     const total = await cursor.count();
     const matches = await cursor
       .skip((page - 1) * itemsPerPage)
