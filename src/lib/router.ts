@@ -1,4 +1,4 @@
-import { ObjectId } from 'mongodb';
+import { ObjectId, Sort } from 'mongodb';
 import express from 'express';
 import { getMatchesCollection, MatchHighlight, Match } from './matches';
 
@@ -85,8 +85,21 @@ type PaginatedMatches = {
   results: Match[];
 };
 
+const getSortOrder = (sort: string): Sort => {
+  if (!sort || typeof sort !== 'string') {
+    return { createdAt: -1 };
+  }
+
+  if (sort.toLowerCase() === 'asc') {
+    return { createdAt: 1 };
+  }
+
+  return { createdAt: -1 };
+};
+
 router.get('/matches', async (request, response, next) => {
   try {
+    const sort = String(request.query.sort);
     const page = Number(request.query.page) || 1;
     const itemsPerPage = Number(request.query.itemsPerPage) || 10;
     const matchesCollection = getMatchesCollection();
@@ -95,6 +108,7 @@ router.get('/matches', async (request, response, next) => {
     const matches = await cursor
       .skip((page - 1) * itemsPerPage)
       .limit(itemsPerPage)
+      .sort(getSortOrder(sort))
       .toArray();
 
     const paginatedMatches: PaginatedMatches = {
