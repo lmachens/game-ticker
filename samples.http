@@ -1,6 +1,7 @@
 @baseUrl = http://localhost:3001/api
 
 ### Insert new match
+# @name insertNewMatch
 POST {{baseUrl}}/matches HTTP/1.1
 Content-Type: application/json
 
@@ -26,13 +27,34 @@ Content-Type: application/json
     "username": "alexisOver9000"
 }
 
+@matchId = {{insertNewMatch.response.body.$._id}}
 
 ### Add highlight to existing match
-POST {{baseUrl}}/matches/1/highlights HTTP/1.1
+POST {{baseUrl}}/matches/{{matchId}}/highlights HTTP/1.1
 Content-Type: application/json
 
 {
     "timestamp": 360,
+    "type": "kill",
+    "videoSrc": "https://cloudinary.com/video/1"
+}
+
+### Add highlight to existing match should fail due to invalid matchId
+POST {{baseUrl}}/matches/12j312ja25/highlights HTTP/1.1
+Content-Type: application/json
+
+{
+    "timestamp": 450,
+    "type": "kill",
+    "videoSrc": "https://cloudinary.com/video/1"
+}
+
+### Add highlight to existing match should fail due to match(id) not found
+POST {{baseUrl}}/matches/60f83c6f4fef2f3442a920a5/highlights HTTP/1.1
+Content-Type: application/json
+
+{
+    "timestamp": 450,
     "type": "kill",
     "videoSrc": "https://cloudinary.com/video/1"
 }
