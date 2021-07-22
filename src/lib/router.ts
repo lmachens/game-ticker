@@ -85,12 +85,38 @@ type PaginatedMatches = {
   results: Match[];
 };
 
+type FilterProps = { gameId?: number; username?: string };
+
+function getFilter(filterOptions: FilterProps) {
+  const { gameId, username } = filterOptions;
+  const filter: FilterProps = {};
+
+  if (typeof gameId !== 'undefined') {
+    filter.gameId = Number(gameId);
+  }
+  if (typeof username !== 'undefined') {
+    filter.username = String(username);
+  }
+
+  return filter;
+}
+
 router.get('/matches', async (request, response, next) => {
   try {
-    const page = Number(request.query.page) || 1;
-    const itemsPerPage = Number(request.query.itemsPerPage) || 10;
+    const {
+      page: requestedPage,
+      itemsPerPage: requestedItemsPerPage,
+      ...filterOptions
+    } = request.query;
+    const page = Number(requestedPage) || 1;
+    const itemsPerPage = Number(requestedItemsPerPage) || 10;
+    const filter = getFilter(filterOptions);
+    const sort = {
+      sort: ['createdAt', 'desc'],
+    };
+
     const matchesCollection = getMatchesCollection();
-    const cursor = matchesCollection.find({});
+    const cursor = matchesCollection.find(filter, sort);
     const total = await cursor.count();
     const matches = await cursor
       .skip((page - 1) * itemsPerPage)
