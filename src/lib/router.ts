@@ -1,4 +1,4 @@
-import { FindCursor, ObjectId, Sort } from 'mongodb';
+import { ObjectId, Sort } from 'mongodb';
 import express from 'express';
 import { getMatchesCollection, MatchHighlight, Match } from './matches';
 
@@ -85,56 +85,37 @@ type PaginatedMatches = {
   results: Match[];
 };
 
-const getSortOrder = (sort: string): Sort => {
-  if (sort.toLowerCase() === 'asc' || sort === '1') {
-    return { createdAt: 1 };
+const generateQuery = (options): any => {
+  const isAttachedQuery = Object.values(options).find(
+    (query) => query !== null
+  );
+  if (!isAttachedQuery) {
+    return {};
   }
 
-  if (sort.toLowerCase() === 'desc' || sort === '-1') {
-    return { createdAt: -1 };
-  }
-
-  return { createdAt: -1 };
-};
-
-type Query = {
-  username?: string;
-  gameId?: number;
-  createdAt?: Date;
-  highlights?: MatchHighlight[];
-};
-
-const generateQuery = (options: Query) => {
-  const query: Query = {};
-  const { username, gameId } = options;
-
-  if (username) {
-    query.username = String(username);
-  }
-
-  if (gameId && Number(gameId)) {
-    query.gameId = Number(gameId);
-  }
-
-  return query;
+  return Object.fromEntries(
+    Object.entries(options).filter((option) => option[1] !== null)
+  );
 };
 
 router.get('/matches', async (request, response, next) => {
   try {
-    const sort = String(request.query.sort);
-    const query = {
-      username: request.query.username,
-      gameId: request.query.gameId,
-    };
+    const username = request.query.username;
+    const gameId = request.query.gameId;
+
+    const query = generateQuery({
+      username: username && !Array.isArray(username) ? username : null,
+      gameId: Number(gameId) || null,
+    });
     const page = Number(request.query.page) || 1;
     const itemsPerPage = Number(request.query.itemsPerPage) || 10;
     const matchesCollection = getMatchesCollection();
-    const cursor = matchesCollection.find(generateQuery(query));
+    const cursor = matchesCollection.find(query);
     const total = await cursor.count();
     const matches = await cursor
       .skip((page - 1) * itemsPerPage)
       .limit(itemsPerPage)
-      .sort(getSortOrder(sort))
+      .sort({ createdAt: -1 })
       .toArray();
 
     const paginatedMatches: PaginatedMatches = {
