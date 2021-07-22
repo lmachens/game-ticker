@@ -1,4 +1,5 @@
-@baseUrl = http://localhost:3001/api
+@port = {{$dotenv PORT}}
+@baseUrl = http://localhost:{{port}}/api
 
 ### Insert new match
 # @name insertNewMatch
