@@ -2,9 +2,18 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 import express from 'express';
+import { connectToMongoDb } from './lib/db';
 import router from './lib/router';
 
-const { PORT = 3001 } = process.env;
+const { PORT, MONGODB_URI } = process.env;
+
+if (typeof PORT !== 'string') {
+  throw new Error('PORT is not set');
+}
+
+if (typeof MONGODB_URI !== 'string') {
+  throw new Error('MONGODB_URI is not set');
+}
 
 const app = express();
 
@@ -19,6 +28,9 @@ app.get('*', (_req, res) => {
   res.send('<h1>Welcome to the server</h1>');
 });
 
-app.listen(PORT, () => {
-  console.log(`Server listening at http://localhost:${PORT}`);
+connectToMongoDb(MONGODB_URI).then(() => {
+  console.log('Connected to MongoDB');
+  app.listen(PORT, () => {
+    console.log(`Server listening at http://localhost:${PORT}`);
+  });
 });
