@@ -1,4 +1,4 @@
-import { ObjectId } from 'bson';
+import { ObjectId } from 'mongodb';
 import express from 'express';
 import { getMatchesCollection, MatchHighlight, Match } from './matches';
 
