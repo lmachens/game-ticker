@@ -5,6 +5,7 @@ import express from 'express';
 import compression from 'compression';
 import { connectToMongoDb } from './lib/db';
 import router from './lib/router';
+import helmet from 'helmet';
 
 const { PORT, MONGODB_URI } = process.env;
 
@@ -17,6 +18,7 @@ if (typeof MONGODB_URI !== 'string') {
 }
 
 const app = express();
+app.use(helmet());
 
 // Middleware (dependency) to automatically compress responses
 app.use(compression());
