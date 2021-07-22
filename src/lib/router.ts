@@ -1,4 +1,4 @@
-import { ObjectId } from 'mongodb';
+import { Filter, ObjectId } from 'mongodb';
 import express from 'express';
 import { getMatchesCollection, MatchHighlight, Match } from './matches';
 
@@ -86,9 +86,8 @@ type PaginatedMatches = {
 };
 
 type Query = { [key: string]: string | number | null };
-type QueryResult = { [key: string]: string | number | string[] };
 
-const generateQuery = (options: Query): QueryResult => {
+const generateQuery = (options: Query): Filter<Match> => {
   return Object.fromEntries(
     Object.entries(options).filter((option) => option[1] !== null)
   );
@@ -98,8 +97,8 @@ router.get('/matches', async (request, response, next) => {
   try {
     const { username, gameId } = request.query;
 
-    const query = generateQuery({
-      username: username && !Array.isArray(username) ? username : null,
+    const query: Filter<Match> = generateQuery({
+      username: typeof username === 'string' ? username : null,
       gameId: Number(gameId) || null,
     });
     const page = Number(request.query.page) || 1;
