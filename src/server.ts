@@ -4,6 +4,7 @@ dotenv.config();
 import express from 'express';
 import { connectToMongoDb } from './lib/db';
 import router from './lib/router';
+import helmet from 'helmet';
 
 const { PORT, MONGODB_URI } = process.env;
 
@@ -16,6 +17,7 @@ if (typeof MONGODB_URI !== 'string') {
 }
 
 const app = express();
+app.use(helmet());
 
 // Middleware that parses json and looks at requests where the Content-Type header matches the type option.
 app.use(express.json());
