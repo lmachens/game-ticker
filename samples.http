@@ -28,9 +28,9 @@ Content-Type: application/json
     "username": "alexisOver9000"
 }
 
-@matchId = {{insertNewMatch.response.body.$._id}}
 
 ### Add highlight to existing match
+@matchId = {{insertNewMatch.response.body.$._id}}
 POST {{baseUrl}}/matches/{{matchId}}/highlights HTTP/1.1
 Content-Type: application/json
 
