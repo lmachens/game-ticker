@@ -76,12 +76,36 @@ router.post('/matches/:matchId/highlights', async (request, response, next) => {
   }
 });
 
-router.get('/matches', async (_request, response, next) => {
-  try {
-    const matchesCollection = await getMatchesCollection();
-    const matches = await matchesCollection.find({}).toArray();
+type PaginatedMatches = {
+  info: {
+    total: number;
+    itemsPerPage: number;
+    page: number;
+  };
+  results: Match[];
+};
 
-    response.status(200).json(matches);
+router.get('/matches', async (request, response, next) => {
+  try {
+    const page = Number(request.query.page) || 1;
+    const itemsPerPage = Number(request.query.itemsPerPage) || 10;
+    const matchesCollection = await getMatchesCollection();
+    const cursor = await matchesCollection.find({});
+    const total = await cursor.count();
+    const matches = await cursor
+      .skip((page - 1) * itemsPerPage)
+      .limit(itemsPerPage)
+      .toArray();
+
+    const paginatedMatches: PaginatedMatches = {
+      info: {
+        total: total,
+        itemsPerPage: itemsPerPage,
+        page: page,
+      },
+      results: matches,
+    };
+    response.status(200).json(paginatedMatches);
   } catch (error) {
     next(error);
   }
