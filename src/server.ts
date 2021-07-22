@@ -6,7 +6,7 @@ import compression from 'compression';
 import { connectToMongoDb } from './lib/db';
 import router from './lib/router';
 import helmet from 'helmet';
-import { ensureMatchesIndexes } from './lib/matches';
+import { ensureMatchesIndexes, ensureMatchesSchema } from './lib/matches';
 
 const { PORT, MONGODB_URI } = process.env;
 
@@ -38,6 +38,7 @@ app.get('*', (_req, res) => {
 connectToMongoDb(MONGODB_URI).then(async () => {
   console.log('Connected to MongoDB');
   await ensureMatchesIndexes();
+  await ensureMatchesSchema();
 
   app.listen(PORT, () => {
     console.log(`Server listening at http://localhost:${PORT}`);
