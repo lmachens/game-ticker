@@ -1,4 +1,4 @@
-import { ObjectId, Sort } from 'mongodb';
+import { ObjectId } from 'mongodb';
 import express from 'express';
 import { getMatchesCollection, MatchHighlight, Match } from './matches';
 
@@ -85,14 +85,10 @@ type PaginatedMatches = {
   results: Match[];
 };
 
-const generateQuery = (options): any => {
-  const isAttachedQuery = Object.values(options).find(
-    (query) => query !== null
-  );
-  if (!isAttachedQuery) {
-    return {};
-  }
+type Query = { [key: string]: string | number | null };
+type QueryResult = { [key: string]: string | number | string[] };
 
+const generateQuery = (options: Query): QueryResult => {
   return Object.fromEntries(
     Object.entries(options).filter((option) => option[1] !== null)
   );
@@ -100,8 +96,7 @@ const generateQuery = (options): any => {
 
 router.get('/matches', async (request, response, next) => {
   try {
-    const username = request.query.username;
-    const gameId = request.query.gameId;
+    const { username, gameId } = request.query;
 
     const query = generateQuery({
       username: username && !Array.isArray(username) ? username : null,
