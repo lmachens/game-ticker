@@ -1,4 +1,4 @@
-import { Filter, ObjectId } from 'mongodb';
+import { ObjectId } from 'mongodb';
 import express from 'express';
 import {
   getMatchesCollection,
@@ -97,11 +97,12 @@ router.get('/matches', async (request, response, next) => {
     const matchesCollection = getMatchesCollection();
     const query = createMatchesQuery(request.query);
     const cursor = matchesCollection.find(query).sort({ createdAt: -1 });
-    const total = await cursor.count();
-    const matches = await cursor
+    const totalPromise = cursor.count();
+    const matchesPromise = cursor
       .skip((page - 1) * itemsPerPage)
       .limit(itemsPerPage)
       .toArray();
+    const [total, matches] = await Promise.all([totalPromise, matchesPromise]);
 
     const paginatedMatches: PaginatedMatches = {
       info: {
