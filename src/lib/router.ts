@@ -1,4 +1,4 @@
-import { ObjectId } from 'mongodb';
+import { MongoServerError, ObjectId } from 'mongodb';
 import express from 'express';
 import {
   getMatchesCollection,
@@ -33,6 +33,11 @@ router.post('/matches', async (request, response, next) => {
     }
     response.status(200).json(match);
   } catch (error) {
+    if (error instanceof MongoServerError) {
+      console.error(error);
+      response.status(500).send(error.message);
+      return;
+    }
     next(error);
   }
 });
@@ -77,6 +82,11 @@ router.post('/matches/:matchId/highlights', async (request, response, next) => {
     }
     response.status(200).json(updatedMatch);
   } catch (error) {
+    if (error instanceof MongoServerError) {
+      console.error(error);
+      response.status(500).send(error.message);
+      return;
+    }
     next(error);
   }
 });
