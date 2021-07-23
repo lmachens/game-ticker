@@ -8,7 +8,7 @@ Content-Type: application/json
 
 {
     "gameId": 59156,
-    "username": "alexisOver9000"
+    "username": "monaOver9000"
 }
 
 ### Insert new match which should fail due to missing username
@@ -28,9 +28,9 @@ Content-Type: application/json
     "username": "alexisOver9000"
 }
 
-@matchId = {{insertNewMatch.response.body.$._id}}
 
 ### Add highlight to existing match
+@matchId = {{insertNewMatch.response.body.$._id}}
 POST {{baseUrl}}/matches/{{matchId}}/highlights HTTP/1.1
 Content-Type: application/json
 
@@ -60,5 +60,20 @@ Content-Type: application/json
     "videoSrc": "https://cloudinary.com/video/1"
 }
 
-### Return all matches
+### Return first matches
 GET {{baseUrl}}/matches HTTP/1.1
+
+### Return more matches
+GET {{baseUrl}}/matches?page=14 HTTP/1.1
+
+### Return matches with specific itemsPerPage
+GET {{baseUrl}}/matches?page=5&itemsPerPage=2 HTTP/1.1
+
+### Return matches based on gameId
+GET {{baseUrl}}/matches?page=5&itemsPerPage=2&gameId=59156 HTTP/1.1
+
+### Return matches based on username
+GET {{baseUrl}}/matches?username=monaOver9000 HTTP/1.1
+
+### Return matches based on gameId and username
+GET {{baseUrl}}/matches?gameId=123123&username=lukasOver9000 HTTP/1.1

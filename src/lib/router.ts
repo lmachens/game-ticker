@@ -1,6 +1,11 @@
-import { ObjectId } from 'mongodb';
+import { MongoServerError, ObjectId } from 'mongodb';
 import express from 'express';
-import { getMatchesCollection, MatchHighlight, Match } from './matches';
+import {
+  getMatchesCollection,
+  MatchHighlight,
+  Match,
+  createMatchesQuery,
+} from './matches';
 
 const router = express.Router();
 
@@ -28,6 +33,12 @@ router.post('/matches', async (request, response, next) => {
     }
     response.status(200).json(match);
   } catch (error) {
+    if (error instanceof MongoServerError) {
+      console.error(error);
+      response.setHeader('Content-Type', 'plain/text');
+      response.status(500).send(error.message);
+      return;
+    }
     next(error);
   }
 });
@@ -72,16 +83,48 @@ router.post('/matches/:matchId/highlights', async (request, response, next) => {
     }
     response.status(200).json(updatedMatch);
   } catch (error) {
+    if (error instanceof MongoServerError) {
+      console.error(error);
+      response.setHeader('Content-Type', 'plain/text');
+      response.status(500).send(error.message);
+      return;
+    }
     next(error);
   }
 });
 
-router.get('/matches', async (_request, response, next) => {
-  try {
-    const matchesCollection = await getMatchesCollection();
-    const matches = await matchesCollection.find({}).toArray();
+type PaginatedMatches = {
+  info: {
+    total: number;
+    itemsPerPage: number;
+    page: number;
+  };
+  results: Match[];
+};
 
-    response.status(200).json(matches);
+router.get('/matches', async (request, response, next) => {
+  try {
+    const page = Number(request.query.page) || 1;
+    const itemsPerPage = Number(request.query.itemsPerPage) || 10;
+    const matchesCollection = getMatchesCollection();
+    const query = createMatchesQuery(request.query);
+    const cursor = matchesCollection.find(query).sort({ createdAt: -1 });
+    const totalPromise = cursor.count();
+    const matchesPromise = cursor
+      .skip((page - 1) * itemsPerPage)
+      .limit(itemsPerPage)
+      .toArray();
+    const [total, matches] = await Promise.all([totalPromise, matchesPromise]);
+
+    const paginatedMatches: PaginatedMatches = {
+      info: {
+        total: total,
+        itemsPerPage: itemsPerPage,
+        page: page,
+      },
+      results: matches,
+    };
+    response.status(200).json(paginatedMatches);
   } catch (error) {
     next(error);
   }

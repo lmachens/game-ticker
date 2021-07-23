@@ -9,11 +9,15 @@ export async function connectToMongoDb(uri: string): Promise<void> {
   await db.command({ ping: 1 });
 }
 
-export function getCollection<DocType>(name: string): Collection<DocType> {
+export function getDb(): Db {
   if (db === null) {
     throw new Error(
       'Database connection not established. Call connectToMongoDb first.'
     );
   }
-  return db.collection<DocType>(name);
+  return db;
+}
+
+export function getCollection<DocType>(name: string): Collection<DocType> {
+  return getDb().collection<DocType>(name);
 }
