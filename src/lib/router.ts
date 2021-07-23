@@ -35,6 +35,7 @@ router.post('/matches', async (request, response, next) => {
   } catch (error) {
     if (error instanceof MongoServerError) {
       console.error(error);
+      response.setHeader('Content-Type', 'plain/text');
       response.status(500).send(error.message);
       return;
     }
@@ -84,6 +85,7 @@ router.post('/matches/:matchId/highlights', async (request, response, next) => {
   } catch (error) {
     if (error instanceof MongoServerError) {
       console.error(error);
+      response.setHeader('Content-Type', 'plain/text');
       response.status(500).send(error.message);
       return;
     }
