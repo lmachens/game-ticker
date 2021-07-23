@@ -1,7 +1,11 @@
 import { Filter, ObjectId } from 'mongodb';
 import express from 'express';
-import { getMatchesCollection, MatchHighlight, Match } from './matches';
-import { ParsedQs } from 'qs';
+import {
+  getMatchesCollection,
+  MatchHighlight,
+  Match,
+  createMatchesQuery,
+} from './matches';
 
 const router = express.Router();
 
@@ -85,18 +89,6 @@ type PaginatedMatches = {
   };
   results: Match[];
 };
-
-function createMatchesQuery(requestQuery: ParsedQs): Filter<Match> {
-  const query: Filter<Match> = {};
-  if (typeof requestQuery.username === 'string') {
-    query.username = requestQuery.username;
-  }
-  const gameId = Number(requestQuery.gameId);
-  if (gameId) {
-    query.gameId = gameId;
-  }
-  return query;
-}
 
 router.get('/matches', async (request, response, next) => {
   try {

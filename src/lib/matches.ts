@@ -1,5 +1,6 @@
-import { Collection, Document, ObjectId } from 'mongodb';
+import { Collection, Document, Filter, ObjectId } from 'mongodb';
 import { getCollection, getDb } from './db';
+import { ParsedQs } from 'qs';
 
 export type MatchHighlight = {
   timestamp: number;
@@ -71,4 +72,16 @@ export function ensureMatchesSchema(): Promise<Document> {
       },
     },
   });
+}
+
+export function createMatchesQuery(requestQuery: ParsedQs): Filter<Match> {
+  const query: Filter<Match> = {};
+  if (typeof requestQuery.username === 'string') {
+    query.username = requestQuery.username;
+  }
+  const gameId = Number(requestQuery.gameId);
+  if (gameId) {
+    query.gameId = gameId;
+  }
+  return query;
 }
