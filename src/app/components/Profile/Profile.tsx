@@ -1,12 +1,7 @@
 import { useEffect, useState } from 'react';
 import defaultAvatar from './defaultAvatar.svg';
 import classes from './Profile.module.css';
-
-type Profile = {
-  username: string | null;
-  displayName: string | null;
-  avatar: string | null;
-};
+import { Profile, getCurrentUser } from '../../utils/user';
 
 const defaultProfile: Profile = {
   username: 'Game-Ticker',
@@ -16,33 +11,6 @@ const defaultProfile: Profile = {
 
 function openLoginDialog() {
   overwolf.profile.openLoginDialog();
-}
-
-function getCurrentUser(): Promise<Profile | null> {
-  return new Promise((resolve, reject) => {
-    try {
-      overwolf.profile.getCurrentUser((result) => {
-        const { success, displayName, username, avatar } = result;
-        if (!success) {
-          resolve(null);
-          return;
-        }
-
-        if (displayName && username && avatar) {
-          resolve({
-            displayName,
-            username,
-            avatar,
-          });
-          return;
-        }
-
-        reject();
-      });
-    } catch (error) {
-      reject(error);
-    }
-  });
 }
 
 const Profile = (): JSX.Element => {
