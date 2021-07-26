@@ -1,20 +1,7 @@
-import { Collection, Document, Filter, ObjectId } from 'mongodb';
+import { Collection, Document, Filter } from 'mongodb';
 import { getCollection, getDb } from './db';
 import { ParsedQs } from 'qs';
-
-export type MatchHighlight = {
-  timestamp: number;
-  type: string;
-  videoSrc: string;
-};
-
-export type Match = {
-  _id?: ObjectId;
-  gameId: number;
-  username: string;
-  createdAt: Date;
-  highlights: MatchHighlight[];
-};
+import { Match } from '../types';
 
 export function getMatchesCollection(): Collection<Match> {
   return getCollection<Match>('matches');
