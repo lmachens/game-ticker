@@ -8,7 +8,7 @@ type Profile = {
   avatar: string | null;
 };
 
-function openDialog() {
+function openLoginDialog() {
   overwolf.profile.openLoginDialog();
 }
 
@@ -66,7 +66,7 @@ function Profile(): JSX.Element {
       {loginDialog && (
         <aside className={classes.login}>
           For full functionality, please login.{' '}
-          <button onClick={openDialog}>Login</button>
+          <button onClick={openLoginDialog}>Login</button>
         </aside>
       )}
       {profileError && <aside className={classes.error}>{profileError}</aside>}
