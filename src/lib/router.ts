@@ -1,11 +1,7 @@
 import { MongoServerError, ObjectId } from 'mongodb';
 import express from 'express';
-import {
-  getMatchesCollection,
-  MatchHighlight,
-  Match,
-  createMatchesQuery,
-} from './matches';
+import { getMatchesCollection, createMatchesQuery } from './matches';
+import type { Match, MatchHighlight } from '../types';
 
 const router = express.Router();
 
