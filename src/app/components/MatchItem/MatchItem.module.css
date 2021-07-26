@@ -1,7 +1,5 @@
 .container {
-  display: grid;
-  grid-auto-flow: column;
-  justify-content: space-between;
+  composes: grid-column-space-between from '../../utils.module.css';
   background: #c4c4c4;
   color: black;
   padding: 1em;

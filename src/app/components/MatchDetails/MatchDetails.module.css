@@ -10,9 +10,7 @@
 }
 
 .highlight {
-  display: grid;
-  grid-auto-flow: column;
-  justify-content: space-between;
+  composes: grid-column-space-between from '../../utils.module.css';
   align-items: center;
   padding: 1em;
   background: #eee;
