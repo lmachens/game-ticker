@@ -1,3 +1,12 @@
+import { Match } from '../../types';
+
+const port = 3001;
+const baseUrl = `http://localhost:${port}/api`;
+
+type ActiveMatch = Match | null;
+
+let activeMatch: ActiveMatch = null;
+
 export function getHighlightsFeatures(id: number): Promise<string[]> {
   return new Promise((resolve, reject) => {
     overwolf.media.replays.getHighlightsFeatures(id, (event) => {
@@ -69,6 +78,28 @@ async function getHighlightsAndTurnOn(classId: number) {
   }
 }
 
+async function postNewMatch(gameId: number): Promise<ActiveMatch> {
+  const username = 'peter123';
+  const data = JSON.stringify({ gameId: gameId, username: username });
+
+  try {
+    const response = await fetch(`${baseUrl}/matches`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: data,
+    });
+    const result = await response.json();
+
+    console.log('postNewMatch', result);
+    return result;
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+}
+
 export function startCaptureHighlights(): void {
   console.log('startCaptureHighlights');
   overwolf.media.replays.onCaptureError.addListener((event) => {
@@ -90,12 +121,19 @@ export function startCaptureHighlights(): void {
   overwolf.games.onGameLaunched.addListener(async (event) => {
     console.log('onGameLaunched', event);
     await getHighlightsAndTurnOn(event.classId);
+    activeMatch = await postNewMatch(event.classId);
+
+    console.log('activeMatch', activeMatch);
   });
 
   overwolf.games.getRunningGameInfo(async (result) => {
     console.log('check if game is already running', result);
     if (result) {
       await getHighlightsAndTurnOn(result.classId);
+
+      if (!activeMatch) {
+        await postNewMatch(result.classId);
+      }
     }
   });
 
