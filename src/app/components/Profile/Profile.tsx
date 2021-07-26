@@ -53,9 +53,11 @@ const Profile = (): JSX.Element => {
 
   useEffect(() => {
     overwolf.profile.onLoginStateChanged.addListener((result) => {
-      if (result.connectionState === 'Online') {
-        setLogin(true);
+      if (result.connectionState !== 'Online') {
+        setLogin(false);
+        return;
       }
+      setLogin(true);
     });
     const getUser = async () => {
       try {
@@ -80,11 +82,6 @@ const Profile = (): JSX.Element => {
       }
     };
     getUser();
-    return overwolf.profile.onLoginStateChanged.removeListener((result) => {
-      if (result.connectionState === 'Online') {
-        setLogin(true);
-      }
-    });
   }, [login]);
 
   return (
