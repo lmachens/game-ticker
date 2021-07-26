@@ -48,24 +48,28 @@ function Profile(): JSX.Element {
   });
 
   return (
-    <section className={classes.profile}>
-      <div className={classes['profile--container']}>
+    <section className={classes.container}>
+      <div className={classes.header}>
         {profile.avatar ? (
-          <img src={profile.avatar} alt="overwolf profile avatar" />
+          <img
+            src={profile.avatar}
+            className={classes.avatar}
+            alt="overwolf profile avatar"
+          />
         ) : (
           defaultAvatar
         )}
-        <h1>{profile.displayName || profile.username}</h1>
+        <h1 className={classes.username}>
+          {profile.displayName || profile.username}
+        </h1>
       </div>
       {loginDialog && (
-        <aside className={classes['profile--login']}>
+        <aside className={classes.login}>
           For full functionality, please login.{' '}
           <button onClick={openDialog}>Login</button>
         </aside>
       )}
-      {profileError && (
-        <aside className={classes['profile--error']}>{profileError}</aside>
-      )}
+      {profileError && <aside className={classes.error}>{profileError}</aside>}
     </section>
   );
 }
