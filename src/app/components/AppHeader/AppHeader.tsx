@@ -2,7 +2,7 @@ import {
   closeMainWindow,
   dragMoveWindow,
   minimizeWindow,
-} from '../../utils/overwolf';
+} from '../../utils/windows';
 import classes from './AppHeader.module.css';
 
 function AppHeader(): JSX.Element {
