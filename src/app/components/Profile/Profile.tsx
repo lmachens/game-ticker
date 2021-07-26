@@ -34,7 +34,10 @@ function getCurrentUser(): Promise<Profile | null> {
             username,
             avatar,
           });
+          return;
         }
+
+        reject();
       });
     } catch (error) {
       reject(error);
