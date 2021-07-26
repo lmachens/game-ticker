@@ -1,4 +1,4 @@
-import { Match } from '../../types';
+import { Match, MatchHighlight } from '../../types';
 
 const port = 3001;
 const baseUrl = `http://localhost:${port}/api`;
@@ -100,6 +100,35 @@ async function postNewMatch(gameId: number): Promise<ActiveMatch> {
   }
 }
 
+async function postNewHighlight({
+  videoSrc,
+  type,
+  timestamp,
+}: MatchHighlight): Promise<ActiveMatch> {
+  if (!activeMatch) return null;
+  const data = JSON.stringify({ videoSrc, type, timestamp });
+
+  try {
+    const response = await fetch(
+      `${baseUrl}/matches/${activeMatch._id}/highlights`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: data,
+      }
+    );
+    const result = await response.json();
+
+    console.log('postNewHighlight', result);
+    return result;
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+}
+
 export function startCaptureHighlights(): void {
   console.log('startCaptureHighlights');
   overwolf.media.replays.onCaptureError.addListener((event) => {
@@ -114,8 +143,20 @@ export function startCaptureHighlights(): void {
   overwolf.media.replays.onReplayServicesStarted.addListener((event) => {
     console.log('onReplayServicesStarted', event);
   });
-  overwolf.media.replays.onHighlightsCaptured.addListener((event) => {
+  overwolf.media.replays.onHighlightsCaptured.addListener(async (event) => {
     console.log('onHighlightsCaptured', event);
+    const { media_url, events, match_start_time, replay_video_start_time } =
+      event;
+    const timestamp = replay_video_start_time - Number(match_start_time);
+
+    const cloudinaryURL = await uploadHighlight({ src: media_url });
+    const updatedMatch = await postNewHighlight({
+      videoSrc: cloudinaryURL,
+      type: events[0],
+      timestamp: timestamp,
+    });
+    activeMatch = updatedMatch;
+    console.log('updatedMatch', updatedMatch);
   });
 
   overwolf.games.onGameLaunched.addListener(async (event) => {
@@ -132,7 +173,7 @@ export function startCaptureHighlights(): void {
       await getHighlightsAndTurnOn(result.classId);
 
       if (!activeMatch) {
-        await postNewMatch(result.classId);
+        activeMatch = await postNewMatch(result.classId);
       }
     }
   });
@@ -160,7 +201,7 @@ type OnProgress = ({ loaded, total }: OnProgressProps) => void;
 
 type UploadToCloudinaryProps = {
   file: Blob;
-  onProgress: OnProgress;
+  onProgress?: OnProgress;
 };
 
 const { VITE_CLOUDINARY_PRESET, VITE_CLOUDINARY_CLOUD_NAME } = import.meta.env;
@@ -196,12 +237,14 @@ const uploadToCloudinary = async ({
       reject(xhr.statusText);
     };
 
-    xhr.upload.onprogress = (event) => {
-      onProgress({
-        loaded: event.loaded,
-        total: event.total,
-      });
-    };
+    if (onProgress) {
+      xhr.upload.onprogress = (event) => {
+        onProgress({
+          loaded: event.loaded,
+          total: event.total,
+        });
+      };
+    }
 
     xhr.open(
       'POST',
@@ -215,7 +258,7 @@ const uploadToCloudinary = async ({
 
 type UploadHighlightProps = {
   src: string;
-  onProgress: OnProgress;
+  onProgress?: OnProgress;
 };
 export async function uploadHighlight({
   src,
