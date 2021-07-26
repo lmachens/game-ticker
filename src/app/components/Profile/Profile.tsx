@@ -8,6 +8,10 @@ type Profile = {
   avatar: string | null;
 };
 
+function openDialog() {
+  overwolf.profile.openLoginDialog();
+}
+
 function Profile(): JSX.Element {
   const defaultProfile: Profile = {
     username: 'Game-Ticker',
@@ -28,7 +32,7 @@ function Profile(): JSX.Element {
           setLoginDialog(true);
           return;
         }
-        setLoginDialog(true);
+        setLoginDialog(false);
         setProfile({
           displayName: displayName || null,
           username: username || null,
@@ -45,18 +49,23 @@ function Profile(): JSX.Element {
 
   return (
     <section className={classes.profile}>
-      {profile.avatar ? (
-        <img src={profile.avatar} alt="overwolf profile avatar" />
-      ) : (
-        defaultAvatar
-      )}
-      <h1>{profile.displayName || profile.username}</h1>
+      <div className={classes['profile--container']}>
+        {profile.avatar ? (
+          <img src={profile.avatar} alt="overwolf profile avatar" />
+        ) : (
+          defaultAvatar
+        )}
+        <h1>{profile.displayName || profile.username}</h1>
+      </div>
       {loginDialog && (
-        <aside>
-          For full functionality, please login. <button>Login</button>
+        <aside className={classes['profile--login']}>
+          For full functionality, please login.{' '}
+          <button onClick={openDialog}>Login</button>
         </aside>
       )}
-      {profileError && <aside>{profileError}</aside>}
+      {profileError && (
+        <aside className={classes['profile--error']}>{profileError}</aside>
+      )}
     </section>
   );
 }
