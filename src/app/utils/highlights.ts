@@ -1,7 +1,7 @@
 import { Match, MatchHighlight } from '../../types';
 
-const port = 3001;
-const baseUrl = `http://localhost:${port}/api`;
+const { VITE_PORT } = import.meta.env;
+const baseUrl = `http://localhost:${VITE_PORT}/api`;
 
 type ActiveMatch = Match | null;
 
