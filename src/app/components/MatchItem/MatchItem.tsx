@@ -1,20 +1,15 @@
+import { Match } from '../../../types';
 import classes from './MatchItem.module.css';
 
 type MatchItemProps = {
-  username: string;
-  game: string;
-  numberOfHighlights: number;
+  match: Match;
 };
-function MatchItem({
-  username,
-  game,
-  numberOfHighlights,
-}: MatchItemProps): JSX.Element {
+function MatchItem({ match }: MatchItemProps): JSX.Element {
   return (
     <article className={classes.container}>
-      <p>{username}</p>
-      <p>{game}</p>
-      <p>{numberOfHighlights}</p>
+      <p>{match.username}</p>
+      <p>{match.gameId}</p>
+      <p>{match.highlights.length}</p>
     </article>
   );
 }

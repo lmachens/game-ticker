@@ -1,29 +1,29 @@
 import { Example } from '../examples';
 import MatchItem from './MatchItem';
 
-export const MatchItemLeagueOfLegends: Example = () => (
-  <MatchItem
-    username="SabineOver9000"
-    game="League of Legends"
-    numberOfHighlights={12}
-  />
-);
-
-export const MatchItemFortnite: Example = () => (
-  <MatchItem username="AlexisOver9000" game="Fortnite" numberOfHighlights={3} />
-);
-
-export const MatchItemMultiple: Example = () => (
+export const MatchItems: Example = () => (
   <>
     <MatchItem
-      username="SabineOver9000"
-      game="League of Legends"
-      numberOfHighlights={12}
+      match={{
+        username: 'LukasOver9000',
+        gameId: 12345,
+        createdAt: new Date('2021-07-2021'),
+        highlights: [],
+      }}
     />
     <MatchItem
-      username="AlexisOver9000"
-      game="Fortnite"
-      numberOfHighlights={3}
+      match={{
+        username: 'SabineOver9000',
+        gameId: 54321,
+        createdAt: new Date('2021-05-2021'),
+        highlights: [
+          {
+            timestamp: 10,
+            type: 'kill',
+            videoSrc: 'https://example.com/video.mp4',
+          },
+        ],
+      }}
     />
   </>
 );
