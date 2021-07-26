@@ -1,0 +1,19 @@
+.container {
+  display: grid;
+  gap: 0.5em;
+  color: black;
+}
+
+.header {
+  padding: 1em;
+  background: #c4c4c4;
+}
+
+.highlight {
+  display: grid;
+  grid-auto-flow: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1em;
+  background: #eee;
+}
