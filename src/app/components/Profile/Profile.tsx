@@ -8,17 +8,17 @@ type Profile = {
   avatar: string | null;
 };
 
+const defaultProfile: Profile = {
+  username: 'Game-Ticker',
+  displayName: 'Game-Ticker',
+  avatar: null,
+};
+
 function openLoginDialog() {
   overwolf.profile.openLoginDialog();
 }
 
 function Profile(): JSX.Element {
-  const defaultProfile: Profile = {
-    username: 'Game-Ticker',
-    displayName: 'Game-Ticker',
-    avatar: null,
-  };
-
   const [profile, setProfile] = useState(defaultProfile);
   const [profileError, setProfileError] = useState<string | null>(null);
   const [loginDialog, setLoginDialog] = useState(false);
