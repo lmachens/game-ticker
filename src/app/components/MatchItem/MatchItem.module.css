@@ -1,0 +1,12 @@
+.container {
+  display: grid;
+  grid-auto-flow: column;
+  justify-content: space-between;
+  background: #c4c4c4;
+  color: black;
+  padding: 1em;
+}
+
+.container + .container {
+  margin-top: 1em;
+}
