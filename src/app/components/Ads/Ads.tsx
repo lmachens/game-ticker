@@ -2,14 +2,17 @@ import { useEffect, useRef } from 'react';
 import classes from './Ads.module.css';
 
 function Ads(): JSX.Element {
-  const adsContainerRef = useRef(null);
+  const adsContainerRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     function onOwAdReady() {
-      if (typeof globalThis.OwAd === 'undefined') {
+      if (
+        typeof window.OwAd === 'undefined' ||
+        adsContainerRef.current === null
+      ) {
         return;
       }
-      new globalThis.OwAd(adsContainerRef.current, {
+      new window.OwAd(adsContainerRef.current, {
         size: { width: 400, height: 300 },
       });
     }
