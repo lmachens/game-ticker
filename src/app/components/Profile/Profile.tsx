@@ -45,7 +45,7 @@ function Profile(): JSX.Element {
         setProfileError(error.message);
       }
     }
-  });
+  }, []);
 
   return (
     <section className={classes.container}>
