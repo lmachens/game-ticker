@@ -13,7 +13,7 @@ function openLoginDialog() {
   overwolf.profile.openLoginDialog();
 }
 
-const Profile = (): JSX.Element => {
+const User = (): JSX.Element => {
   const [profile, setProfile] = useState<Profile>(defaultProfile);
   const [profileError, setProfileError] = useState<string | null>(null);
   const [loginDialog, setLoginDialog] = useState(false);
@@ -79,4 +79,4 @@ const Profile = (): JSX.Element => {
   );
 };
 
-export default Profile;
+export default User;
