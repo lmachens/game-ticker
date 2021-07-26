@@ -8,4 +8,8 @@ waitForOverwolf().then(async () => {
 
   restoreWindow(WINDOWS.DEVELOPMENT);
   restoreWindow(WINDOWS.DESKTOP);
+
+  overwolf.extensions.onAppLaunchTriggered.addListener(() => {
+    restoreWindow(WINDOWS.DESKTOP);
+  });
 });
