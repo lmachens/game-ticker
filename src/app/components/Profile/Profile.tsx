@@ -18,34 +18,71 @@ function openLoginDialog() {
   overwolf.profile.openLoginDialog();
 }
 
-function Profile(): JSX.Element {
-  const [profile, setProfile] = useState(defaultProfile);
-  const [profileError, setProfileError] = useState<string | null>(null);
-  const [loginDialog, setLoginDialog] = useState(false);
-
-  useEffect(() => {
+function getCurrentUser(): Promise<Profile | null> {
+  return new Promise((resolve, reject) => {
     try {
       overwolf.profile.getCurrentUser((result) => {
         const { success, displayName, username, avatar } = result;
-
         if (!success) {
+          resolve(null);
+          return;
+        }
+
+        if (displayName && username && avatar) {
+          resolve({
+            displayName,
+            username,
+            avatar,
+          });
+        }
+      });
+    } catch (error) {
+      reject(error);
+    }
+  });
+}
+
+const Profile = (): JSX.Element => {
+  const [profile, setProfile] = useState<Profile>(defaultProfile);
+  const [profileError, setProfileError] = useState<string | null>(null);
+  const [loginDialog, setLoginDialog] = useState(false);
+  const [login, setLogin] = useState(false);
+
+  useEffect(() => {
+    overwolf.profile.onLoginStateChanged.addListener((result) => {
+      if (result.connectionState === 'Online') {
+        setLogin(true);
+      }
+    });
+    const getUser = async () => {
+      try {
+        const result = await getCurrentUser();
+
+        if (!result) {
           setLoginDialog(true);
           return;
         }
+
         setLoginDialog(false);
         setProfile({
-          displayName: displayName || null,
-          username: username || null,
-          avatar: avatar || null,
+          displayName: result.displayName || null,
+          username: result.username || null,
+          avatar: result.avatar || null,
         });
-      });
-    } catch (error) {
-      console.error(error);
-      if (error instanceof Error) {
-        setProfileError(error.message);
+      } catch (error) {
+        console.error(error);
+        if (error instanceof Error) {
+          setProfileError(error.message);
+        }
       }
-    }
-  }, []);
+    };
+    getUser();
+    return overwolf.profile.onLoginStateChanged.removeListener((result) => {
+      if (result.connectionState === 'Online') {
+        setLogin(true);
+      }
+    });
+  }, [login]);
 
   return (
     <section className={classes.container}>
@@ -72,6 +109,6 @@ function Profile(): JSX.Element {
       {profileError && <aside className={classes.error}>{profileError}</aside>}
     </section>
   );
-}
+};
 
 export default Profile;
