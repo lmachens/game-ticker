@@ -5,7 +5,7 @@ export const MatchDetailsLukas: Example = () => (
   <MatchDetails
     match={{
       username: 'LukasOver9000',
-      gameId: 12345,
+      gameId: 7764,
       createdAt: new Date('2021-07-2021'),
       highlights: [
         {

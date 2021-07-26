@@ -6,7 +6,7 @@ export const MatchItems: Example = () => (
     <MatchItem
       match={{
         username: 'LukasOver9000',
-        gameId: 12345,
+        gameId: 5426,
         createdAt: new Date('2021-07-2021'),
         highlights: [],
       }}
@@ -14,7 +14,7 @@ export const MatchItems: Example = () => (
     <MatchItem
       match={{
         username: 'SabineOver9000',
-        gameId: 54321,
+        gameId: 9898,
         createdAt: new Date('2021-05-2021'),
         highlights: [
           {

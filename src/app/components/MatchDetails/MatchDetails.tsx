@@ -1,15 +1,18 @@
 import classes from './MatchDetails.module.css';
 import type { Match } from '../../../types';
 import VideoHighlight from '../VideoHighlight/VideoHighlight';
+import useGameInfo from '../../hooks/useGameInfo';
 
 type MatchDetailsProps = {
   match: Match;
 };
 function MatchDetails({ match }: MatchDetailsProps): JSX.Element {
+  const { gameInfo } = useGameInfo(match.gameId);
+
   return (
     <section className={classes.container}>
       <header className={classes.header}>
-        <p>{match.gameId}</p>
+        <p>{gameInfo?.Label}</p>
         <p>{match.username}</p>
       </header>
       {match.highlights.map((highlight) => (
