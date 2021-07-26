@@ -6,7 +6,7 @@ type MatchItemProps = {
   match: Match;
 };
 function MatchItem({ match }: MatchItemProps): JSX.Element {
-  const { gameInfo } = useGameInfo(match.gameId);
+  const gameInfo = useGameInfo(match.gameId);
 
   return (
     <article className={classes.container}>

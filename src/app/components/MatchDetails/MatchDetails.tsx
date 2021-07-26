@@ -7,7 +7,7 @@ type MatchDetailsProps = {
   match: Match;
 };
 function MatchDetails({ match }: MatchDetailsProps): JSX.Element {
-  const { gameInfo } = useGameInfo(match.gameId);
+  const gameInfo = useGameInfo(match.gameId);
 
   return (
     <section className={classes.container}>
