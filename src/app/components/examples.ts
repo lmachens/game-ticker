@@ -5,3 +5,4 @@ export * from './HardwareInfo/HardwareInfo.examples';
 export * from './Upload/Upload.examples';
 export * from './VideoHighlight/VideoHighlight.examples';
 export * from './Welcome/Welcome.examples';
+export * from './Ads/Ads.examples';
