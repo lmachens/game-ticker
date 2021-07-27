@@ -30,3 +30,9 @@ export type Pagination<T> = {
 
 export type PaginatedMatchesClient = Pagination<MatchClient>;
 export type PaginatedMatches = Pagination<Match>;
+
+export type Profile = {
+  username: string | null;
+  displayName: string | null;
+  avatar: string | null;
+};
