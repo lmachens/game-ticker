@@ -45,7 +45,10 @@ export function ensureMatchesSchema(): Promise<Document> {
                   bsonType: 'int',
                 },
                 type: {
-                  bsonType: 'string',
+                  bsonType: 'array',
+                  items: {
+                    bsonType: 'string',
+                  },
                 },
                 videoSrc: {
                   bsonType: 'string',
