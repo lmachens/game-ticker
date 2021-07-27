@@ -10,12 +10,12 @@ export const MatchDetailsLukas: Example = () => (
       highlights: [
         {
           timestamp: 10,
-          type: 'kill',
+          type: ['kill', 'assist'],
           videoSrc: 'https://example.com/video.mp4',
         },
         {
           timestamp: 30,
-          type: 'death',
+          type: ['death'],
           videoSrc: 'https://example.com/video.mp4',
         },
       ],
