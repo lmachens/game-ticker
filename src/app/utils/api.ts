@@ -1,4 +1,4 @@
-import { PaginatedMatches } from '../../types';
+import { Match, MatchHighlight, PaginatedMatches } from '../../types';
 
 const { VITE_API_ENDPOINT } = import.meta.env;
 
@@ -17,4 +17,42 @@ export function fetchJSON<T>(
 
 export function getMatches(): Promise<PaginatedMatches> {
   return fetchJSON<PaginatedMatches>('/api/matches');
+}
+
+export function postMatch(gameId: number): Promise<Match> | null {
+  const username = 'peter123';
+  const data = JSON.stringify({ gameId, username });
+
+  try {
+    return fetchJSON<Match>('/api/matches', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: data,
+    });
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+}
+
+export function postMatchHighlight(
+  highlight: MatchHighlight,
+  matchId: Pick<Match, '_id'>
+): Promise<Match> | null {
+  const data = JSON.stringify(highlight);
+
+  try {
+    return fetchJSON<Match>(`/api/matches/${matchId}/highlights`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: data,
+    });
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
 }
