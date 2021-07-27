@@ -39,7 +39,7 @@ export function postMatch(gameId: number): Promise<Match> | null {
 
 export function postMatchHighlight(
   highlight: MatchHighlight,
-  matchId: Pick<Match, '_id'>
+  matchId: Match['_id']
 ): Promise<Match> | null {
   const data = JSON.stringify(highlight);
 
