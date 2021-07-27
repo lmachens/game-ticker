@@ -18,7 +18,7 @@ function MatchDetails({ match }: MatchDetailsProps): JSX.Element {
       {match.highlights.map((highlight) => (
         <article key={highlight.timestamp} className={classes.highlight}>
           <VideoHighlight src={highlight.videoSrc} />
-          <p>{highlight.type}</p>
+          <p>{highlight.events.join(', ')}</p>
           <p>{highlight.timestamp}</p>
         </article>
       ))}

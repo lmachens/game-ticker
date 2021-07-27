@@ -41,12 +41,13 @@ router.post('/matches', async (request, response, next) => {
 
 router.post('/matches/:matchId/highlights', async (request, response, next) => {
   try {
-    const { timestamp, type, videoSrc } = request.body;
+    const { timestamp, events, videoSrc } = request.body;
     const { matchId } = request.params;
     const matchIdIsInvalid = !ObjectId.isValid(matchId);
     const requestIsInvalid =
       typeof timestamp !== 'number' ||
-      typeof type !== 'string' ||
+      !Array.isArray(events) ||
+      !events.every((event) => typeof event === 'string') ||
       typeof videoSrc !== 'string';
 
     if (matchIdIsInvalid) {
@@ -61,7 +62,7 @@ router.post('/matches/:matchId/highlights', async (request, response, next) => {
 
     const highlight: MatchHighlight = {
       timestamp,
-      type,
+      events,
       videoSrc,
     };
 

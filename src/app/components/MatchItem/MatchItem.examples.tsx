@@ -19,7 +19,7 @@ export const MatchItems: Example = () => (
         highlights: [
           {
             timestamp: 10,
-            type: 'kill',
+            events: ['kill'],
             videoSrc: 'https://example.com/video.mp4',
           },
         ],
