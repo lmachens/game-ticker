@@ -3,7 +3,7 @@ import type { ObjectId } from 'mongodb';
 
 export type MatchHighlight = {
   timestamp: number;
-  type: string;
+  events: string[];
   videoSrc: string;
 };
 
@@ -13,4 +13,21 @@ export type Match = {
   username: string;
   createdAt: Date;
   highlights: MatchHighlight[];
+};
+
+export type Pagination<T> = {
+  info: {
+    total: number;
+    itemsPerPage: number;
+    page: number;
+  };
+  results: T[];
+};
+
+export type PaginatedMatches = Pagination<Match>;
+
+export type Profile = {
+  username: string | null;
+  displayName: string | null;
+  avatar: string | null;
 };

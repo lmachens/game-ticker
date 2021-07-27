@@ -1,0 +1,17 @@
+.container {
+  display: grid;
+  gap: 0.5em;
+  color: black;
+}
+
+.header {
+  padding: 1em;
+  background: #c4c4c4;
+}
+
+.highlight {
+  composes: grid-column-space-between from '../../utils.module.css';
+  align-items: center;
+  padding: 1em;
+  background: #eee;
+}

@@ -1,3 +1,4 @@
+import { classNames } from '../../utils/styles';
 import {
   closeMainWindow,
   dragMoveWindow,
@@ -5,9 +6,13 @@ import {
 } from '../../utils/windows';
 import classes from './AppHeader.module.css';
 
-function AppHeader(): JSX.Element {
+type AppHeaderProps = {
+  className?: string;
+};
+
+function AppHeader({ className }: AppHeaderProps): JSX.Element {
   return (
-    <header className={classes.header}>
+    <header className={classNames(classes.header, className)}>
       <h1 className={classes.title} onMouseDown={dragMoveWindow}>
         Game Ticker
       </h1>

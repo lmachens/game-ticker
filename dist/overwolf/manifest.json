@@ -13,7 +13,9 @@
     "launcher_icon": "icons/desktopIcon.ico",
     "window_icon": "icons/taskbarIcon.png"
   },
+
   "permissions": ["VideoCaptureSettings", "Extensions", "Streaming", "Profile", "GameInfo"],
+
   "data": {
   
     "start_window": "background",
