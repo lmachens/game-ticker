@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
-import { getCurrentUser, Profile } from '../utils/user';
+import { Profile } from '../../types';
+import { getCurrentUser } from '../utils/user';
 
 export function useCurrentUser(): [Profile | null, string | null] {
   const [currentUser, setProfile] = useState<Profile | null>(null);
