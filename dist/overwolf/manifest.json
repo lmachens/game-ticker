@@ -13,7 +13,7 @@
     "launcher_icon": "icons/desktopIcon.ico",
     "window_icon": "icons/taskbarIcon.png"
   },
-  "permissions": ["VideoCaptureSettings"],
+  "permissions": ["VideoCaptureSettings", "Profile"],
   "data": {
     "start_window": "background",
     "windows": {
