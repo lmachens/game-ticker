@@ -4,7 +4,7 @@ import VideoHighlight from '../VideoHighlight/VideoHighlight';
 import useGameInfo from '../../hooks/useGameInfo';
 
 type MatchDetailsProps = {
-  match: Match;
+  match: Omit<Match, '_id'>;
 };
 function MatchDetails({ match }: MatchDetailsProps): JSX.Element {
   const gameInfo = useGameInfo(match.gameId);

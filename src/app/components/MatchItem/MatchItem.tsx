@@ -3,7 +3,7 @@ import useGameInfo from '../../hooks/useGameInfo';
 import classes from './MatchItem.module.css';
 
 type MatchItemProps = {
-  match: Match;
+  match: Omit<Match, '_id'>;
   onClick?: () => void;
 };
 function MatchItem({ match, onClick }: MatchItemProps): JSX.Element {
