@@ -46,7 +46,8 @@ router.post('/matches/:matchId/highlights', async (request, response, next) => {
     const matchIdIsInvalid = !ObjectId.isValid(matchId);
     const requestIsInvalid =
       typeof timestamp !== 'number' ||
-      typeof type !== 'string' ||
+      !Array.isArray(type) ||
+      !type.every((item) => typeof item === 'string') ||
       typeof videoSrc !== 'string';
 
     if (matchIdIsInvalid) {
