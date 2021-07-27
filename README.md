@@ -40,6 +40,7 @@ You can configure the server port by setting the `PORT` environment variable. Cr
 | MONGODB_URI                | URI for the MongoDB server             |
 | VITE_CLOUDINARY_CLOUD_NAME | Cloudinary cloud name                  |
 | VITE_CLOUDINARY_PRESET     | Cloudinary preset (has to be unsigned) |
+| VITE_API_ENDPOINT          | http://localhost:3002 (for local dev ) |
 
 ## Building
 
