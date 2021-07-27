@@ -14,3 +14,7 @@
 .aside {
   padding: 1em;
 }
+
+.main {
+  overflow: auto;
+}
