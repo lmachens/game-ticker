@@ -1,4 +1,5 @@
 import { Match, MatchHighlight, PaginatedMatchesClient } from '../../types';
+import { getCurrentUser } from './user';
 
 const { VITE_API_ENDPOINT } = import.meta.env;
 
@@ -24,8 +25,8 @@ export async function getMatches(): Promise<PaginatedMatchesClient> {
   return matches;
 }
 
-export function postMatch(gameId: number): Promise<Match> | null {
-  const username = 'peter123';
+export async function postMatch(gameId: number): Promise<Match | null> {
+  const { username } = (await getCurrentUser()) || { username: 'unknown' };
   const data = JSON.stringify({ gameId, username });
 
   try {
