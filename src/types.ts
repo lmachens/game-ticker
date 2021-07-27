@@ -8,7 +8,7 @@ export type MatchHighlight = {
 };
 
 export type Match = {
-  _id?: ObjectId;
+  _id: ObjectId;
   gameId: number;
   username: string;
   createdAt: Date;
