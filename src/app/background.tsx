@@ -12,4 +12,8 @@ waitForOverwolf().then(async () => {
   overwolf.extensions.onAppLaunchTriggered.addListener(() => {
     restoreWindow(WINDOWS.DESKTOP);
   });
+
+  overwolf.extensions.onAppLaunchTriggered.addListener(() => {
+    restoreWindow(WINDOWS.OVERLAY);
+  });
 });

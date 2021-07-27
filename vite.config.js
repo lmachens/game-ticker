@@ -28,6 +28,7 @@ export default defineConfig({
         background: resolve(__dirname, 'src/app/background.html'),
         development: resolve(__dirname, 'src/app/development.html'),
         index: resolve(__dirname, 'src/app/index.html'),
+        overlay: resolve(__dirname, 'src/app/overlay.html'),
       },
     },
   },

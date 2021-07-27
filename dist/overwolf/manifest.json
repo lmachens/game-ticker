@@ -49,6 +49,15 @@
         },
         "resizable": true,
         "allow_local_file_access": true
+      },
+      "overlay": {
+        "file": "build/overlay.html",
+        "debug_url": "http://localhost:3000/overlay.html",
+        "size": {
+          "width": 1212,
+          "height": 699
+        },
+        "in_game_only": true
       }
     },
     "game_targeting": {
