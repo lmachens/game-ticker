@@ -1,5 +1,6 @@
 import { Match } from '../../types';
 import { postMatch, postMatchHighlight } from './api';
+import { onGameLaunched } from './games';
 
 type ActiveMatch = Match | null;
 
@@ -128,22 +129,11 @@ export function startCaptureHighlights(): void {
     console.log('activeMatch', activeMatch);
   });
 
-  function onGameLaunched(callback: (classId: number) => void): void {
-    overwolf.games.onGameLaunched.addListener(async (event) => {
-      callback(event.classId);
-    });
-
-    overwolf.games.getRunningGameInfo(async (event) => {
-      if (event.success) {
-        callback(event.classId);
-      }
-    });
-  }
-
   overwolf.games.onGameInfoUpdated.addListener(async (event) => {
     console.log('game info changed', event);
     if (event.runningChanged && !event.gameInfo!.isRunning) {
       await turnOffReplayIfOn();
+      activeMatch = null;
     }
   });
 }
