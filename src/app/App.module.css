@@ -18,3 +18,10 @@
 .main {
   overflow: auto;
 }
+
+.back {
+  background: none;
+  color: #fff;
+  border: none;
+  margin-bottom: 1em;
+}
