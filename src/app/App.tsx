@@ -4,6 +4,7 @@ import AppHeader from './components/AppHeader/AppHeader';
 import Feed from './components/Feed/Feed';
 import type { Match } from '../types';
 import MatchDetails from './components/MatchDetails/MatchDetails';
+import User from './components/User/User';
 
 function App(): JSX.Element {
   const [match, setMatch] = useState<Match | null>(null);
@@ -22,7 +23,9 @@ function App(): JSX.Element {
           <Feed onMatchClick={setMatch} />
         )}
       </main>
-      <aside className={classes.aside}>ASIDE</aside>
+      <aside className={classes.aside}>
+        <User />
+      </aside>
     </div>
   );
 }
