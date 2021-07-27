@@ -6,7 +6,6 @@ import compression from 'compression';
 import { connectToMongoDb } from './lib/db';
 import router from './lib/router';
 import helmet from 'helmet';
-import cors from 'cors';
 import { ensureMatchesIndexes, ensureMatchesSchema } from './lib/matches';
 
 const { PORT, MONGODB_URI } = process.env;
@@ -21,8 +20,6 @@ if (typeof MONGODB_URI !== 'string') {
 
 const app = express();
 app.use(helmet());
-
-app.use(cors());
 
 // Middleware (dependency) to automatically compress responses
 app.use(compression());
