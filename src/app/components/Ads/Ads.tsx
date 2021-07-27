@@ -2,17 +2,14 @@ import { useEffect, useRef } from 'react';
 import classes from './Ads.module.css';
 
 function Ads(): JSX.Element {
-  const adsContainerRef = useRef<HTMLDivElement | null>(null);
+  const containerRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     function onOwAdReady() {
-      if (
-        typeof window.OwAd === 'undefined' ||
-        adsContainerRef.current === null
-      ) {
+      if (typeof window.OwAd === 'undefined' || containerRef.current === null) {
         return;
       }
-      new window.OwAd(adsContainerRef.current, {
+      new window.OwAd(containerRef.current, {
         size: { width: 400, height: 300 },
       });
     }
@@ -25,7 +22,7 @@ function Ads(): JSX.Element {
       document.body.removeChild(script);
     };
   }, []);
-  return <div className={classes.adsContainer} ref={adsContainerRef}></div>;
+  return <div className={classes.container} ref={containerRef} />;
 }
 
 export default Ads;
