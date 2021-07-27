@@ -1,4 +1,4 @@
-import { Match, MatchHighlight, PaginatedMatches } from '../../types';
+import { Match, MatchHighlight, PaginatedMatchesClient } from '../../types';
 
 const { VITE_API_ENDPOINT } = import.meta.env;
 
@@ -15,8 +15,13 @@ export function fetchJSON<T>(
   );
 }
 
-export function getMatches(): Promise<PaginatedMatches> {
-  return fetchJSON<PaginatedMatches>('/api/matches');
+export async function getMatches(): Promise<PaginatedMatchesClient> {
+  const matches = await fetchJSON<PaginatedMatchesClient>('/api/matches');
+  matches.results = matches.results.map((match) => ({
+    ...match,
+    createdAt: new Date(match.createdAt),
+  }));
+  return matches;
 }
 
 export function postMatch(gameId: number): Promise<Match> | null {

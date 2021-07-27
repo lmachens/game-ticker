@@ -15,6 +15,10 @@ export type Match = {
   highlights: MatchHighlight[];
 };
 
+export type MatchClient = {
+  _id: string;
+} & Omit<Match, '_id'>;
+
 export type Pagination<T> = {
   info: {
     total: number;
@@ -24,4 +28,5 @@ export type Pagination<T> = {
   results: T[];
 };
 
+export type PaginatedMatchesClient = Pagination<MatchClient>;
 export type PaginatedMatches = Pagination<Match>;

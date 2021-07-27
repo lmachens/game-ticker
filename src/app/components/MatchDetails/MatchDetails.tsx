@@ -1,10 +1,10 @@
 import classes from './MatchDetails.module.css';
-import type { Match } from '../../../types';
+import type { MatchClient } from '../../../types';
 import VideoHighlight from '../VideoHighlight/VideoHighlight';
 import useGameInfo from '../../hooks/useGameInfo';
 
 type MatchDetailsProps = {
-  match: Omit<Match, '_id'>;
+  match: MatchClient;
 };
 function MatchDetails({ match }: MatchDetailsProps): JSX.Element {
   const gameInfo = useGameInfo(match.gameId);
