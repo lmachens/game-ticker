@@ -3,7 +3,7 @@ import type { ObjectId } from 'mongodb';
 
 export type MatchHighlight = {
   timestamp: number;
-  type: string;
+  type: string[];
   videoSrc: string;
 };
 
