@@ -27,6 +27,12 @@ app.use(compression());
 // Middleware that parses json and looks at requests where the Content-Type header matches the type option.
 app.use(express.json());
 
+// Middleware to set CORS headers
+app.use((_req, res, next) => {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  next();
+});
+
 // Serve API requests from the router
 app.use('/api', router);
 

@@ -1,7 +1,7 @@
 import { MongoServerError, ObjectId } from 'mongodb';
 import express from 'express';
 import { getMatchesCollection, createMatchesQuery } from './matches';
-import type { Match, MatchHighlight } from '../types';
+import type { Match, MatchHighlight, PaginatedMatches } from '../types';
 
 const router = express.Router();
 
@@ -89,15 +89,6 @@ router.post('/matches/:matchId/highlights', async (request, response, next) => {
     next(error);
   }
 });
-
-type PaginatedMatches = {
-  info: {
-    total: number;
-    itemsPerPage: number;
-    page: number;
-  };
-  results: Match[];
-};
 
 router.get('/matches', async (request, response, next) => {
   try {

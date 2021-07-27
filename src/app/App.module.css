@@ -1,12 +1,27 @@
 .container {
   display: grid;
-  place-items: center;
+  grid-template: auto 1fr / 1fr calc(400px + 2em);
   height: 100vh;
   background: #222;
   color: #fff;
 }
 
-.logo {
-  height: 40vmin;
-  pointer-events: none;
+.header {
+  grid-column: 1 / 3;
+}
+
+.main,
+.aside {
+  padding: 1em;
+}
+
+.main {
+  overflow: auto;
+}
+
+.back {
+  background: none;
+  color: #fff;
+  border: none;
+  margin-bottom: 1em;
 }

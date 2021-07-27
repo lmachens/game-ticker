@@ -14,3 +14,14 @@ export type Match = {
   createdAt: Date;
   highlights: MatchHighlight[];
 };
+
+export type Pagination<T> = {
+  info: {
+    total: number;
+    itemsPerPage: number;
+    page: number;
+  };
+  results: T[];
+};
+
+export type PaginatedMatches = Pagination<Match>;
