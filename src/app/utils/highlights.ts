@@ -1,7 +1,5 @@
-import { Match, MatchHighlight } from '../../types';
-
-const { VITE_PORT } = import.meta.env;
-const baseUrl = `http://localhost:${VITE_PORT}/api`;
+import { Match } from '../../types';
+import { postMatch, postMatchHighlight } from './api';
 
 type ActiveMatch = Match | null;
 
@@ -78,57 +76,6 @@ async function getHighlightsAndTurnOn(classId: number) {
   }
 }
 
-async function postNewMatch(gameId: number): Promise<ActiveMatch> {
-  const username = 'peter123';
-  const data = JSON.stringify({ gameId: gameId, username: username });
-
-  try {
-    const response = await fetch(`${baseUrl}/matches`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: data,
-    });
-    const result = await response.json();
-
-    console.log('postNewMatch', result);
-    return result;
-  } catch (error) {
-    console.log(error);
-    return null;
-  }
-}
-
-async function postNewHighlight({
-  videoSrc,
-  type,
-  timestamp,
-}: MatchHighlight): Promise<ActiveMatch> {
-  if (!activeMatch) return null;
-  const data = JSON.stringify({ videoSrc, type, timestamp });
-
-  try {
-    const response = await fetch(
-      `${baseUrl}/matches/${activeMatch._id}/highlights`,
-      {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: data,
-      }
-    );
-    const result = await response.json();
-
-    console.log('postNewHighlight', result);
-    return result;
-  } catch (error) {
-    console.log(error);
-    return null;
-  }
-}
-
 export function startCaptureHighlights(): void {
   console.log('startCaptureHighlights');
   overwolf.media.replays.onCaptureError.addListener((event) => {
@@ -145,38 +92,53 @@ export function startCaptureHighlights(): void {
   });
   overwolf.media.replays.onHighlightsCaptured.addListener(async (event) => {
     console.log('onHighlightsCaptured', event);
-    const { media_url, events, match_start_time, replay_video_start_time } =
-      event;
-    const timestamp = replay_video_start_time - Number(match_start_time);
+    const {
+      media_url: mediaUrl,
+      events,
+      match_start_time: matchStartTime,
+      replay_video_start_time: replayVideoStartTime,
+    } = event;
+    const timestamp = replayVideoStartTime - Number(matchStartTime);
 
-    const cloudinaryURL = await uploadHighlight({ src: media_url });
-    const updatedMatch = await postNewHighlight({
+    const cloudinaryURL = await uploadHighlight({ src: mediaUrl });
+
+    if (!activeMatch) {
+      const newMatch = await postMatch(event.game_id);
+      activeMatch = newMatch;
+
+      if (!activeMatch) return;
+    }
+
+    const highlight = {
       videoSrc: cloudinaryURL,
-      type: events[0],
+      events: events,
       timestamp: timestamp,
-    });
+    };
+    const updatedMatch = await postMatchHighlight(highlight, activeMatch._id);
+
     activeMatch = updatedMatch;
     console.log('updatedMatch', updatedMatch);
   });
 
-  overwolf.games.onGameLaunched.addListener(async (event) => {
-    console.log('onGameLaunched', event);
-    await getHighlightsAndTurnOn(event.classId);
-    activeMatch = await postNewMatch(event.classId);
+  onGameLaunched(async (classId) => {
+    console.log('onGameLaunched', classId);
+    await getHighlightsAndTurnOn(classId);
+    activeMatch = await postMatch(classId);
 
     console.log('activeMatch', activeMatch);
   });
 
-  overwolf.games.getRunningGameInfo(async (result) => {
-    console.log('check if game is already running', result);
-    if (result) {
-      await getHighlightsAndTurnOn(result.classId);
+  function onGameLaunched(callback: (classId: number) => void): void {
+    overwolf.games.onGameLaunched.addListener(async (event) => {
+      callback(event.classId);
+    });
 
-      if (!activeMatch) {
-        activeMatch = await postNewMatch(result.classId);
+    overwolf.games.getRunningGameInfo(async (event) => {
+      if (event.success) {
+        callback(event.classId);
       }
-    }
-  });
+    });
+  }
 
   overwolf.games.onGameInfoUpdated.addListener(async (event) => {
     console.log('game info changed', event);
