@@ -5,17 +5,6 @@ export const WINDOWS = {
   OVERLAY: 'overlay',
 };
 
-/* export async function getInGamePopUp(): Promise<overwolf.windows.WindowInfo> {
-  return new Promise((resolve, reject) => {
-  overwolf.windows.bringToFront((result) => {
-    if (result.success) {
-      resolve(result.window_id!);
-    } else {
-      reject(result.error);
-    }
-  });
-  })} */
-
 export function getCurrentWindow(): Promise<overwolf.windows.WindowInfo> {
   return new Promise((resolve, reject) => {
     overwolf.windows.getCurrentWindow((result) => {
