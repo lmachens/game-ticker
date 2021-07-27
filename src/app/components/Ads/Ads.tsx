@@ -37,16 +37,15 @@ function Ads(): JSX.Element {
       const currentWindow = await getCurrentWindow();
       if (currentWindow.id !== state.window_id) {
         return;
-      } else {
-        console.log(`Window state changed:' ${JSON.stringify(state)}`);
-        if (state.window_state_ex === 'minimized') {
-          owAd?.removeAd();
-        } else if (
-          state.window_previous_state_ex === 'minimized' &&
-          state.window_state_ex === 'normal'
-        ) {
-          owAd?.refreshAd({});
-        }
+      }
+      console.log(`Window state changed:' ${JSON.stringify(state)}`);
+      if (state.window_state_ex === 'minimized') {
+        owAd?.removeAd();
+      } else if (
+        state.window_previous_state_ex === 'minimized' &&
+        state.window_state_ex === 'normal'
+      ) {
+        owAd?.refreshAd({});
       }
     }
     overwolf.windows.onStateChanged.addListener(onWindowStateChanged);
