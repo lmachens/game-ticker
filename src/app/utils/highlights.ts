@@ -99,7 +99,7 @@ export function startCaptureHighlights(): void {
       match_start_time: matchStartTime,
       replay_video_start_time: replayVideoStartTime,
     } = event;
-    const timestamp = replayVideoStartTime - Number(matchStartTime);
+    const timestamp = replayVideoStartTime - matchStartTime;
 
     const cloudinaryURL = await uploadHighlight({ src: mediaUrl });
 
