@@ -1,8 +1,8 @@
 import { Example } from '../examples';
-import Profile from './Profile';
+import User from './User';
 
-export const StandardProfile: Example = () => (
+export const StandardUser: Example = () => (
   <div style={{ backgroundColor: 'black' }}>
-    <Profile />
+    <User />
   </div>
 );
