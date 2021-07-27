@@ -44,7 +44,7 @@ export function ensureMatchesSchema(): Promise<Document> {
                 timestamp: {
                   bsonType: 'int',
                 },
-                type: {
+                events: {
                   bsonType: 'array',
                   items: {
                     bsonType: 'string',
