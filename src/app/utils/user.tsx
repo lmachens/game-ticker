@@ -38,7 +38,7 @@ export function useCurrentUser(): [Profile | null, string | null] {
   const [profileError, setProfileError] = useState<string | null>(null);
 
   useEffect(() => {
-    const loadUser = async () => {
+    async function loadUser() {
       try {
         const currentUser = await getCurrentUser();
         setProfile(currentUser);
@@ -48,7 +48,7 @@ export function useCurrentUser(): [Profile | null, string | null] {
           setProfileError(error.message);
         }
       }
-    };
+    }
     loadUser();
     overwolf.profile.onLoginStateChanged.addListener(loadUser);
     return () => overwolf.profile.onLoginStateChanged.removeListener(loadUser);
