@@ -16,6 +16,18 @@ export function fetchJSON<T>(
   );
 }
 
+function createPostOptions(data: BodyInit): RequestInit {
+  const postOptions = {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: data,
+  };
+
+  return postOptions;
+}
+
 export async function getMatches(): Promise<PaginatedMatchesClient> {
   const matches = await fetchJSON<PaginatedMatchesClient>('/api/matches');
   matches.results = matches.results.map((match) => ({
@@ -28,15 +40,10 @@ export async function getMatches(): Promise<PaginatedMatchesClient> {
 export async function postMatch(gameId: number): Promise<Match | null> {
   const { username } = (await getCurrentUser()) || { username: 'unknown' };
   const data = JSON.stringify({ gameId, username });
+  const postOptions = createPostOptions(data);
 
   try {
-    return fetchJSON<Match>('/api/matches', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: data,
-    });
+    return fetchJSON<Match>('/api/matches', postOptions);
   } catch (error) {
     console.log(error);
     return null;
@@ -48,15 +55,10 @@ export function postMatchHighlight(
   matchId: Match['_id']
 ): Promise<Match> | null {
   const data = JSON.stringify(highlight);
+  const postOptions = createPostOptions(data);
 
   try {
-    return fetchJSON<Match>(`/api/matches/${matchId}/highlights`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: data,
-    });
+    return fetchJSON<Match>(`/api/matches/${matchId}/highlights`, postOptions);
   } catch (error) {
     console.log(error);
     return null;
