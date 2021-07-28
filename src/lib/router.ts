@@ -1,4 +1,4 @@
-import { MongoServerError, ObjectId } from 'mongodb';
+import { ObjectId } from 'mongodb';
 import express from 'express';
 import { getMatchesCollection, createMatchesQuery } from './matches';
 import type { Match, MatchHighlight, PaginatedMatches } from '../types';
