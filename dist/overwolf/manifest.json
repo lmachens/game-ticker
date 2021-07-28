@@ -13,7 +13,7 @@
     "launcher_icon": "icons/desktopIcon.ico",
     "window_icon": "icons/taskbarIcon.png"
   },
-  "permissions": ["VideoCaptureSettings", "Profile"],
+  "permissions": ["VideoCaptureSettings", "Extensions", "Streaming", "Profile", "GameInfo"],
   "data": {
     "start_window": "background",
     "windows": {
@@ -23,6 +23,9 @@
         "is_background_page": true
       },
       "desktop": {
+        "block_top_window_navigation": true,
+        "popup_blocker": true,
+        "mute": true,
         "file": "build/index.html",
         "debug_url": "http://localhost:3000/index.html",
         "desktop_only": true,
