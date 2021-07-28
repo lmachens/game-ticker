@@ -12,15 +12,11 @@ const User = (): JSX.Element => {
   return (
     <section className={classes.container}>
       <div className={classes.header}>
-        {currentUser?.avatar ? (
-          <img
-            src={currentUser.avatar}
-            className={classes.avatar}
-            alt="overwolf profile avatar"
-          />
-        ) : (
-          defaultAvatar
-        )}
+        <img
+          src={currentUser?.avatar || defaultAvatar}
+          className={classes.avatar}
+          alt="overwolf profile avatar"
+        />
         <h1 className={classes.username}>
           {currentUser?.displayName || currentUser?.username || 'Game Ticker'}
         </h1>

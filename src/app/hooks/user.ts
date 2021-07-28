@@ -2,8 +2,14 @@ import { useEffect, useState } from 'react';
 import { Profile } from '../../types';
 import { getCurrentUser } from '../utils/user';
 
+const defaultUser: Profile = {
+  username: null,
+  displayName: null,
+  avatar: null,
+};
+
 export function useCurrentUser(): [Profile | null, string | null] {
-  const [currentUser, setProfile] = useState<Profile | null>(null);
+  const [currentUser, setProfile] = useState<Profile | null>(defaultUser);
   const [profileError, setProfileError] = useState<string | null>(null);
 
   useEffect(() => {
