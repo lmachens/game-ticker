@@ -18,6 +18,9 @@ function Feed({ onMatchClick }: FeedProps): JSX.Element {
           onClick={() => onMatchClick(match)}
         />
       ))}
+      {matches?.results.length === 0 && (
+        <p className={classes.noMatches}>No matches found</p>
+      )}
     </section>
   );
 }
