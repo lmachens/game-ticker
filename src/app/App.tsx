@@ -2,25 +2,27 @@ import { useState } from 'react';
 import classes from './App.module.css';
 import AppHeader from './components/AppHeader/AppHeader';
 import Feed from './components/Feed/Feed';
-import type { MatchClient } from '../types';
 import MatchDetails from './components/MatchDetails/MatchDetails';
 import User from './components/User/User';
 
 function App(): JSX.Element {
-  const [match, setMatch] = useState<MatchClient | null>(null);
+  const [targetMatchId, setTargetMatchId] = useState<string | null>(null);
   return (
     <div className={classes.container}>
       <AppHeader className={classes.header} />
       <main className={classes.main}>
-        {match ? (
+        {targetMatchId ? (
           <>
-            <button className={classes.back} onClick={() => setMatch(null)}>
+            <button
+              className={classes.back}
+              onClick={() => setTargetMatchId(null)}
+            >
               &lt;- Back to feed
             </button>
-            <MatchDetails match={match} />
+            <MatchDetails matchId={targetMatchId} />
           </>
         ) : (
-          <Feed onMatchClick={setMatch} />
+          <Feed onMatchClick={setTargetMatchId} />
         )}
       </main>
       <aside className={classes.aside}>

@@ -1,4 +1,8 @@
-import { Match, MatchHighlight, PaginatedMatchesClient } from '../../types';
+import {
+  MatchClient,
+  MatchHighlight,
+  PaginatedMatchesClient,
+} from '../../types';
 import { getCurrentUser } from './user';
 
 const { VITE_API_ENDPOINT } = import.meta.env;
@@ -37,13 +41,13 @@ export async function getMatches(): Promise<PaginatedMatchesClient> {
   return matches;
 }
 
-export async function postMatch(gameId: number): Promise<Match | null> {
+export async function postMatch(gameId: number): Promise<MatchClient | null> {
   const { username } = (await getCurrentUser()) || { username: 'unknown' };
   const data = JSON.stringify({ gameId, username });
   const postOptions = createPostOptions(data);
 
   try {
-    return fetchJSON<Match>('/api/matches', postOptions);
+    return fetchJSON<MatchClient>('/api/matches', postOptions);
   } catch (error) {
     console.log(error);
     return null;
@@ -52,15 +56,22 @@ export async function postMatch(gameId: number): Promise<Match | null> {
 
 export function postMatchHighlight(
   highlight: MatchHighlight,
-  matchId: Match['_id']
-): Promise<Match> | null {
+  matchId: MatchClient['_id']
+): Promise<MatchClient> | null {
   const data = JSON.stringify(highlight);
   const postOptions = createPostOptions(data);
 
   try {
-    return fetchJSON<Match>(`/api/matches/${matchId}/highlights`, postOptions);
+    return fetchJSON<MatchClient>(
+      `/api/matches/${matchId}/highlights`,
+      postOptions
+    );
   } catch (error) {
     console.log(error);
     return null;
   }
+}
+
+export function getMatch(matchId: string): Promise<MatchClient> {
+  return fetchJSON<MatchClient>(`/api/matches/${matchId}`);
 }
