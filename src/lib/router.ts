@@ -42,6 +42,12 @@ router.post('/matches', async (request, response, next) => {
 router.get('/matches/:matchId', async (request, response, next) => {
   try {
     const { matchId } = request.params;
+    const matchIdIsInvalid = !ObjectId.isValid(matchId);
+    if (matchIdIsInvalid) {
+      response.status(400).send('Invalid match id');
+      return;
+    }
+
     const matchesCollection = await getMatchesCollection();
     const match = await matchesCollection.findOne({
       _id: new ObjectId(matchId),
