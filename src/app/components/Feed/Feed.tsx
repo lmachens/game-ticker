@@ -36,6 +36,9 @@ function Feed({ onMatchClick }: FeedProps): JSX.Element {
           onClick={() => onMatchClick(match._id)}
         />
       ))}
+      {matches?.results.length === 0 && (
+        <p className={classes.noMatches}>No matches found</p>
+      )}
       <button disabled={!hasMorePages} onClick={() => setPage(page + 1)}>
         Load more
       </button>
