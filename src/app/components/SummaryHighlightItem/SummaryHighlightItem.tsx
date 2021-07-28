@@ -1,10 +1,6 @@
 import classes from './SummaryHighlightItem.module.css';
 
 function formatSeconds(seconds: number): string {
-  if (seconds === 0) {
-    return '00';
-  }
-
   if (seconds < 10) {
     return `0${seconds}`;
   }
