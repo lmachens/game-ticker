@@ -1,38 +1,37 @@
-import classes from './SummaryHighlight.module.css';
+import classes from './SummaryHighlightItem.module.css';
 
-type Options = {
-  hour: 'numeric';
-  minute: 'numeric';
-  second: 'numeric';
-  hour12: boolean;
-  timeZone: string;
-};
-
-function createTimestampOutput(timestamp: string): string {
+/* function createTimestampOutput(
+  timestamp: string | number,
+  options: Options
+): string {
   const date = new Date(Number(timestamp));
-  const options: Options = {
-    hour: 'numeric',
-    minute: 'numeric',
-    second: 'numeric',
-    hour12: false,
-    timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
-  };
   return new Intl.DateTimeFormat('default', options).format(date);
+} */
+
+// timestamp in seconds
+function createTimeString(timestamp: number): string {
+  const duration = Number(timestamp);
+  const minutes = Math.floor((duration % 3600) / 60);
+  const seconds = Math.floor((duration % 3600) % 60);
+
+  const minutesDisplay = minutes > 0 ? minutes : '00';
+  const secondsDisplay = seconds > 0 ? seconds : '00';
+  return `${minutesDisplay}:${secondsDisplay}`;
 }
 
 type summaryHightlightItemProp = {
-  highlights: string[];
-  timestamp: string;
+  events: string[];
+  timestamp: number;
 };
 
 function SummaryHighlightItem({
-  highlights,
+  events,
   timestamp,
 }: summaryHightlightItemProp): JSX.Element {
   return (
     <article className={classes.container}>
-      <p>{highlights.join(', ')}e</p>
-      <p>{createTimestampOutput(timestamp)}</p>
+      <p>{events.join(', ')}</p>
+      <p>{createTimeString(timestamp)}</p>
     </article>
   );
 }
