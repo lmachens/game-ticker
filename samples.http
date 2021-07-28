@@ -77,3 +77,11 @@ GET {{baseUrl}}/matches?username=monaOver9000 HTTP/1.1
 
 ### Return matches based on gameId and username
 GET {{baseUrl}}/matches?gameId=123123&username=lukasOver9000 HTTP/1.1
+
+### Return a single match
+@matchId = {{insertNewMatch.response.body.$._id}}
+
+GET {{baseUrl}}/matches/{{matchId}} HTTP/1.1
+
+### Fails if matchId is invalid
+GET {{baseUrl}}/matches/abc HTTP/1.1
