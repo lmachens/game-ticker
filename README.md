@@ -38,6 +38,7 @@ You can configure the server port by setting the `PORT` environment variable. Cr
 | -------------------------- | -------------------------------------- |
 | PORT                       | Port for the server environment        |
 | MONGODB_URI                | URI for the MongoDB server             |
+| VITE_API_ENDPOINT          | The URL to your api endpoint           |
 | VITE_CLOUDINARY_CLOUD_NAME | Cloudinary cloud name                  |
 | VITE_CLOUDINARY_PRESET     | Cloudinary preset (has to be unsigned) |
 

@@ -4,6 +4,7 @@ import MatchDetails from './MatchDetails';
 export const MatchDetailsLukas: Example = () => (
   <MatchDetails
     match={{
+      _id: '1',
       username: 'LukasOver9000',
       gameId: 7764,
       createdAt: new Date('2021-07-2021'),

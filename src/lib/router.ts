@@ -14,7 +14,7 @@ router.post('/matches', async (request, response, next) => {
       return;
     }
 
-    const match: Match = {
+    const match: Omit<Match, '_id'> = {
       gameId: gameId,
       username: username,
       createdAt: new Date(),

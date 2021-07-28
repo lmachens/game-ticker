@@ -11,3 +11,15 @@ export function getGameDBInfo(
     });
   });
 }
+
+export function onGameLaunched(callback: (classId: number) => void): void {
+  overwolf.games.onGameLaunched.addListener(async (event) => {
+    callback(event.classId);
+  });
+
+  overwolf.games.getRunningGameInfo(async (event) => {
+    if (event.success) {
+      callback(event.classId);
+    }
+  });
+}
