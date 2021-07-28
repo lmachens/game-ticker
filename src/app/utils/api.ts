@@ -37,6 +37,19 @@ export async function getMatches(): Promise<PaginatedMatchesClient> {
   return matches;
 }
 
+export async function getUserMatches(
+  username: Match['username']
+): Promise<PaginatedMatchesClient> {
+  const matches = await fetchJSON<PaginatedMatchesClient>(
+    `/api/matches?username=${username}`
+  );
+  matches.results = matches.results.map((match) => ({
+    ...match,
+    createdAt: new Date(match.createdAt),
+  }));
+  return matches;
+}
+
 export async function postMatch(gameId: number): Promise<Match | null> {
   const { username } = (await getCurrentUser()) || { username: 'unknown' };
   const data = JSON.stringify({ gameId, username });
