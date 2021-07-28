@@ -1,13 +1,19 @@
 import { useEffect, useState } from 'react';
-import { PaginatedMatchesClient } from '../../types';
-import { getMatches } from '../utils/api';
+import { PaginatedMatchesClient, Profile } from '../../types';
+import { getMatches, getUserMatches } from '../utils/api';
 
-function useMatches(): PaginatedMatchesClient | null {
+function useMatches(
+  username?: Profile['username']
+): PaginatedMatchesClient | null {
   const [matches, setMatches] = useState<PaginatedMatchesClient | null>(null);
 
   useEffect(() => {
-    getMatches().then(setMatches);
-  }, []);
+    if (username) {
+      getUserMatches(username).then(setMatches);
+    } else {
+      getMatches().then(setMatches);
+    }
+  }, [username]);
 
   return matches;
 }
