@@ -7,3 +7,5 @@ export * from './MatchItem/MatchItem.examples';
 export * from './Upload/Upload.examples';
 export * from './User/User.example';
 export * from './VideoHighlight/VideoHighlight.examples';
+export * from './SummaryHighlightItem/SummaryHighlightItem.examples';
+export * from './SummaryHighlightsFeed/SummaryHighlightsFeed.examples';
