@@ -1,13 +1,5 @@
 import classes from './SummaryHighlightItem.module.css';
 
-/* function createTimestampOutput(
-  timestamp: string | number,
-  options: Options
-): string {
-  const date = new Date(Number(timestamp));
-  return new Intl.DateTimeFormat('default', options).format(date);
-} */
-
 // timestamp in seconds
 function createTimeString(timestamp: number): string {
   const duration = Number(timestamp);
