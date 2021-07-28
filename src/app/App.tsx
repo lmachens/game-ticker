@@ -5,6 +5,7 @@ import Feed from './components/Feed/Feed';
 import type { MatchClient } from '../types';
 import MatchDetails from './components/MatchDetails/MatchDetails';
 import User from './components/User/User';
+import Ads from './components/Ads/Ads';
 
 function App(): JSX.Element {
   const [match, setMatch] = useState<MatchClient | null>(null);
@@ -25,6 +26,7 @@ function App(): JSX.Element {
       </main>
       <aside className={classes.aside}>
         <User />
+        <Ads />
       </aside>
     </div>
   );
