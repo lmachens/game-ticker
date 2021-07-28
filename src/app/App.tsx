@@ -30,7 +30,7 @@ function App(): JSX.Element {
               &lt;- Back to feed
             </button>
           )}
-          {username && <span>{username}</span>}
+          {username && !match && <span>{username}</span>}
         </header>
         {match ? (
           <MatchDetails match={match} />
