@@ -6,7 +6,7 @@
     "dev": "concurrently \"npm run server:dev\" \"npm run client:dev\"",
     "client:dev": "vite",
     "server:dev": "ts-node-dev --project tsconfig.server.json src/server",
-    "client:build": "vite build",
+    "client:build": "vite build --emptyOutDir",
     "server:build": "tsc --project tsconfig.server.json",
     "build": "npm run server:build && npm run client:build",
     "serve": "vite preview",
