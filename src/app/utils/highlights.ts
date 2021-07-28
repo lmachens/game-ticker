@@ -144,8 +144,8 @@ export function startCaptureHighlights(): void {
 
 async function loadFromLocal(src: string): Promise<Blob> {
   const response = await fetch(src);
-  const blob = await response.blob();
-  return blob;
+  const arrayBuffer = await response.arrayBuffer();
+  return new Blob([arrayBuffer]);
 }
 
 type OnProgressProps = {
