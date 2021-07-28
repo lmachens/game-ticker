@@ -24,7 +24,6 @@
         "allow_local_file_access": true
       },
       "desktop": {
-        "block_top_window_navigation": true,
         "popup_blocker": true,
         "mute": true,
         "file": "build/index.html",
