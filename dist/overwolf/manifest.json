@@ -23,7 +23,6 @@
         "is_background_page": true
       },
       "desktop": {
-        "block_top_window_navigation": true,
         "popup_blocker": true,
         "mute": true,
         "file": "build/index.html",
