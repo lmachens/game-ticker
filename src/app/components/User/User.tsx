@@ -1,3 +1,4 @@
+import { Profile } from '../../../types';
 import { useCurrentUser } from '../../hooks/user';
 import defaultAvatar from './defaultAvatar.svg';
 import classes from './User.module.css';
@@ -6,11 +7,18 @@ function openLoginDialog() {
   overwolf.profile.openLoginDialog();
 }
 
-const User = (): JSX.Element => {
+type UserProps = {
+  onUserClick: (username: Profile['username']) => void;
+};
+
+const User = ({ onUserClick }: UserProps): JSX.Element => {
   const [currentUser, profileError] = useCurrentUser();
 
   return (
-    <section className={classes.container}>
+    <section
+      className={classes.container}
+      onClick={() => (currentUser ? onUserClick(currentUser.username) : null)}
+    >
       <div className={classes.header}>
         {currentUser?.avatar ? (
           <img

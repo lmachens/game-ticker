@@ -19,6 +19,11 @@
   overflow: auto;
 }
 
+.options {
+  display: flex;
+  justify-content: space-between;
+}
+
 .back {
   background: none;
   color: #fff;
