@@ -14,7 +14,7 @@ function createTimeString(timestamp: number): string {
   const minutes = Math.floor((duration % 3600) / 60);
   const seconds = Math.floor((duration % 3600) % 60);
 
-  const minutesDisplay = minutes > 0 ? minutes : '00';
+  const minutesDisplay = minutes > 0 ? minutes : '0';
   const secondsDisplay = seconds > 0 ? seconds : '00';
   return `${minutesDisplay}:${secondsDisplay}`;
 }
