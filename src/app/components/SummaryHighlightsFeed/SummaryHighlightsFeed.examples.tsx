@@ -9,18 +9,23 @@ const highlights: MatchHighlight[] = [
     videoSrc: '',
   },
   {
-    timestamp: 180,
-    events: ['kill', 'assist'],
+    timestamp: 780,
+    events: ['assist'],
     videoSrc: '',
   },
   {
-    timestamp: 360,
+    timestamp: 5365,
     events: ['kill', 'assist'],
     videoSrc: '',
   },
   {
     timestamp: 45,
-    events: ['kill', 'assist'],
+    events: ['kill', 'assist', 'healing'],
+    videoSrc: '',
+  },
+  {
+    timestamp: 179,
+    events: ['assist'],
     videoSrc: '',
   },
 ];

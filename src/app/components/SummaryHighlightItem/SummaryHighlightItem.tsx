@@ -1,17 +1,28 @@
 import classes from './SummaryHighlightItem.module.css';
 
-// timestamp in seconds
-function createTimeString(timestamp: number): string {
+function formatSeconds(seconds: number): string {
+  if (seconds === 0) {
+    return '00';
+  }
+
+  if (seconds < 10) {
+    return `0${seconds}`;
+  }
+
+  return `${seconds}`;
+}
+
+function translateSecondsToTimeString(timestamp: number): string {
   const duration = Number(timestamp);
   const minutes = Math.floor((duration % 3600) / 60);
   const seconds = Math.floor((duration % 3600) % 60);
 
   const minutesDisplay = minutes > 0 ? minutes : '0';
-  const secondsDisplay = seconds > 0 ? seconds : '00';
+  const secondsDisplay = formatSeconds(seconds);
   return `${minutesDisplay}:${secondsDisplay}`;
 }
 
-type summaryHightlightItemProp = {
+type summaryHightlightItemProps = {
   events: string[];
   timestamp: number;
 };
@@ -19,11 +30,11 @@ type summaryHightlightItemProp = {
 function SummaryHighlightItem({
   events,
   timestamp,
-}: summaryHightlightItemProp): JSX.Element {
+}: summaryHightlightItemProps): JSX.Element {
   return (
     <article className={classes.container}>
       <p>{events.join(', ')}</p>
-      <p>{createTimeString(timestamp)}</p>
+      <p>{translateSecondsToTimeString(timestamp)}</p>
     </article>
   );
 }
