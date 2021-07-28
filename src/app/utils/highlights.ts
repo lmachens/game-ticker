@@ -1,8 +1,8 @@
-import { Match } from '../../types';
+import { MatchClient } from '../../types';
 import { postMatch, postMatchHighlight } from './api';
 import { onGameLaunched } from './games';
 
-type ActiveMatch = Match | null;
+type ActiveMatch = MatchClient | null;
 
 let activeMatch: ActiveMatch = null;
 
@@ -101,24 +101,28 @@ export function startCaptureHighlights(): void {
     } = event;
     const timestamp = replayVideoStartTime - matchStartTime;
 
-    const cloudinaryURL = await uploadHighlight({ src: mediaUrl });
+    try {
+      const cloudinaryURL = await uploadHighlight({ src: mediaUrl });
 
-    if (!activeMatch) {
-      const newMatch = await postMatch(event.game_id);
-      activeMatch = newMatch;
+      if (!activeMatch) {
+        const newMatch = await postMatch(event.game_id);
+        activeMatch = newMatch;
 
-      if (!activeMatch) return;
+        if (!activeMatch) return;
+      }
+
+      const highlight = {
+        videoSrc: cloudinaryURL,
+        events: events,
+        timestamp: timestamp,
+      };
+      const updatedMatch = await postMatchHighlight(highlight, activeMatch._id);
+
+      activeMatch = updatedMatch;
+      console.log('updatedMatch', updatedMatch);
+    } catch (error) {
+      console.error(error);
     }
-
-    const highlight = {
-      videoSrc: cloudinaryURL,
-      events: events,
-      timestamp: timestamp,
-    };
-    const updatedMatch = await postMatchHighlight(highlight, activeMatch._id);
-
-    activeMatch = updatedMatch;
-    console.log('updatedMatch', updatedMatch);
   });
 
   onGameLaunched(async (classId) => {

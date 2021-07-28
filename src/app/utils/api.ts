@@ -49,35 +49,25 @@ export async function getMatches({
   return matches;
 }
 
-export async function postMatch(gameId: number): Promise<MatchClient | null> {
+export async function postMatch(gameId: number): Promise<MatchClient> {
   const { username } = (await getCurrentUser()) || { username: 'unknown' };
   const data = JSON.stringify({ gameId, username });
   const postOptions = createPostOptions(data);
 
-  try {
-    return fetchJSON<MatchClient>('/api/matches', postOptions);
-  } catch (error) {
-    console.log(error);
-    return null;
-  }
+  return fetchJSON<MatchClient>('/api/matches', postOptions);
 }
 
 export function postMatchHighlight(
   highlight: MatchHighlight,
   matchId: MatchClient['_id']
-): Promise<MatchClient> | null {
+): Promise<MatchClient> {
   const data = JSON.stringify(highlight);
   const postOptions = createPostOptions(data);
 
-  try {
-    return fetchJSON<MatchClient>(
-      `/api/matches/${matchId}/highlights`,
-      postOptions
-    );
-  } catch (error) {
-    console.log(error);
-    return null;
-  }
+  return fetchJSON<MatchClient>(
+    `/api/matches/${matchId}/highlights`,
+    postOptions
+  );
 }
 
 export function getMatch(matchId: string): Promise<MatchClient> {
