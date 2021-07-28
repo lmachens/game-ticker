@@ -33,9 +33,10 @@ app.use(express.json());
 
 // Middleware to set CORS headers
 app.use((_req, res, next) => {
-  if (process.env.NODE_ENV === 'production') {
-    res.setHeader('Access-Control-Allow-Origin', REQUEST_ORIGIN);
-  }
+  res.setHeader(
+    'Access-Control-Allow-Origin',
+    process.env.NODE_ENV === 'production' ? REQUEST_ORIGIN : '*'
+  );
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
   next();
 });
