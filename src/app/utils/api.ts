@@ -32,8 +32,16 @@ function createPostOptions(data: BodyInit): RequestInit {
   return postOptions;
 }
 
-export async function getMatches(): Promise<PaginatedMatchesClient> {
-  const matches = await fetchJSON<PaginatedMatchesClient>('/api/matches');
+export async function getMatches({
+  page,
+  itemsPerPage,
+}: {
+  page: number;
+  itemsPerPage: number;
+}): Promise<PaginatedMatchesClient> {
+  const matches = await fetchJSON<PaginatedMatchesClient>(
+    `/api/matches?page=${page}&${itemsPerPage}`
+  );
   matches.results = matches.results.map((match) => ({
     ...match,
     createdAt: new Date(match.createdAt),

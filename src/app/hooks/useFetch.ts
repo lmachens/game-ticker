@@ -26,7 +26,9 @@ function useFetch<T extends (...args: any[]) => Promise<any>>(
   const refresh = useCallback(async () => {
     try {
       setErrorMessage(null);
-      await func().then((a) => setData(a));
+      await func().then((result) => {
+        setData(result);
+      });
     } catch (error) {
       console.error(error);
       setErrorMessage(error.message || 'An error occurred');
@@ -44,7 +46,7 @@ function useFetch<T extends (...args: any[]) => Promise<any>>(
     if (!refreshInterval) {
       return;
     }
-    const intervalId = setInterval(func, refreshInterval);
+    const intervalId = setInterval(refresh, refreshInterval);
 
     return () => {
       clearInterval(intervalId);
