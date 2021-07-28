@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
-import { PaginatedMatches } from '../../types';
+import { PaginatedMatchesClient } from '../../types';
 import { getMatches } from '../utils/api';
 
-function useMatches(): PaginatedMatches | null {
-  const [matches, setMatches] = useState<PaginatedMatches | null>(null);
+function useMatches(): PaginatedMatchesClient | null {
+  const [matches, setMatches] = useState<PaginatedMatchesClient | null>(null);
 
   useEffect(() => {
     getMatches().then(setMatches);

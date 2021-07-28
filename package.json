@@ -15,7 +15,7 @@
     "start": "node dist/server/server.js"
   },
   "devDependencies": {
-    "@overwolf/types": "^3.1.0",
+    "@overwolf/types": "3.3.0",
     "@types/compression": "^1.7.1",
     "@types/express": "^4.17.13",
     "@types/node": "^16.3.1",

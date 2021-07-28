@@ -2,12 +2,12 @@ import { useState } from 'react';
 import classes from './App.module.css';
 import AppHeader from './components/AppHeader/AppHeader';
 import Feed from './components/Feed/Feed';
-import type { Match } from '../types';
+import type { MatchClient } from '../types';
 import MatchDetails from './components/MatchDetails/MatchDetails';
 import User from './components/User/User';
 
 function App(): JSX.Element {
-  const [match, setMatch] = useState<Match | null>(null);
+  const [match, setMatch] = useState<MatchClient | null>(null);
   return (
     <div className={classes.container}>
       <AppHeader className={classes.header} />

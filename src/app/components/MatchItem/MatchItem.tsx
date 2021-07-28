@@ -1,9 +1,9 @@
-import { Match } from '../../../types';
+import { MatchClient } from '../../../types';
 import useGameInfo from '../../hooks/useGameInfo';
 import classes from './MatchItem.module.css';
 
 type MatchItemProps = {
-  match: Match;
+  match: MatchClient;
   onClick?: () => void;
 };
 function MatchItem({ match, onClick }: MatchItemProps): JSX.Element {

@@ -8,12 +8,16 @@ export type MatchHighlight = {
 };
 
 export type Match = {
-  _id?: ObjectId;
+  _id: ObjectId;
   gameId: number;
   username: string;
   createdAt: Date;
   highlights: MatchHighlight[];
 };
+
+export type MatchClient = {
+  _id: string;
+} & Omit<Match, '_id'>;
 
 export type Pagination<T> = {
   info: {
@@ -24,6 +28,7 @@ export type Pagination<T> = {
   results: T[];
 };
 
+export type PaginatedMatchesClient = Pagination<MatchClient>;
 export type PaginatedMatches = Pagination<Match>;
 
 export type Profile = {

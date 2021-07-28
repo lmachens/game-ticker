@@ -20,10 +20,10 @@
       "background": {
         "file": "build/background.html",
         "debug_url": "http://localhost:3000/background.html",
-        "is_background_page": true
+        "is_background_page": true,
+        "allow_local_file_access": true
       },
       "desktop": {
-        "block_top_window_navigation": true,
         "popup_blocker": true,
         "mute": true,
         "file": "build/index.html",
