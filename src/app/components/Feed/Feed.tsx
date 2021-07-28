@@ -13,7 +13,7 @@ function Feed({ onMatchClick }: FeedProps): JSX.Element {
     <section className={classes.container}>
       {matches?.results.map((match) => (
         <MatchItem
-          key={match._id!.toString()}
+          key={match._id}
           match={match}
           onClick={() => onMatchClick(match)}
         />
