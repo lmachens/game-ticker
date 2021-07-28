@@ -1,6 +1,6 @@
 import { useCurrentUser } from '../../hooks/user';
 import defaultAvatar from './defaultAvatar.svg';
-import classes from './Profile.module.css';
+import classes from './User.module.css';
 
 function openLoginDialog() {
   overwolf.profile.openLoginDialog();
