@@ -7,7 +7,7 @@ function openLoginDialog() {
 }
 
 const User = (): JSX.Element => {
-  const [currentUser, profileError] = useCurrentUser();
+  const { currentUser, errorMessage } = useCurrentUser();
 
   return (
     <section className={classes.container}>
@@ -27,7 +27,7 @@ const User = (): JSX.Element => {
           <button onClick={openLoginDialog}>Login</button>
         </aside>
       )}
-      {profileError && <aside className={classes.error}>{profileError}</aside>}
+      {errorMessage && <aside className={classes.error}>{errorMessage}</aside>}
     </section>
   );
 };

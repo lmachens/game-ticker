@@ -8,21 +8,24 @@ const defaultUser: Profile = {
   avatar: null,
 };
 
-export function useCurrentUser(): [Profile | null, string | null] {
+export function useCurrentUser(): {
+  currentUser: Profile | null;
+  errorMessage: string | null;
+} {
   const [currentUser, setCurrentUser] = useState<Profile | null>(defaultUser);
-  const [profileError, setProfileError] = useState<string | null>(null);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   useEffect(() => {
     async function loadUser() {
       try {
+        setErrorMessage(null);
         const currentUser = await getCurrentUser();
         setCurrentUser(currentUser);
-        setProfileError(null);
       } catch (error) {
         console.error(error);
         if (error instanceof Error) {
           setCurrentUser(defaultUser);
-          setProfileError(error.message);
+          setErrorMessage(error.message);
         }
       }
     }
@@ -31,5 +34,5 @@ export function useCurrentUser(): [Profile | null, string | null] {
     return () => overwolf.profile.onLoginStateChanged.removeListener(loadUser);
   }, []);
 
-  return [currentUser, profileError];
+  return { currentUser, errorMessage };
 }
