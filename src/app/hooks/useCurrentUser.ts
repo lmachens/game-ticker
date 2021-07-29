@@ -9,17 +9,19 @@ const defaultUser: Profile = {
 };
 
 export function useCurrentUser(): [Profile | null, string | null] {
-  const [currentUser, setProfile] = useState<Profile | null>(defaultUser);
+  const [currentUser, setCurrentUser] = useState<Profile | null>(defaultUser);
   const [profileError, setProfileError] = useState<string | null>(null);
 
   useEffect(() => {
     async function loadUser() {
       try {
         const currentUser = await getCurrentUser();
-        setProfile(currentUser);
+        setCurrentUser(currentUser);
+        setProfileError(null);
       } catch (error) {
         console.error(error);
         if (error instanceof Error) {
+          setCurrentUser(defaultUser);
           setProfileError(error.message);
         }
       }

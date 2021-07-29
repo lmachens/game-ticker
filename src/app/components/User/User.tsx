@@ -1,4 +1,4 @@
-import { useCurrentUser } from '../../hooks/useUser';
+import { useCurrentUser } from '../../hooks/useCurrentUser';
 import defaultAvatar from './defaultAvatar.svg';
 import classes from './User.module.css';
 
