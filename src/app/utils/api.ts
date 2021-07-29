@@ -1,6 +1,7 @@
 import {
   MatchClient,
   MatchHighlight,
+  MatchHighlightClient,
   PaginatedMatchesClient,
 } from '../../types';
 import { getCurrentUser } from './user';
@@ -57,19 +58,15 @@ export async function postMatch(gameId: number): Promise<MatchClient> {
   return fetchJSON<MatchClient>('/api/matches', postOptions);
 }
 
-export function postMatchHighlight(
-  highlight: MatchHighlight,
-  matchId: MatchClient['_id']
-): Promise<MatchClient> {
+export function getMatch(matchId: string): Promise<MatchClient> {
+  return fetchJSON<MatchClient>(`/api/matches/${matchId}`);
+}
+
+export async function postHighlight(
+  highlight: Omit<MatchHighlightClient, '_id'>
+): Promise<MatchHighlightClient> {
   const data = JSON.stringify(highlight);
   const postOptions = createPostOptions(data);
 
-  return fetchJSON<MatchClient>(
-    `/api/matches/${matchId}/highlights`,
-    postOptions
-  );
-}
-
-export function getMatch(matchId: string): Promise<MatchClient> {
-  return fetchJSON<MatchClient>(`/api/matches/${matchId}`);
+  return fetchJSON<MatchHighlightClient>('/api/highlights', postOptions);
 }

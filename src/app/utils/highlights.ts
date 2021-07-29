@@ -1,5 +1,5 @@
 import { MatchClient } from '../../types';
-import { postMatch, postMatchHighlight } from './api';
+import { postHighlight, postMatch } from './api';
 import { onGameLaunched } from './games';
 
 type ActiveMatch = MatchClient | null;
@@ -112,14 +112,15 @@ export function startCaptureHighlights(): void {
       }
 
       const highlight = {
+        matchId: activeMatch._id,
         videoSrc: cloudinaryURL,
         events: events,
         timestamp: timestamp,
       };
-      const updatedMatch = await postMatchHighlight(highlight, activeMatch._id);
 
-      activeMatch = updatedMatch;
-      console.log('updatedMatch', updatedMatch);
+      const createdHighlight = await postHighlight(highlight);
+
+      console.log('createdHighlight', createdHighlight);
     } catch (error) {
       console.error(error);
     }
