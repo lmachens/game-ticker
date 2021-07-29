@@ -2,7 +2,7 @@ import { classNames } from '../../utils/styles';
 import classes from './SVG.module.css';
 
 export type SVGProps = {
-  children?: JSX.Element;
+  children: JSX.Element;
   className?: string;
   disabled?: boolean;
   selected?: boolean;

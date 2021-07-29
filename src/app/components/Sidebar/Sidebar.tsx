@@ -1,10 +1,6 @@
 import { classNames } from '../../utils/styles';
-
-import Settings from '../Icons/Settings';
-import Info from '../Icons/Info';
-import Home from '../Icons/Home';
-import Favorites from '../Icons/Favorites';
 import classes from './Sidebar.module.css';
+import { Settings, Info, Home, Favorites } from '../Icons';
 
 function Sidebar(): JSX.Element {
   return (

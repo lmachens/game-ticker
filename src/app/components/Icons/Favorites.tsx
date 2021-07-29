@@ -1,6 +1,6 @@
-import SVG, { SVGProps } from './SVG';
+import SVG, { SVGProps } from '../SVG/SVG';
 
-function IconFavorites(props: SVGProps): JSX.Element {
+function IconFavorites(props: Omit<SVGProps, 'children'>): JSX.Element {
   return (
     <SVG {...props}>
       <>

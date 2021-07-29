@@ -1,6 +1,6 @@
-import SVG, { SVGProps } from './SVG';
+import SVG, { SVGProps } from '../SVG/SVG';
 
-function IconInfo(props: SVGProps): JSX.Element {
+function IconInfo(props: Omit<SVGProps, 'children'>): JSX.Element {
   return (
     <SVG {...props}>
       <>
