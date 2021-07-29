@@ -15,6 +15,7 @@ const User = (): JSX.Element => {
         <img
           src={currentUser?.avatar || defaultAvatar}
           className={classes.avatar}
+          alt=""
         />
         <h1 className={classes.username}>
           {currentUser?.displayName || currentUser?.username || 'Game Ticker'}
