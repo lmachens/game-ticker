@@ -13,13 +13,29 @@ export function getGameDBInfo(
 }
 
 export function onGameLaunched(callback: (classId: number) => void): void {
-  overwolf.games.onGameLaunched.addListener(async (event) => {
-    callback(event.classId);
+  overwolf.games.onGameLaunched.addListener(async (result) => {
+    callback(result.classId);
   });
 
-  overwolf.games.getRunningGameInfo(async (event) => {
-    if (event.success) {
-      callback(event.classId);
+  overwolf.games.getRunningGameInfo(async (result) => {
+    if (result?.success) {
+      callback(result.classId);
+    }
+  });
+}
+
+export function isIngame(): Promise<boolean> {
+  return new Promise((resolve) => {
+    overwolf.games.getRunningGameInfo((result) => {
+      resolve(Boolean(result?.success));
+    });
+  });
+}
+
+export function onGameTerminated(callback: (classId: number) => void): void {
+  overwolf.games.onGameInfoUpdated.addListener(async (event) => {
+    if (event.gameInfo && event.runningChanged && !event.gameInfo.isRunning) {
+      callback(event.gameInfo.classId);
     }
   });
 }

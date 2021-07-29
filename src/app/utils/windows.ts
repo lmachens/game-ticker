@@ -2,6 +2,7 @@ export const WINDOWS = {
   DESKTOP: 'desktop',
   BACKGROUND: 'background',
   DEVELOPMENT: 'development',
+  OVERLAY: 'overlay',
 };
 
 export function getCurrentWindow(): Promise<overwolf.windows.WindowInfo> {
@@ -40,9 +41,13 @@ export async function minimizeWindow(): Promise<void> {
   overwolf.windows.minimize(currentWindow.id);
 }
 
-export async function closeMainWindow(): Promise<void> {
-  const backgroundWindow = await obtainDeclaredWindow(WINDOWS.BACKGROUND);
+export async function closeWindow(windowName: string): Promise<void> {
+  const backgroundWindow = await obtainDeclaredWindow(windowName);
   overwolf.windows.close(backgroundWindow.id);
+}
+
+export async function closeMainWindow(): Promise<void> {
+  return closeWindow(WINDOWS.BACKGROUND);
 }
 
 export async function restoreWindow(windowName: string): Promise<string> {
@@ -56,4 +61,14 @@ export async function restoreWindow(windowName: string): Promise<string> {
       }
     })
   );
+}
+
+export function toggleWindow(windowName: string): void {
+  overwolf.windows.obtainDeclaredWindow(windowName, (result) => {
+    if (['normal', 'maximized'].includes(result.window.stateEx)) {
+      overwolf.windows.hide(result.window.id);
+    } else {
+      restoreWindow(result.window.id);
+    }
+  });
 }
