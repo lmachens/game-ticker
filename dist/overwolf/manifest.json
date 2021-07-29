@@ -13,7 +13,13 @@
     "launcher_icon": "icons/desktopIcon.ico",
     "window_icon": "icons/taskbarIcon.png"
   },
-  "permissions": ["VideoCaptureSettings", "Extensions", "Streaming", "Profile", "GameInfo"],
+  "permissions": [
+    "VideoCaptureSettings",
+    "Extensions",
+    "Streaming",
+    "Profile",
+    "GameInfo"
+  ],
   "data": {
     "start_window": "background",
     "windows": {
@@ -65,12 +71,10 @@
       }
     },
     "game_targeting": {
-      "type": "dedicated",
-      "game_ids": []
+      "type": "all"
     },
     "game_events": [],
     "launch_events": [],
-    "hotkeys": {},
     "protocol_override_domains": {
       "googlesyndication": "http"
     },
