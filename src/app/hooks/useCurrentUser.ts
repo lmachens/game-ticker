@@ -8,7 +8,7 @@ const defaultUser: Profile = {
   avatar: null,
 };
 
-export function useCurrentUser(): {
+function useCurrentUser(): {
   currentUser: Profile | null;
   errorMessage: string | null;
 } {
@@ -36,3 +36,5 @@ export function useCurrentUser(): {
 
   return { currentUser, errorMessage };
 }
+
+export default useCurrentUser;
