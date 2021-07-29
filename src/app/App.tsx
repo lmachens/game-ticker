@@ -9,7 +9,7 @@ import Ads from './components/Ads/Ads';
 
 function App(): JSX.Element {
   const [targetMatchId, setTargetMatchId] = useState<string | null>(null);
-  const [username, setUsername] = useState<Profile['username']>(null);
+  const [username, setUsername] = useState<Profile['username'] | null>(null);
 
   function handleBackToFeedClick() {
     setTargetMatchId(null);
