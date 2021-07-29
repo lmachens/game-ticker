@@ -1,3 +1,7 @@
+button {
+  cursor: pointer;
+}
+
 .flex {
   display: flex;
   flex-direction: column;
@@ -24,6 +28,49 @@
   fill: url(#occtyGradient);
 }
 
-button:disabled .icon {
+.selected .icon {
+  fill: url(#occtyGradient);
+}
+
+.disabled .icon {
   fill: #2b2b2d;
+}
+
+.disabled {
+  position: relative;
+  cursor: default;
+}
+
+.disabled::after,
+.disabled::before {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  display: none;
+  z-index: 10;
+}
+
+.disabled::after {
+  content: attr(data-tooltip);
+  width: max-content;
+  height: 75%;
+  background-color: #2b2b2d;
+  padding: 0.5rem;
+  left: 100%;
+  border-radius: 5%;
+}
+
+.disabled::before {
+  content: '';
+  width: 0.5rem;
+  height: 0.5rem;
+  border-right: 0.5rem solid #2b2b2d;
+  border-bottom: 0.25rem solid transparent;
+  border-top: 0.25rem solid transparent;
+  left: calc(100% - 0.5rem);
+}
+
+.disabled:hover::after,
+.disabled:hover::before {
+  display: block;
 }
