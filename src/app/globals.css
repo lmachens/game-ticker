@@ -9,10 +9,10 @@
   --color-primary: #68fe9c;
   --color-secondary: #e2e2e2;
   --color-shade-first: #060606;
-  --color-shade-second: #1b1f24;
-  --color-shade-third: #23272c;
-  --color-shade-fourth: #393d43;
-  --color-shade-fifth: #585d64;
+  --color-shade-second: rgb(27, 31, 36, 0.4);
+  --color-shade-third: rgb(27, 31, 36, 0.4);
+  --color-shade-fourth: rgb(27, 31, 36, 0.4);
+  --color-shade-fifth: rgb(27, 31, 36, 0.4);
   --color-alert: #b61313;
 
   /* Fonts */
@@ -34,6 +34,7 @@ body {
   font-family: var(--font-family-primary);
   background: var(--color-shade-first);
   color: var(--color-secondary);
+  background-image: url('backgroundimage.jpg');
 }
 
 a {

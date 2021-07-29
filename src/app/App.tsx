@@ -9,27 +9,30 @@ import Ads from './components/Ads/Ads';
 function App(): JSX.Element {
   const [targetMatchId, setTargetMatchId] = useState<string | null>(null);
   return (
-    <div className={classes.container}>
-      <AppHeader className={classes.header} />
-      <main className={classes.main}>
-        {targetMatchId ? (
-          <>
-            <button
-              className={classes.back}
-              onClick={() => setTargetMatchId(null)}
-            >
-              &lt;- Back to feed
-            </button>
-            <MatchDetails matchId={targetMatchId} />
-          </>
-        ) : (
-          <Feed onMatchClick={setTargetMatchId} />
-        )}
-      </main>
-      <aside className={classes.aside}>
-        <User />
-        <Ads />
-      </aside>
+    <div>
+      <div className={classes.container}>
+        <AppHeader className={classes.header} />
+
+        <main className={classes.main}>
+          {targetMatchId ? (
+            <>
+              <button
+                className={classes.back}
+                onClick={() => setTargetMatchId(null)}
+              >
+                &lt;- Back to feed
+              </button>
+              <MatchDetails matchId={targetMatchId} />
+            </>
+          ) : (
+            <Feed onMatchClick={setTargetMatchId} />
+          )}
+        </main>
+        <aside className={classes.aside}>
+          <User />
+          <Ads />
+        </aside>
+      </div>
     </div>
   );
 }
