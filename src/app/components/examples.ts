@@ -9,3 +9,4 @@ export * from './User/User.example';
 export * from './VideoHighlight/VideoHighlight.examples';
 export * from './SummaryHighlightItem/SummaryHighlightItem.examples';
 export * from './SummaryHighlightsFeed/SummaryHighlightsFeed.examples';
+export * from './FeedFilter/FeedFilter.examples';
