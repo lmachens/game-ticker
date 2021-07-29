@@ -1,3 +1,11 @@
+import { MatchClient } from '../../types';
+import { postMatch, postMatchHighlight } from './api';
+import { onGameLaunched } from './games';
+
+type ActiveMatch = MatchClient | null;
+
+let activeMatch: ActiveMatch = null;
+
 export function getHighlightsFeatures(id: number): Promise<string[]> {
   return new Promise((resolve, reject) => {
     overwolf.media.replays.getHighlightsFeatures(id, (event) => {
@@ -83,26 +91,53 @@ export function startCaptureHighlights(): void {
   overwolf.media.replays.onReplayServicesStarted.addListener((event) => {
     console.log('onReplayServicesStarted', event);
   });
-  overwolf.media.replays.onHighlightsCaptured.addListener((event) => {
+  overwolf.media.replays.onHighlightsCaptured.addListener(async (event) => {
     console.log('onHighlightsCaptured', event);
-  });
+    const {
+      media_url: mediaUrl,
+      events,
+      match_start_time: matchStartTime,
+      replay_video_start_time: replayVideoStartTime,
+    } = event;
+    const timestamp = replayVideoStartTime - matchStartTime;
 
-  overwolf.games.onGameLaunched.addListener(async (event) => {
-    console.log('onGameLaunched', event);
-    await getHighlightsAndTurnOn(event.classId);
-  });
+    try {
+      const cloudinaryURL = await uploadHighlight({ src: mediaUrl });
 
-  overwolf.games.getRunningGameInfo(async (result) => {
-    console.log('check if game is already running', result);
-    if (result) {
-      await getHighlightsAndTurnOn(result.classId);
+      if (!activeMatch) {
+        const newMatch = await postMatch(event.game_id);
+        activeMatch = newMatch;
+
+        if (!activeMatch) return;
+      }
+
+      const highlight = {
+        videoSrc: cloudinaryURL,
+        events: events,
+        timestamp: timestamp,
+      };
+      const updatedMatch = await postMatchHighlight(highlight, activeMatch._id);
+
+      activeMatch = updatedMatch;
+      console.log('updatedMatch', updatedMatch);
+    } catch (error) {
+      console.error(error);
     }
+  });
+
+  onGameLaunched(async (classId) => {
+    console.log('onGameLaunched', classId);
+    await getHighlightsAndTurnOn(classId);
+    activeMatch = await postMatch(classId);
+
+    console.log('activeMatch', activeMatch);
   });
 
   overwolf.games.onGameInfoUpdated.addListener(async (event) => {
     console.log('game info changed', event);
     if (event.runningChanged && !event.gameInfo!.isRunning) {
       await turnOffReplayIfOn();
+      activeMatch = null;
     }
   });
 }
@@ -122,7 +157,7 @@ type OnProgress = ({ loaded, total }: OnProgressProps) => void;
 
 type UploadToCloudinaryProps = {
   file: Blob;
-  onProgress: OnProgress;
+  onProgress?: OnProgress;
 };
 
 const { VITE_CLOUDINARY_PRESET, VITE_CLOUDINARY_CLOUD_NAME } = import.meta.env;
@@ -158,12 +193,14 @@ const uploadToCloudinary = async ({
       reject(xhr.statusText);
     };
 
-    xhr.upload.onprogress = (event) => {
-      onProgress({
-        loaded: event.loaded,
-        total: event.total,
-      });
-    };
+    if (onProgress) {
+      xhr.upload.onprogress = (event) => {
+        onProgress({
+          loaded: event.loaded,
+          total: event.total,
+        });
+      };
+    }
 
     xhr.open(
       'POST',
@@ -177,7 +214,7 @@ const uploadToCloudinary = async ({
 
 type UploadHighlightProps = {
   src: string;
-  onProgress: OnProgress;
+  onProgress?: OnProgress;
 };
 export async function uploadHighlight({
   src,

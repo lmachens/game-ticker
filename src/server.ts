@@ -8,7 +8,7 @@ import router from './lib/router';
 import helmet from 'helmet';
 import { ensureMatchesIndexes, ensureMatchesSchema } from './lib/matches';
 
-const { PORT, MONGODB_URI } = process.env;
+const { PORT, MONGODB_URI, REQUEST_ORIGIN } = process.env;
 
 if (typeof PORT !== 'string') {
   throw new Error('PORT is not set');
@@ -16,6 +16,10 @@ if (typeof PORT !== 'string') {
 
 if (typeof MONGODB_URI !== 'string') {
   throw new Error('MONGODB_URI is not set');
+}
+
+if (typeof REQUEST_ORIGIN !== 'string') {
+  throw new Error('REQUEST_ORIGIN is not set');
 }
 
 const app = express();
@@ -26,6 +30,16 @@ app.use(compression());
 
 // Middleware that parses json and looks at requests where the Content-Type header matches the type option.
 app.use(express.json());
+
+// Middleware to set CORS headers
+app.use((_req, res, next) => {
+  res.setHeader(
+    'Access-Control-Allow-Origin',
+    process.env.NODE_ENV === 'production' ? REQUEST_ORIGIN : '*'
+  );
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+  next();
+});
 
 // Serve API requests from the router
 app.use('/api', router);

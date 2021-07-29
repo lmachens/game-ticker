@@ -4,16 +4,50 @@
   box-sizing: border-box;
 }
 
+:root {
+  /* Colors */
+  --color-primary: #68fe9c;
+  --color-secondary: #e2e2e2;
+  --color-shade-first: #060606;
+  --color-shade-second: #1b1f24;
+  --color-shade-third: #23272c;
+  --color-shade-fourth: #393d43;
+  --color-shade-fifth: #585d64;
+  --color-alert: #b61313;
+
+  /* Fonts */
+  --font-size: 115%;
+  --font-family-primary: 'Roboto', sans-serif;
+  --font-family-secondary: 'Lato', sans-serif;
+
+  /* Misc */
+  --border-radius-primary: 1em;
+  --border-radius-secondary: 0.2em;
+}
+
+html {
+  font-size: var(--font-size);
+}
+
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  font-family: var(--font-family-primary);
+  background: var(--color-shade-first);
+  color: var(--color-secondary);
 }
 
 a {
   color: inherit;
   text-decoration: none;
+}
+
+button {
+  background-color: var(--color-primary);
+  color: var(--color-shade-first);
+  border: none;
+  padding: 0.5em 1em;
+}
+
+p {
+  margin: 0;
 }

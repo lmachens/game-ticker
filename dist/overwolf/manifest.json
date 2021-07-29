@@ -13,16 +13,19 @@
     "launcher_icon": "icons/desktopIcon.ico",
     "window_icon": "icons/taskbarIcon.png"
   },
-  "permissions": ["VideoCaptureSettings"],
+  "permissions": ["VideoCaptureSettings", "Extensions", "Streaming", "Profile", "GameInfo"],
   "data": {
     "start_window": "background",
     "windows": {
       "background": {
         "file": "build/background.html",
         "debug_url": "http://localhost:3000/background.html",
-        "is_background_page": true
+        "is_background_page": true,
+        "allow_local_file_access": true
       },
       "desktop": {
+        "popup_blocker": true,
+        "mute": true,
         "file": "build/index.html",
         "debug_url": "http://localhost:3000/index.html",
         "desktop_only": true,

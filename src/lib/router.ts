@@ -1,11 +1,7 @@
-import { MongoServerError, ObjectId } from 'mongodb';
+import { ObjectId } from 'mongodb';
 import express from 'express';
-import {
-  getMatchesCollection,
-  MatchHighlight,
-  Match,
-  createMatchesQuery,
-} from './matches';
+import { getMatchesCollection, createMatchesQuery } from './matches';
+import type { Match, MatchHighlight, PaginatedMatches } from '../types';
 
 const router = express.Router();
 
@@ -18,7 +14,7 @@ router.post('/matches', async (request, response, next) => {
       return;
     }
 
-    const match: Match = {
+    const match: Omit<Match, '_id'> = {
       gameId: gameId,
       username: username,
       createdAt: new Date(),
@@ -33,24 +29,42 @@ router.post('/matches', async (request, response, next) => {
     }
     response.status(200).json(match);
   } catch (error) {
-    if (error instanceof MongoServerError) {
-      console.error(error);
-      response.setHeader('Content-Type', 'plain/text');
-      response.status(500).send(error.message);
+    next(error);
+  }
+});
+
+router.get('/matches/:matchId', async (request, response, next) => {
+  try {
+    const { matchId } = request.params;
+    const matchIdIsInvalid = !ObjectId.isValid(matchId);
+    if (matchIdIsInvalid) {
+      response.status(400).send('Invalid match id');
       return;
     }
+
+    const matchesCollection = await getMatchesCollection();
+    const match = await matchesCollection.findOne({
+      _id: new ObjectId(matchId),
+    });
+    if (!match) {
+      response.status(404).send('Match not found');
+      return;
+    }
+    response.status(200).json(match);
+  } catch (error) {
     next(error);
   }
 });
 
 router.post('/matches/:matchId/highlights', async (request, response, next) => {
   try {
-    const { timestamp, type, videoSrc } = request.body;
+    const { timestamp, events, videoSrc } = request.body;
     const { matchId } = request.params;
     const matchIdIsInvalid = !ObjectId.isValid(matchId);
     const requestIsInvalid =
       typeof timestamp !== 'number' ||
-      typeof type !== 'string' ||
+      !Array.isArray(events) ||
+      !events.every((event) => typeof event === 'string') ||
       typeof videoSrc !== 'string';
 
     if (matchIdIsInvalid) {
@@ -65,7 +79,7 @@ router.post('/matches/:matchId/highlights', async (request, response, next) => {
 
     const highlight: MatchHighlight = {
       timestamp,
-      type,
+      events,
       videoSrc,
     };
 
@@ -83,24 +97,9 @@ router.post('/matches/:matchId/highlights', async (request, response, next) => {
     }
     response.status(200).json(updatedMatch);
   } catch (error) {
-    if (error instanceof MongoServerError) {
-      console.error(error);
-      response.setHeader('Content-Type', 'plain/text');
-      response.status(500).send(error.message);
-      return;
-    }
     next(error);
   }
 });
-
-type PaginatedMatches = {
-  info: {
-    total: number;
-    itemsPerPage: number;
-    page: number;
-  };
-  results: Match[];
-};
 
 router.get('/matches', async (request, response, next) => {
   try {

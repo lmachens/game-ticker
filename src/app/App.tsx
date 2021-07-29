@@ -1,22 +1,35 @@
-import logo from './logo.svg';
-import styles from './App.module.css';
-import Welcome from './components/Welcome/Welcome';
+import { useState } from 'react';
+import classes from './App.module.css';
+import AppHeader from './components/AppHeader/AppHeader';
+import Feed from './components/Feed/Feed';
+import MatchDetails from './components/MatchDetails/MatchDetails';
+import User from './components/User/User';
+import Ads from './components/Ads/Ads';
 
 function App(): JSX.Element {
+  const [targetMatchId, setTargetMatchId] = useState<string | null>(null);
   return (
-    <div className={styles.container}>
-      <img src={logo} className={styles.logo} alt="logo" />
-      <Welcome />
-      <p>Something great will happen here!</p>
-      <button
-        onClick={() =>
-          overwolf.windows.getCurrentWindow((result) => {
-            overwolf.windows.close(result.window.id);
-          })
-        }
-      >
-        Close
-      </button>
+    <div className={classes.container}>
+      <AppHeader className={classes.header} />
+      <main className={classes.main}>
+        {targetMatchId ? (
+          <>
+            <button
+              className={classes.back}
+              onClick={() => setTargetMatchId(null)}
+            >
+              &lt;- Back to feed
+            </button>
+            <MatchDetails matchId={targetMatchId} />
+          </>
+        ) : (
+          <Feed onMatchClick={setTargetMatchId} />
+        )}
+      </main>
+      <aside className={classes.aside}>
+        <User />
+        <Ads />
+      </aside>
     </div>
   );
 }
