@@ -1,9 +1,8 @@
 .container {
   composes: grid-column-space-between from '../../utils.module.css';
-  background: var(--color-shade-fourth);
-  color: var(--color-secondary);
+  background: #c4c4c4;
+  color: black;
   padding: 1em;
-  border-radius: var(--border-radius-secondary);
 }
 
 .container + .container {

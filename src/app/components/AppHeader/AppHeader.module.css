@@ -3,32 +3,30 @@
   grid-auto-flow: column;
   grid-template-columns: 1fr;
   align-items: center;
-  background-color: #161326;
-  color: #eee;
-  padding-left: 0.5em;
-  font-size: 1rem;
+  color: var(--color-secondary);
+  background-color: var(--color-shade-first);
+  border-bottom: 1px solid var(--color-shade-fourth);
 }
 
 .title {
   margin: 0;
-  font-size: 1em;
+  padding: 0.2em 0.5em;
+  font-size: 0.8em;
 }
 
 .button {
   background: none;
-  border: none;
   height: 2em;
   width: 2em;
-  color: #958fb2;
+  color: var(--color-secondary);
   padding: 0.6em;
   transition: all 0.2s;
 }
 
 .button:hover {
-  background-color: #ffffff3b;
-  color: #fff;
+  background-color: var(--color-shade-third);
 }
 
 .button--danger:hover {
-  background-color: #b61313;
+  background-color: var(--color-alert);
 }

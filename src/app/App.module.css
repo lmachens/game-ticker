@@ -2,8 +2,6 @@
   display: grid;
   grid-template: auto 1fr / 1fr calc(400px + 2em);
   height: 100vh;
-  background: #222;
-  color: #fff;
 }
 
 .header {
@@ -17,6 +15,13 @@
 
 .main {
   overflow: auto;
+  background-color: var(--color-shade-third);
+}
+
+.aside {
+  display: grid;
+  align-content: space-between;
+  background-color: var(--color-shade-second);
 }
 
 .options {
@@ -25,8 +30,6 @@
 }
 
 .back {
-  background: none;
-  color: #fff;
-  border: none;
+  border-radius: var(--border-radius-primary);
   margin-bottom: 1em;
 }

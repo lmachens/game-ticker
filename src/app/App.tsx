@@ -2,18 +2,17 @@ import { useState } from 'react';
 import classes from './App.module.css';
 import AppHeader from './components/AppHeader/AppHeader';
 import Feed from './components/Feed/Feed';
-import type { MatchClient, Profile } from '../types';
+import type { Profile } from '../types';
 import MatchDetails from './components/MatchDetails/MatchDetails';
 import User from './components/User/User';
-import useMatches from './hooks/useMatches';
+import Ads from './components/Ads/Ads';
 
 function App(): JSX.Element {
-  const [match, setMatch] = useState<MatchClient | null>(null);
+  const [targetMatchId, setTargetMatchId] = useState<string | null>(null);
   const [username, setUsername] = useState<Profile['username']>(null);
-  const matches = useMatches(username);
 
   function handleButtonClick() {
-    setMatch(null);
+    setTargetMatchId(null);
     setUsername(null);
   }
 
@@ -22,7 +21,7 @@ function App(): JSX.Element {
       <AppHeader className={classes.header} />
       <main className={classes.main}>
         <header className={classes.options}>
-          {(match || username) && (
+          {(targetMatchId || username) && (
             <button
               className={classes.back}
               onClick={() => handleButtonClick()}
@@ -30,16 +29,17 @@ function App(): JSX.Element {
               &lt;- Back to feed
             </button>
           )}
-          {username && !match && <span>{username}</span>}
+          {username && !targetMatchId && <span>{username}</span>}
         </header>
-        {match ? (
-          <MatchDetails match={match} />
+        {targetMatchId ? (
+          <MatchDetails matchId={targetMatchId} />
         ) : (
-          <Feed matches={matches} onMatchClick={setMatch} />
+          <Feed username={username} onMatchClick={setTargetMatchId} />
         )}
       </main>
       <aside className={classes.aside}>
         <User onUserClick={setUsername} />
+        <Ads />
       </aside>
     </div>
   );

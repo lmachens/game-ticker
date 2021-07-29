@@ -1,4 +1,5 @@
 .container {
+  background: var(--color-shade-third);
   height: 300px;
   width: 400px;
 }
