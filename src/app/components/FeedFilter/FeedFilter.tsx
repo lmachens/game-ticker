@@ -1,3 +1,4 @@
+import FeedFilterElement from '../FeedFilterElement/FeedFilterElement';
 import classes from './FeedFilter.module.css';
 
 type FeedFilterProps = {
@@ -8,7 +9,7 @@ function FeedFilter({ filters }: FeedFilterProps): JSX.Element {
   return (
     <div className={classes.container}>
       {filters.map((filter) => (
-        <button className={classes.button}>{filter}</button>
+        <FeedFilterElement>{filter}</FeedFilterElement>
       ))}
     </div>
   );

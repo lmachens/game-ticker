@@ -1,0 +1,10 @@
+.button {
+  background: red;
+  color: var(--color-secondary);
+  padding: 0.6em;
+  transition: all 0.2s;
+}
+
+.active {
+  background: black;
+}
