@@ -1,5 +1,5 @@
 import { Profile } from '../../../types';
-import { useCurrentUser } from '../../hooks/user';
+import useCurrentUser from '../../hooks/useCurrentUser';
 import defaultAvatar from './defaultAvatar.svg';
 import classes from './User.module.css';
 
@@ -12,7 +12,7 @@ type UserProps = {
 };
 
 const User = ({ onUserClick }: UserProps): JSX.Element => {
-  const [currentUser, profileError] = useCurrentUser();
+  const { currentUser, errorMessage } = useCurrentUser();
 
   return (
     <section
@@ -20,15 +20,11 @@ const User = ({ onUserClick }: UserProps): JSX.Element => {
       onClick={() => (currentUser ? onUserClick(currentUser.username) : null)}
     >
       <div className={classes.header}>
-        {currentUser?.avatar ? (
-          <img
-            src={currentUser.avatar}
-            className={classes.avatar}
-            alt="overwolf profile avatar"
-          />
-        ) : (
-          defaultAvatar
-        )}
+        <img
+          src={currentUser?.avatar || defaultAvatar}
+          className={classes.avatar}
+          alt=""
+        />
         <h1 className={classes.username}>
           {currentUser?.displayName || currentUser?.username || 'Game Ticker'}
         </h1>
@@ -39,7 +35,7 @@ const User = ({ onUserClick }: UserProps): JSX.Element => {
           <button onClick={openLoginDialog}>Login</button>
         </aside>
       )}
-      {profileError && <aside className={classes.error}>{profileError}</aside>}
+      {errorMessage && <aside className={classes.error}>{errorMessage}</aside>}
     </section>
   );
 };
