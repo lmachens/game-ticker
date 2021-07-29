@@ -1,4 +1,5 @@
 import useCurrentUser from '../../hooks/useCurrentUser';
+import Avatar from '../Avatar/Avatar';
 import defaultAvatar from './defaultAvatar.svg';
 import classes from './User.module.css';
 
@@ -11,16 +12,12 @@ const User = (): JSX.Element => {
 
   return (
     <section className={classes.container}>
-      <div className={classes.header}>
-        <img
-          src={currentUser?.avatar || defaultAvatar}
-          className={classes.avatar}
-          alt=""
-        />
+      <header className={classes.header}>
+        <Avatar src={currentUser?.avatar || defaultAvatar} size="large" />
         <h1 className={classes.username}>
           {currentUser?.displayName || currentUser?.username || 'Game Ticker'}
         </h1>
-      </div>
+      </header>
       {currentUser === null && (
         <aside className={classes.login}>
           For full functionality, please login.{' '}
