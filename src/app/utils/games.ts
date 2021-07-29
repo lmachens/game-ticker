@@ -18,7 +18,7 @@ export function onGameLaunched(callback: (classId: number) => void): void {
   });
 
   overwolf.games.getRunningGameInfo(async (event) => {
-    if (event.success) {
+    if (event?.success) {
       callback(event.classId);
     }
   });
