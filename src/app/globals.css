@@ -52,6 +52,11 @@ button {
   color: var(--color-button);
   border: none;
   padding: 0.5em 1em;
+  outline: none;
+}
+
+button:hover {
+  cursor: pointer;
 }
 
 p,
