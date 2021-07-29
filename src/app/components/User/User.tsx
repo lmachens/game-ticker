@@ -8,23 +8,40 @@ function openLoginDialog() {
 }
 
 const User = (): JSX.Element => {
-  const { currentUser, errorMessage } = useCurrentUser();
+  const { currentUser } = useCurrentUser();
 
   return (
     <section className={classes.container}>
       <header className={classes.header}>
-        <Avatar src={currentUser?.avatar || defaultAvatar} size="large" />
-        <h1 className={classes.username}>
+        <Avatar
+          className={classes.header__avatar}
+          src={currentUser?.avatar || defaultAvatar}
+          size="large"
+        />
+        <h2 className={classes.header_username}>
           {currentUser?.displayName || currentUser?.username || 'Game Ticker'}
-        </h1>
+        </h2>
+        <p className={classes.header_status}>
+          {!currentUser ? (
+            <>
+              For full functionality, please{' '}
+              <button onClick={openLoginDialog} className={classes.login}>
+                Login
+              </button>
+            </>
+          ) : (
+            'Start playing a match'
+          )}
+        </p>
       </header>
-      {currentUser === null && (
-        <aside className={classes.login}>
-          For full functionality, please login.{' '}
-          <button onClick={openLoginDialog}>Login</button>
-        </aside>
-      )}
-      {errorMessage && <aside className={classes.error}>{errorMessage}</aside>}
+      <section className={classes.stats}>
+        <strong>12</strong>
+        <div className={classes.stats__name}>Matches</div>
+        <strong>26</strong>
+        <div className={classes.stats__name}>Highlights</div>
+        <strong>43</strong>
+        <div className={classes.stats__name}>Likes</div>
+      </section>
     </section>
   );
 };
