@@ -2,17 +2,25 @@
 import type { ObjectId } from 'mongodb';
 
 export type MatchHighlight = {
+  _id: ObjectId;
+  matchId: ObjectId;
   timestamp: number;
   events: string[];
   videoSrc: string;
+  createdAt: Date;
 };
+
+export type MatchHighlightClient = {
+  _id: string;
+  matchId: string;
+} & Omit<MatchHighlight, '_id' | 'matchId' | 'createdAt'>;
 
 export type Match = {
   _id: ObjectId;
   gameId: number;
   username: string;
   createdAt: Date;
-  highlights: MatchHighlight[];
+  highlights: { highlightId: ObjectId }[];
 };
 
 export type MatchClient = {

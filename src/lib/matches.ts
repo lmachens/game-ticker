@@ -41,17 +41,8 @@ export function ensureMatchesSchema(): Promise<Document> {
             items: {
               bsonType: 'object',
               properties: {
-                timestamp: {
-                  bsonType: 'int',
-                },
-                events: {
-                  bsonType: 'array',
-                  items: {
-                    bsonType: 'string',
-                  },
-                },
-                videoSrc: {
-                  bsonType: 'string',
+                highlightId: {
+                  bsonType: 'objectId',
                 },
               },
             },
