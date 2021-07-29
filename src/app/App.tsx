@@ -11,7 +11,7 @@ function App(): JSX.Element {
   const [targetMatchId, setTargetMatchId] = useState<string | null>(null);
   const [username, setUsername] = useState<Profile['username']>(null);
 
-  function handleButtonClick() {
+  function handleBackToFeedClick() {
     setTargetMatchId(null);
     setUsername(null);
   }
@@ -22,10 +22,7 @@ function App(): JSX.Element {
       <main className={classes.main}>
         <header className={classes.options}>
           {(targetMatchId || username) && (
-            <button
-              className={classes.back}
-              onClick={() => handleButtonClick()}
-            >
+            <button className={classes.back} onClick={handleBackToFeedClick}>
               &lt;- Back to feed
             </button>
           )}
