@@ -1,8 +1,8 @@
 import SVG, { SVGProps } from './SVG';
 
-function IconFavorites({ className }: SVGProps): JSX.Element {
+function IconFavorites(props: SVGProps): JSX.Element {
   return (
-    <SVG className={className}>
+    <SVG {...props}>
       <>
         <g>
           <path d="M0,0h24v24H0V0z" fill="none" />

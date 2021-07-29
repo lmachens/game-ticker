@@ -1,14 +1,29 @@
+import { classNames } from '../../utils/styles';
+import classes from './SVG.module.css';
+
 export type SVGProps = {
   children?: JSX.Element;
-  className: string;
+  className?: string;
+  disabled?: boolean;
+  selected?: boolean;
 };
 
-function SVG({ className, children }: SVGProps): JSX.Element {
+function SVG({
+  className,
+  children,
+  disabled = false,
+  selected = false,
+}: SVGProps): JSX.Element {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 24 24"
-      className={className}
+      className={classNames(
+        className,
+        classes.svg,
+        selected ? classes.selected : '',
+        disabled ? classes.disabled : ''
+      )}
     >
       <defs>
         <linearGradient
