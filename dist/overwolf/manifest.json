@@ -57,9 +57,10 @@
         "file": "build/overlay.html",
         "debug_url": "http://localhost:3000/overlay.html",
         "size": {
-          "width": 1212,
+          "width": 500,
           "height": 699
         },
+        "transparent": true,
         "in_game_only": true
       }
     },
