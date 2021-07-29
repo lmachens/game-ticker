@@ -1,4 +1,4 @@
-import { useCurrentUser } from '../../hooks/user';
+import useCurrentUser from '../../hooks/useCurrentUser';
 import defaultAvatar from './defaultAvatar.svg';
 import classes from './User.module.css';
 
@@ -7,20 +7,16 @@ function openLoginDialog() {
 }
 
 const User = (): JSX.Element => {
-  const [currentUser, profileError] = useCurrentUser();
+  const { currentUser, errorMessage } = useCurrentUser();
 
   return (
     <section className={classes.container}>
       <div className={classes.header}>
-        {currentUser?.avatar ? (
-          <img
-            src={currentUser.avatar}
-            className={classes.avatar}
-            alt="overwolf profile avatar"
-          />
-        ) : (
-          defaultAvatar
-        )}
+        <img
+          src={currentUser?.avatar || defaultAvatar}
+          className={classes.avatar}
+          alt=""
+        />
         <h1 className={classes.username}>
           {currentUser?.displayName || currentUser?.username || 'Game Ticker'}
         </h1>
@@ -31,7 +27,7 @@ const User = (): JSX.Element => {
           <button onClick={openLoginDialog}>Login</button>
         </aside>
       )}
-      {profileError && <aside className={classes.error}>{profileError}</aside>}
+      {errorMessage && <aside className={classes.error}>{errorMessage}</aside>}
     </section>
   );
 };
