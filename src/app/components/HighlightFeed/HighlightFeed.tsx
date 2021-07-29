@@ -1,5 +1,5 @@
 import { MatchHighlight } from '../../../types';
-import SummaryHighlightItem from '../SummaryHighlightItem/SummaryHighlightItem';
+import Highlight from '../Highlight/Highlight';
 
 type SummaryHighlightsProps = {
   highlights: MatchHighlight[];
@@ -12,7 +12,7 @@ function SummaryHighlights({
     <section>
       {highlights.length
         ? highlights.map(({ timestamp, events }) => (
-            <SummaryHighlightItem events={events} timestamp={timestamp} />
+            <Highlight events={events} timestamp={timestamp} />
           ))
         : 'Nothing to see here (Placeholder)'}
     </section>

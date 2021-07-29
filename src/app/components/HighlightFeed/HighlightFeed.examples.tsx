@@ -1,6 +1,6 @@
 import { MatchHighlight } from '../../../types';
 import { Example } from '../examples';
-import SummaryHighlight from './SummaryHighlightsFeed';
+import SummaryHighlight from './HighlightFeed';
 
 const highlights: MatchHighlight[] = [
   {
@@ -30,6 +30,6 @@ const highlights: MatchHighlight[] = [
   },
 ];
 
-export const SummaryHighlightsFeed: Example = () => (
+export const HighlightFeed: Example = () => (
   <SummaryHighlight highlights={highlights} />
 );

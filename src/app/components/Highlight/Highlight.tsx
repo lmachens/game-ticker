@@ -1,4 +1,4 @@
-import classes from './SummaryHighlightItem.module.css';
+import classes from './Highlight.module.css';
 
 function formatSeconds(seconds: number): string {
   if (seconds < 10) {
@@ -18,15 +18,12 @@ function translateSecondsToTimeString(timestamp: number): string {
   return `${minutesDisplay}:${secondsDisplay}`;
 }
 
-type summaryHightlightItemProps = {
+type HighlightProps = {
   events: string[];
   timestamp: number;
 };
 
-function SummaryHighlightItem({
-  events,
-  timestamp,
-}: summaryHightlightItemProps): JSX.Element {
+function Highlight({ events, timestamp }: HighlightProps): JSX.Element {
   return (
     <article className={classes.container}>
       <p>{events.join(', ')}</p>
@@ -35,4 +32,4 @@ function SummaryHighlightItem({
   );
 }
 
-export default SummaryHighlightItem;
+export default Highlight;
