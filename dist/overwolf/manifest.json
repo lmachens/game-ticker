@@ -6,7 +6,7 @@
     "author": "Game Ticker",
     "version": "0.0.1",
     "minimum-overwolf-version": "0.169.0",
-    "description": "Automatically share highlights and comments on your favorite games with your friends.",
+    "description": "Automatically share highlights and comments of your favorite games with your friends.",
     "dock_button_title": "Game Ticker",
     "icon": "icons/iconMouseOver.png",
     "icon_gray": "icons/iconMouseNormal.png",

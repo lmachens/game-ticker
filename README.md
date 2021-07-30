@@ -1,16 +1,23 @@
 # Game Ticker
 
-**The social network for Gamers!**
+**The social network for Gamers**
 
-Automatically share highlights and comments on your favorite games with your friends.
+Automatically share highlights and comments of your favorite games with your friends.
 
 This project is the result of a [Gaming App Course](https://coda.io/@leon-machens/gaming-app-lvl).
 
 ## Features
 
-- Play and let Game Ticker automatically capture your highlights.
-- Spectate your friends match in a live-ticker. You won't miss any highlight!
+Play and let **Game Ticker** take care of the rest.
+
+- **Game Ticker** will automatically record your ingame highlights
+- Watch your friends' matches in the live ticker. You will no longer miss a highlight again!
 - Share your highlights with your friends.
+
+## Prerequisites
+
+- node >= v14.17.1
+- npm <= 7.20.0
 
 ## Installing / Developing
 
@@ -18,7 +25,7 @@ This project is the result of a [Gaming App Course](https://coda.io/@leon-machen
 npm install
 ```
 
-This will install the dependencies required to run the game-ticker.
+This will install the dependencies required to run **Game Ticker**.
 
 You need to configure the environment by setting several environment variables. Creating a `.env` file is required (use `.env.example` as reference).
 
@@ -35,9 +42,9 @@ You need to configure the environment by setting several environment variables. 
 npm run dev
 ```
 
-Boom! These scripts run your client and server in development mode.
+**Boom!** These scripts run your client and server in development mode.
 
-If you don't like to call all scripts at once, you can also run:
+If you do not want to call all the scripts at once, you can run them separately:
 
 ```shell
 npm run server:dev
