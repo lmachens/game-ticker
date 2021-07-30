@@ -33,13 +33,12 @@ function IconSvg({
           x2="0.06"
           y2="0.26"
         >
-          <stop offset="0%" stopColor="#f68e31" />
+          <stop offset="0%" stopColor="#fe804b" />
           <stop offset="10.67%" stopColor="#fb8d28" />
           <stop offset="32%" stopColor="#ff8f38" />
           <stop offset="42.67%" stopColor="#ff824f" />
           <stop offset="64%" stopColor="#fe656f" />
-          <stop offset="76%" stopColor="#fa3a7b" />
-          <stop offset="100%" stopColor="#bf2a88" />
+          <stop offset="100%" stopColor="#fb31b3" />
         </linearGradient>
       </defs>
       {children}

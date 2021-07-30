@@ -1,7 +1,7 @@
 .svg {
-  width: 2rem;
-  height: 2rem;
-  fill: #2b2b2d;
+  width: 2em;
+  height: 2em;
+  fill: var(--color-inactive);
 }
 
 .svg:hover,
@@ -11,5 +11,5 @@
 }
 
 .disabled:hover {
-  fill: #2b2b2d;
+  fill: var(--color-inactive);
 }
