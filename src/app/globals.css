@@ -52,9 +52,6 @@ button {
   color: var(--color-button);
   border: none;
   padding: 0.5em 1em;
-}
-
-button:hover {
   cursor: pointer;
 }
 
