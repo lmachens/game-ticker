@@ -23,13 +23,11 @@ export type Match = {
   gameId: number;
   username: string;
   createdAt: Date;
-  highlights: { highlightId: ObjectId }[];
 };
 
 export type MatchClient = {
   _id: string;
-  highlights: { highlightId: string }[];
-} & Omit<Match, '_id' | 'highlights'>;
+} & Omit<Match, '_id'>;
 
 export type Pagination<T> = {
   info: {
