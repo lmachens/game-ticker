@@ -6,18 +6,27 @@ function Sidebar(): JSX.Element {
   return (
     <nav className={classNames(classes.container, classes.flex)}>
       <section className={classNames(classes.section, classes.flex)}>
-        <a className={classes.selected}>
+        <a className={classNames(classes.selected, classes.link)}>
           <HomeIcon selected />
         </a>
-        <a className={classes.disabled} data-tooltip="coming soon">
+        <a
+          className={classNames(classes.disabled, classes.link)}
+          data-tooltip="coming soon"
+        >
           <FavoritesIcon disabled />
         </a>
       </section>
       <aside className={classes.flex}>
-        <a className={classes.disabled} data-tooltip="coming soon">
+        <a
+          className={classNames(classes.disabled, classes.link)}
+          data-tooltip="coming soon"
+        >
           <InfoIcon disabled />
         </a>
-        <a className={classes.disabled} data-tooltip="coming soon">
+        <a
+          className={classNames(classes.disabled, classes.link)}
+          data-tooltip="coming soon"
+        >
           <SettingsIcon disabled />
         </a>
       </aside>
