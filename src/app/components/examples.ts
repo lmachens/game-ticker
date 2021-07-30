@@ -3,6 +3,8 @@ export * from './Ads/Ads.examples';
 export * from './AppHeader/AppHeader.examples';
 export * from './Avatar/Avatar.examples';
 export * from './Feed/Feed.examples';
+export * from './FeedFilter/FeedFilter.examples';
+export * from './FeedFilterElement/FeedFilterElement.examples';
 export * from './Highlight/Highlight.examples';
 export * from './MatchDetails/MatchDetails.examples';
 export * from './MatchItem/MatchItem.examples';
