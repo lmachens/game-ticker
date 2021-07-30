@@ -1,0 +1,15 @@
+.svg {
+  width: 2em;
+  height: 2em;
+  fill: var(--color-inactive);
+}
+
+.svg:hover,
+.selected,
+.selected:hover {
+  fill: url(#octyGradient);
+}
+
+.disabled:hover {
+  fill: var(--color-inactive);
+}
