@@ -1,8 +1,8 @@
-import { MatchHighlight } from '../../../types';
+import { MatchHighlightClient } from '../../../types';
 import SummaryHighlightItem from '../SummaryHighlightItem/SummaryHighlightItem';
 
 type SummaryHighlightsProps = {
-  highlights: MatchHighlight[];
+  highlights: MatchHighlightClient[];
 };
 
 function SummaryHighlights({

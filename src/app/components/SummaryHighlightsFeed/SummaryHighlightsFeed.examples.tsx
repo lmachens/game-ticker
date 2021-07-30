@@ -1,35 +1,18 @@
-import { MatchHighlight } from '../../../types';
+import { MatchHighlight, MatchHighlightClient } from '../../../types';
+import useFetch from '../../hooks/useFetch';
+import { getHighlights } from '../../utils/api';
 import { Example } from '../examples';
-import SummaryHighlight from './SummaryHighlightsFeed';
+import SummaryHighlights from './SummaryHighlightsFeed';
 
-const highlights: MatchHighlight[] = [
-  {
-    timestamp: 60,
-    events: ['kill', 'assist'],
-    videoSrc: '',
-  },
-  {
-    timestamp: 780,
-    events: ['assist'],
-    videoSrc: '',
-  },
-  {
-    timestamp: 5365,
-    events: ['kill', 'assist'],
-    videoSrc: '',
-  },
-  {
-    timestamp: 45,
-    events: ['kill', 'assist', 'healing'],
-    videoSrc: '',
-  },
-  {
-    timestamp: 179,
-    events: ['assist'],
-    videoSrc: '',
-  },
-];
+export const SummaryHighlightsFeed: Example = () => {
+  const { data } = useFetch(() =>
+    getHighlights({
+      page: 1,
+      itemsPerPage: 10,
+    })
+  );
 
-export const SummaryHighlightsFeed: Example = () => (
-  <SummaryHighlight highlights={highlights} />
-);
+  const highlights = data?.results || [];
+
+  return <SummaryHighlights highlights={highlights} />;
+};
