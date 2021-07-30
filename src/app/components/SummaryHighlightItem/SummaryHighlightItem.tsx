@@ -21,14 +21,16 @@ function translateSecondsToTimeString(timestamp: number): string {
 type summaryHightlightItemProps = {
   events: string[];
   timestamp: number;
+  onClick?: () => void;
 };
 
 function SummaryHighlightItem({
   events,
   timestamp,
+  onClick,
 }: summaryHightlightItemProps): JSX.Element {
   return (
-    <article className={classes.container}>
+    <article className={classes.container} onClick={onClick}>
       <p>{events.join(', ')}</p>
       <p>{translateSecondsToTimeString(timestamp)}</p>
     </article>

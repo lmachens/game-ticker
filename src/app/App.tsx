@@ -8,6 +8,8 @@ import Ads from './components/Ads/Ads';
 
 function App(): JSX.Element {
   const [targetMatchId, setTargetMatchId] = useState<string | null>(null);
+
+  console.log(targetMatchId);
   return (
     <div className={classes.container}>
       <AppHeader className={classes.header} />
@@ -23,7 +25,7 @@ function App(): JSX.Element {
             <MatchDetails matchId={targetMatchId} />
           </>
         ) : (
-          <Feed onMatchClick={setTargetMatchId} />
+          <Feed onHighlightClick={setTargetMatchId} />
         )}
       </main>
       <aside className={classes.aside}>

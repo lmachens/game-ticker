@@ -1,4 +1,3 @@
-import { MatchHighlight, MatchHighlightClient } from '../../../types';
 import useFetch from '../../hooks/useFetch';
 import { getHighlights } from '../../utils/api';
 import { Example } from '../examples';
