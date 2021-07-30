@@ -15,7 +15,7 @@ export async function getMatches(query: {
   const queryString = searchParams.toString();
 
   const matches = await fetchJSON<PaginatedMatchesClient>(
-    `/api/matches?page=${queryString}`
+    `/api/matches?${queryString}`
   );
   matches.results = matches.results.map((match) => ({
     ...match,

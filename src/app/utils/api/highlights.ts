@@ -26,7 +26,7 @@ export async function getHighlights(query: {
   const queryString = searchParams.toString();
 
   const highlights = await fetchJSON<PaginatedMatchHighlightsClient>(
-    `/api/highlights?page=${queryString}`
+    `/api/highlights?${queryString}`
   );
   highlights.results = highlights.results.map((highlight) => ({
     ...highlight,
