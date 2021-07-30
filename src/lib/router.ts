@@ -24,7 +24,6 @@ router.post('/matches', async (request, response, next) => {
       gameId: gameId,
       username: username,
       createdAt: new Date(),
-      highlights: [],
     };
 
     const matchesCollection = await getMatchesCollection();
