@@ -4,6 +4,7 @@ import useFetch from '../../hooks/useFetch';
 import { getMatches } from '../../utils/api';
 import MatchItem from '../MatchItem/MatchItem';
 import classes from './Feed.module.css';
+import FeedFilter from '../FeedFilter/FeedFilter';
 
 type FeedProps = {
   username: MatchClient['username'] | null;
@@ -42,28 +43,35 @@ function Feed({ username, onMatchClick }: FeedProps): JSX.Element {
   const hasMorePages = info.page * info.itemsPerPage < info.total;
   return (
     <section className={classes.container}>
-      <button
-        disabled={page === 1}
-        onClick={() => setQuery({ ...query, page: 1 })}
-      >
-        Back to top
-      </button>
-      {results.map((match) => (
-        <MatchItem
-          key={match._id}
-          match={match}
-          onClick={() => onMatchClick(match._id)}
-        />
-      ))}
+      <FeedFilter selectedFilter="Newest" onFilterChange={console.log} />
+      {page > 1 && (
+        <button
+          className={classes.button}
+          onClick={() => setQuery({ ...query, page: 1 })}
+        >
+          Most recent
+        </button>
+      )}
+      <div className={classes.items}>
+        {results.map((match) => (
+          <MatchItem
+            key={match._id}
+            match={match}
+            onClick={() => onMatchClick(match._id)}
+          />
+        ))}
+      </div>
       {matches?.results.length === 0 && (
         <p className={classes.noMatches}>No matches found</p>
       )}
-      <button
-        disabled={!hasMorePages}
-        onClick={() => setQuery({ ...query, page: page + 1 })}
-      >
-        Load more
-      </button>
+      {hasMorePages && (
+        <button
+          className={classes.button}
+          onClick={() => setQuery({ ...query, page: page + 1 })}
+        >
+          Next
+        </button>
+      )}
     </section>
   );
 }

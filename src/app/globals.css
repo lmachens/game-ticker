@@ -70,6 +70,12 @@ button {
   cursor: pointer;
 }
 
+button:disabled {
+  background: var(--color-inactive);
+  color: var(--color-text-secondary);
+  cursor: default;
+}
+
 p,
 h1,
 h2,
