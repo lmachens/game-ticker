@@ -2,7 +2,7 @@ import { classNames } from '../../utils/styles';
 import classes from './IconSvg.module.css';
 
 export type SVGProps = {
-  children: JSX.Element;
+  children: React.ReactNode;
   className?: string;
   disabled?: boolean;
   selected?: boolean;
@@ -11,8 +11,8 @@ export type SVGProps = {
 function IconSvg({
   className,
   children,
-  disabled = false,
-  selected = false,
+  disabled,
+  selected,
 }: SVGProps): JSX.Element {
   return (
     <svg
@@ -21,8 +21,8 @@ function IconSvg({
       className={classNames(
         className,
         classes.svg,
-        selected ? classes.selected : '',
-        disabled ? classes.disabled : ''
+        selected && classes.selected,
+        disabled && classes.disabled
       )}
     >
       <defs>
@@ -33,13 +33,13 @@ function IconSvg({
           x2="0.06"
           y2="0.26"
         >
-          <stop offset="0%" stop-color="#f68e31" />
-          <stop offset="10.67%" stop-color="#fb8d28" />
-          <stop offset="32%" stop-color="#ff8f38" />
-          <stop offset="42.67%" stop-color="#ff824f" />
-          <stop offset="64%" stop-color="#fe656f" />
-          <stop offset="76%" stop-color="#fa3a7b" />
-          <stop offset="100%" stop-color="#bf2a88" />
+          <stop offset="0%" stopColor="#f68e31" />
+          <stop offset="10.67%" stopColor="#fb8d28" />
+          <stop offset="32%" stopColor="#ff8f38" />
+          <stop offset="42.67%" stopColor="#ff824f" />
+          <stop offset="64%" stopColor="#fe656f" />
+          <stop offset="76%" stopColor="#fa3a7b" />
+          <stop offset="100%" stopColor="#bf2a88" />
         </linearGradient>
       </defs>
       {children}
