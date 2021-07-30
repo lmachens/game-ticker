@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Anton&family=DM+Sans&display=swap');
 *,
 *::after,
 *::before {
@@ -6,19 +7,24 @@
 
 :root {
   /* Colors */
-  --color-primary: #68fe9c;
-  --color-secondary: #e2e2e2;
-  --color-shade-first: #060606;
-  --color-shade-second: #1b1f24;
-  --color-shade-third: #23272c;
-  --color-shade-fourth: #393d43;
-  --color-shade-fifth: #585d64;
+  --color-inactive: #2b2b2d;
   --color-alert: #b61313;
+  --gradient-primary-from: #fe804b;
+  --gradient-primary-to: #fb31b3;
+  --gradient-primary: linear-gradient(
+    var(--gradient-primary-from),
+    var(--gradient-primary-to)
+  );
+  --color-shade-first: #080809;
+  --color-shade-second: #101012;
+  --color-shade-third: #212124;
+  --color-text: #c6c6c6;
+  --color-button: #fff;
 
   /* Fonts */
-  --font-size: 115%;
-  --font-family-primary: 'Roboto', sans-serif;
-  --font-family-secondary: 'Lato', sans-serif;
+  --font-size: 100%;
+  --font-family-primary: 'DM Sans', sans-serif;
+  --font-family-secondary: 'Anton', sans-serif;
 
   /* Misc */
   --border-radius-primary: 1em;
@@ -33,7 +39,7 @@ body {
   margin: 0;
   font-family: var(--font-family-primary);
   background: var(--color-shade-first);
-  color: var(--color-secondary);
+  color: var(--color-text);
 }
 
 a {
@@ -42,12 +48,18 @@ a {
 }
 
 button {
-  background-color: var(--color-primary);
-  color: var(--color-shade-first);
+  background-color: var(--gradient-primary);
+  color: var(--color-button);
   border: none;
   padding: 0.5em 1em;
+  cursor: pointer;
 }
 
-p {
+p,
+h1,
+h2,
+h3,
+h4,
+h5 {
   margin: 0;
 }

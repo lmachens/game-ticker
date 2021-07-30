@@ -5,6 +5,7 @@ import {
   minimizeWindow,
 } from '../../utils/windows';
 import classes from './AppHeader.module.css';
+import logoSrc from './logo.png';
 
 type AppHeaderProps = {
   className?: string;
@@ -13,6 +14,7 @@ type AppHeaderProps = {
 function AppHeader({ className }: AppHeaderProps): JSX.Element {
   return (
     <header className={classNames(classes.header, className)}>
+      <img alt="" src={logoSrc} className={classes.logo} />
       <h1 className={classes.title} onMouseDown={dragMoveWindow}>
         Game Ticker
       </h1>
