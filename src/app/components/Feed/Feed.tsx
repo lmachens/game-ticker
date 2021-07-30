@@ -23,11 +23,11 @@ function Feed({ username, onHighlightClick }: FeedProps): JSX.Element {
   const { page } = query;
 
   useEffect(() => {
-    if (username)
+    if (username) {
       setQuery((query) => {
         return { ...query, page: 1, username };
       });
-    if (!username) {
+    } else {
       setQuery((query) => {
         const currentQuery = { ...query };
         delete currentQuery.username;
