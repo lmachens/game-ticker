@@ -6,6 +6,8 @@ import commentSrc from './comment.png';
 import shareSrc from './share.png';
 import likeSrc from './like.png';
 import { toTimeAgo } from '../../utils/dates';
+import UserInfo from '../UserInfo/UserInfo';
+import defaultAvatarSrc from '../User/defaultAvatar.png';
 
 type HighlightProps = {
   matchIsActive: boolean;
@@ -21,7 +23,11 @@ function Highlight({
   return (
     <article className={classNames(classes.container, classes[layout])}>
       <header className={classes.header}>
-        <section>PROFILE</section>
+        <UserInfo
+          username="AlexisOver9000"
+          status="Fortnite"
+          avatarSrc={defaultAvatarSrc}
+        />
         <section className={classes.info}>
           {layout === 'full' && (
             <p>

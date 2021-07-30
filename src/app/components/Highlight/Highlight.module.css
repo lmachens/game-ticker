@@ -6,6 +6,7 @@
 .header {
   display: grid;
   grid-template-columns: 1fr 1fr;
+  align-items: end;
 }
 
 .info {
@@ -37,8 +38,6 @@
 .more__match {
   justify-self: end;
   border-radius: var(--border-radius-primary);
-  background: var(--color-primary);
-  color: var(--color-text);
   display: grid;
   place-content: center;
   padding: 0.5em 1em;
