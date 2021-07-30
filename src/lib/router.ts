@@ -94,12 +94,17 @@ router.post('/highlights', async (request, response, next) => {
     const { timestamp, events, videoSrc, matchId, username, avatar } =
       request.body;
 
+    const matchIdIsInvalid = !ObjectId.isValid(matchId);
     const requestIsInvalid =
       typeof timestamp !== 'number' ||
       !Array.isArray(events) ||
       !events.every((event) => typeof event === 'string') ||
-      typeof videoSrc !== 'string' ||
-      typeof matchId !== 'string';
+      typeof videoSrc !== 'string';
+
+    if (matchIdIsInvalid) {
+      response.status(400).send('Invalid match id');
+      return;
+    }
 
     if (requestIsInvalid) {
       response.status(400).send('Invalid payload');
