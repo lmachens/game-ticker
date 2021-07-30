@@ -25,14 +25,15 @@
   --gradient-primary-from: #fe804b;
   --gradient-primary-to: #fb31b3;
   --gradient-primary: linear-gradient(
+    -90deg,
     var(--gradient-primary-from),
     var(--gradient-primary-to)
   );
   --color-shade-first: #080809;
   --color-shade-second: #101012;
   --color-shade-third: #212124;
-  --color-text: #c6c6c6;
-  --color-button: #fff;
+  --color-text-primary: #fff;
+  --color-text-secondary: #c6c6c6;
 
   /* Fonts */
   --font-size: 100%;
@@ -53,7 +54,7 @@ body {
   margin: 0;
   font-family: var(--font-family-primary);
   background: var(--color-shade-first);
-  color: var(--color-text);
+  color: var(--color-text-secondary);
 }
 
 a {
@@ -62,10 +63,11 @@ a {
 }
 
 button {
-  background-color: var(--gradient-primary);
-  color: var(--color-button);
+  background: var(--gradient-primary);
+  color: var(--color-text-primary);
   border: none;
   padding: 0.5em 1em;
+  cursor: pointer;
 }
 
 p,
