@@ -1,23 +1,35 @@
-# Overwolf Boilerplate
+# Game Ticker
 
-> Quickly bootstrap a new project with Overwolf Boilerplate.
+**The social network for Gamers!**
 
-This boilerplate contains all the tools you need to build a modern web app with TypeScript, React, Vite, Storybook and Express.  
-You can use it to quickly bootstrap your project.
+Automatically share highlights and comments on your favorite games with your friends.
 
-ESLint, stylelint, prettier, husky and lintstaged are configured to give you a solid development experience.
+This project is the result of a [Gaming App Course](https://coda.io/@leon-machens/gaming-app-lvl).
+
+## Features
+
+- Play and let Game Ticker automatically capture your highlights.
+- Spectate your friends match in a live-ticker. You won't miss any highlight!
+- Share your highlights with your friends.
 
 ## Installing / Developing
-
-First, [create a repository from this template](https://docs.github.com/en/github/creating-cloning-and-archiving-repositories/creating-a-repository-on-github/creating-a-repository-from-a-template).
-
-Now you are ready to go:
 
 ```shell
 npm install
 ```
 
-This will install the dependencies required to run the boilerplate.
+This will install the dependencies required to run the game-ticker.
+
+You need to configure the environment by setting several environment variables. Creating a `.env` file is required (use `.env.example` as reference).
+
+| KEY                        | VALUE                                  |
+| -------------------------- | -------------------------------------- |
+| PORT                       | Port for the server environment        |
+| MONGODB_URI                | URI for the MongoDB server             |
+| VITE_API_ENDPOINT          | The URL to your API endpoint           |
+| VITE_CLOUDINARY_CLOUD_NAME | Cloudinary cloud name                  |
+| VITE_CLOUDINARY_PRESET     | Cloudinary preset (has to be unsigned) |
+| REQUEST_ORIGIN             | CORS origin                            |
 
 ```shell
 npm run dev
@@ -31,16 +43,6 @@ If you don't like to call all scripts at once, you can also run:
 npm run server:dev
 npm run client:dev
 ```
-
-You can configure the server port by setting the `PORT` environment variable. Creating a `.env` file is supported.
-
-| KEY                        | VALUE                                  |
-| -------------------------- | -------------------------------------- |
-| PORT                       | Port for the server environment        |
-| MONGODB_URI                | URI for the MongoDB server             |
-| VITE_API_ENDPOINT          | The URL to your api endpoint           |
-| VITE_CLOUDINARY_CLOUD_NAME | Cloudinary cloud name                  |
-| VITE_CLOUDINARY_PRESET     | Cloudinary preset (has to be unsigned) |
 
 ## Building
 
