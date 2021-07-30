@@ -1,5 +1,5 @@
 import { classNames } from '../../utils/styles';
-import classes from './SVG.module.css';
+import classes from './IconSvg.module.css';
 
 export type SVGProps = {
   children: JSX.Element;
@@ -8,7 +8,7 @@ export type SVGProps = {
   selected?: boolean;
 };
 
-function SVG({
+function IconSvg({
   className,
   children,
   disabled = false,
@@ -47,4 +47,4 @@ function SVG({
   );
 }
 
-export default SVG;
+export default IconSvg;
