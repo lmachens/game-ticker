@@ -7,7 +7,7 @@
 .svg:hover,
 .selected,
 .selected:hover {
-  fill: url(#occtyGradient);
+  fill: url(#octyGradient);
 }
 
 .disabled:hover {
