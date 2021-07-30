@@ -1,37 +1,55 @@
-import { useCurrentUser } from '../../hooks/user';
-import defaultAvatar from './defaultAvatar.svg';
+import { Profile } from '../../../types';
+import useCurrentUser from '../../hooks/useCurrentUser';
+import Avatar from '../Avatar/Avatar';
+import defaultAvatar from './defaultAvatar.png';
 import classes from './User.module.css';
 
 function openLoginDialog() {
   overwolf.profile.openLoginDialog();
 }
 
-const User = (): JSX.Element => {
-  const [currentUser, profileError] = useCurrentUser();
+type UserProps = {
+  onClick: (user: Profile) => void;
+};
+
+const User = ({ onClick }: UserProps): JSX.Element => {
+  const { currentUser } = useCurrentUser();
 
   return (
-    <section className={classes.container}>
-      <div className={classes.header}>
-        {currentUser?.avatar ? (
-          <img
-            src={currentUser.avatar}
-            className={classes.avatar}
-            alt="overwolf profile avatar"
-          />
-        ) : (
-          defaultAvatar
-        )}
-        <h1 className={classes.username}>
+    <section
+      className={classes.container}
+      onClick={currentUser ? () => onClick(currentUser) : undefined}
+    >
+      <header className={classes.header}>
+        <Avatar
+          className={classes.header__avatar}
+          src={currentUser?.avatar || defaultAvatar}
+          size="large"
+        />
+        <h2 className={classes.header_username}>
           {currentUser?.displayName || currentUser?.username || 'Game Ticker'}
-        </h1>
-      </div>
-      {currentUser === null && (
-        <aside className={classes.login}>
-          For full functionality, please login.{' '}
-          <button onClick={openLoginDialog}>Login</button>
-        </aside>
-      )}
-      {profileError && <aside className={classes.error}>{profileError}</aside>}
+        </h2>
+        <p className={classes.header_status}>
+          {!currentUser ? (
+            <>
+              For full functionality, please{' '}
+              <button onClick={openLoginDialog} className={classes.login}>
+                Login
+              </button>
+            </>
+          ) : (
+            'Start playing a match'
+          )}
+        </p>
+      </header>
+      <section className={classes.stats}>
+        <strong>12</strong>
+        <div className={classes.stats__name}>Matches</div>
+        <strong>26</strong>
+        <div className={classes.stats__name}>Highlights</div>
+        <strong>43</strong>
+        <div className={classes.stats__name}>Likes</div>
+      </section>
     </section>
   );
 };
