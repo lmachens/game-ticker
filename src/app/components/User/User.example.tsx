@@ -3,6 +3,10 @@ import User from './User';
 
 export const StandardUser: Example = () => (
   <div style={{ backgroundColor: 'black' }}>
-    <User />
+    <User
+      onUserClick={() => {
+        console.log('clicked');
+      }}
+    />
   </div>
 );

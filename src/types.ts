@@ -36,3 +36,9 @@ export type Profile = {
   displayName: string | null;
   avatar: string | null;
 };
+
+export type QueryOptions = {
+  page: number;
+  itemsPerPage: number;
+  username?: MatchClient['username'];
+};
