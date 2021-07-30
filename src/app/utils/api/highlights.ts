@@ -16,6 +16,7 @@ export async function postHighlight(
 export async function getHighlights(query: {
   page: number;
   itemsPerPage: number;
+  matchId?: string;
 }): Promise<PaginatedMatchHighlightsClient> {
   const { page, itemsPerPage, ...rest } = query;
   const searchParams = new URLSearchParams({
