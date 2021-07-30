@@ -5,5 +5,5 @@ export const MyFeedFilterElement: Example = () => (
   <FeedFilterElement>Test</FeedFilterElement>
 );
 export const MyFeedFilterElement2: Example = () => (
-  <FeedFilterElement active="active">Test</FeedFilterElement>
+  <FeedFilterElement active>Test</FeedFilterElement>
 );
