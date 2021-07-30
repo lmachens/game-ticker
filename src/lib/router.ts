@@ -1,7 +1,13 @@
 import { ObjectId } from 'mongodb';
 import express from 'express';
 import { getMatchesCollection, createMatchesQuery } from './matches';
-import type { Match, MatchHighlight, PaginatedMatches } from '../types';
+import type {
+  Match,
+  MatchHighlight,
+  PaginatedMatches,
+  PaginatedMatchHighlights,
+} from '../types';
+import { createHighlightsQuery, getHighlightsCollection } from './highlights';
 
 const router = express.Router();
 
@@ -18,7 +24,6 @@ router.post('/matches', async (request, response, next) => {
       gameId: gameId,
       username: username,
       createdAt: new Date(),
-      highlights: [],
     };
 
     const matchesCollection = await getMatchesCollection();
@@ -56,51 +61,6 @@ router.get('/matches/:matchId', async (request, response, next) => {
   }
 });
 
-router.post('/matches/:matchId/highlights', async (request, response, next) => {
-  try {
-    const { timestamp, events, videoSrc } = request.body;
-    const { matchId } = request.params;
-    const matchIdIsInvalid = !ObjectId.isValid(matchId);
-    const requestIsInvalid =
-      typeof timestamp !== 'number' ||
-      !Array.isArray(events) ||
-      !events.every((event) => typeof event === 'string') ||
-      typeof videoSrc !== 'string';
-
-    if (matchIdIsInvalid) {
-      response.status(400).send('Invalid match id');
-      return;
-    }
-
-    if (requestIsInvalid) {
-      response.status(400).send('Invalid payload');
-      return;
-    }
-
-    const highlight: MatchHighlight = {
-      timestamp,
-      events,
-      videoSrc,
-    };
-
-    const matchesCollection = await getMatchesCollection();
-    const result = await matchesCollection.findOneAndUpdate(
-      { _id: new ObjectId(matchId) },
-      { $push: { highlights: highlight } },
-      { returnDocument: 'after' }
-    );
-    const { value: updatedMatch } = result;
-
-    if (!updatedMatch) {
-      response.status(404).send('Error pushing highlight: Match not found.');
-      return;
-    }
-    response.status(200).json(updatedMatch);
-  } catch (error) {
-    next(error);
-  }
-});
-
 router.get('/matches', async (request, response, next) => {
   try {
     const page = Number(request.query.page) || 1;
@@ -124,6 +84,81 @@ router.get('/matches', async (request, response, next) => {
       results: matches,
     };
     response.status(200).json(paginatedMatches);
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.post('/highlights', async (request, response, next) => {
+  try {
+    const { timestamp, events, videoSrc, matchId, username, avatar } =
+      request.body;
+
+    const matchIdIsInvalid = !ObjectId.isValid(matchId);
+    const requestIsInvalid =
+      typeof timestamp !== 'number' ||
+      !Array.isArray(events) ||
+      !events.every((event) => typeof event === 'string') ||
+      typeof videoSrc !== 'string';
+
+    if (matchIdIsInvalid) {
+      response.status(400).send('Invalid match id');
+      return;
+    }
+
+    if (requestIsInvalid) {
+      response.status(400).send('Invalid payload');
+      return;
+    }
+
+    const highlight: Omit<MatchHighlight, '_id'> = {
+      matchId: new ObjectId(matchId),
+      timestamp,
+      events,
+      videoSrc,
+      createdAt: new Date(),
+      username,
+      avatar,
+    };
+
+    const highlightsCollection = await getHighlightsCollection();
+    const inserted = await highlightsCollection.insertOne(highlight);
+    if (!inserted.acknowledged) {
+      response.status(500).send('Error inserting highlight');
+      return;
+    }
+    response.status(200).json(highlight);
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.get('/highlights', async (request, response, next) => {
+  try {
+    const page = Number(request.query.page) || 1;
+    const itemsPerPage = Number(request.query.itemsPerPage) || 10;
+    const highlightsCollection = getHighlightsCollection();
+    const query = createHighlightsQuery(request.query);
+    const cursor = highlightsCollection.find(query).sort({ createdAt: -1 });
+    const totalPromise = cursor.count();
+    const highlightsPromise = cursor
+      .skip((page - 1) * itemsPerPage)
+      .limit(itemsPerPage)
+      .toArray();
+    const [total, highlights] = await Promise.all([
+      totalPromise,
+      highlightsPromise,
+    ]);
+
+    const paginatedHighlights: PaginatedMatchHighlights = {
+      info: {
+        total: total,
+        itemsPerPage: itemsPerPage,
+        page: page,
+      },
+      results: highlights,
+    };
+    response.status(200).json(paginatedHighlights);
   } catch (error) {
     next(error);
   }

@@ -36,29 +36,9 @@ export function ensureMatchesSchema(): Promise<Document> {
           createdAt: {
             bsonType: 'date',
           },
-          highlights: {
-            bsonType: 'array',
-            items: {
-              bsonType: 'object',
-              properties: {
-                timestamp: {
-                  bsonType: 'int',
-                },
-                events: {
-                  bsonType: 'array',
-                  items: {
-                    bsonType: 'string',
-                  },
-                },
-                videoSrc: {
-                  bsonType: 'string',
-                },
-              },
-            },
-          },
         },
         additionalProperties: false,
-        required: ['gameId', 'username', 'createdAt', 'highlights'],
+        required: ['gameId', 'username', 'createdAt'],
       },
     },
   });

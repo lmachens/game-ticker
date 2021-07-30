@@ -2,17 +2,29 @@
 import type { ObjectId } from 'mongodb';
 
 export type MatchHighlight = {
+  _id: ObjectId;
+  matchId: ObjectId;
   timestamp: number;
   events: string[];
   videoSrc: string;
+  createdAt: Date;
+  username: string;
+  avatar: string;
 };
+
+export type MatchHighlightClient = {
+  _id: string;
+  matchId: string;
+} & Omit<MatchHighlight, '_id' | 'matchId'>;
+
+export type PaginatedMatchHighlightsClient = Pagination<MatchHighlightClient>;
+export type PaginatedMatchHighlights = Pagination<MatchHighlight>;
 
 export type Match = {
   _id: ObjectId;
   gameId: number;
   username: string;
   createdAt: Date;
-  highlights: MatchHighlight[];
 };
 
 export type MatchClient = {
