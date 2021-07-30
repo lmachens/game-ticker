@@ -8,6 +8,8 @@ export type MatchHighlight = {
   events: string[];
   videoSrc: string;
   createdAt: Date;
+  username: Profile['username'];
+  avatar: Profile['avatar'];
 };
 
 export type MatchHighlightClient = {

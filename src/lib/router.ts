@@ -91,7 +91,8 @@ router.get('/matches', async (request, response, next) => {
 
 router.post('/highlights', async (request, response, next) => {
   try {
-    const { timestamp, events, videoSrc, matchId } = request.body;
+    const { timestamp, events, videoSrc, matchId, username, avatar } =
+      request.body;
 
     const requestIsInvalid =
       typeof timestamp !== 'number' ||
@@ -107,10 +108,12 @@ router.post('/highlights', async (request, response, next) => {
 
     const highlight: Omit<MatchHighlight, '_id'> = {
       matchId: new ObjectId(matchId),
-      timestamp: timestamp,
-      events: events,
-      videoSrc: videoSrc,
+      timestamp,
+      events,
+      videoSrc,
       createdAt: new Date(),
+      username,
+      avatar,
     };
 
     const highlightsCollection = await getHighlightsCollection();

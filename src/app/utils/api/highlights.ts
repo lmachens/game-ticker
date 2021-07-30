@@ -3,11 +3,19 @@ import {
   MatchHighlightClient,
   PaginatedMatchHighlightsClient,
 } from '../../../types';
+import { getCurrentUser } from '../user';
 
 export async function postHighlight(
-  highlight: Omit<MatchHighlightClient, '_id' | 'createdAt'>
+  highlight: Omit<
+    MatchHighlightClient,
+    '_id' | 'createdAt' | 'username' | 'avatar'
+  >
 ): Promise<MatchHighlightClient> {
-  const data = JSON.stringify(highlight);
+  const { username, avatar } = (await getCurrentUser()) || {
+    username: 'unknown',
+    avatar: '',
+  };
+  const data = JSON.stringify({ ...highlight, username, avatar });
   const postOptions = createPostOptions(data);
 
   return fetchJSON<MatchHighlightClient>('/api/highlights', postOptions);
