@@ -1,5 +1,6 @@
-import { Collection, Document } from 'mongodb';
+import { Collection, Document, Filter, ObjectId } from 'mongodb';
 import { getCollection, getDb } from './db';
+import { ParsedQs } from 'qs';
 import { MatchHighlight } from '../types';
 
 export function getHighlightsCollection(): Collection<MatchHighlight> {
@@ -48,4 +49,16 @@ export function ensureHighlightsSchema(): Promise<Document> {
       },
     },
   });
+}
+
+export function createHighlightsQuery(
+  requestQuery: ParsedQs
+): Filter<MatchHighlight> {
+  const query: Filter<MatchHighlight> = {};
+  const matchId = requestQuery.matchId;
+
+  if (typeof matchId === 'string') {
+    query.matchId = new ObjectId(matchId);
+  }
+  return query;
 }

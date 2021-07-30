@@ -1,8 +1,13 @@
 import { ObjectId } from 'mongodb';
 import express from 'express';
 import { getMatchesCollection, createMatchesQuery } from './matches';
-import type { Match, MatchHighlight, PaginatedMatches } from '../types';
-import { getHighlightsCollection } from './highlights';
+import type {
+  Match,
+  MatchHighlight,
+  PaginatedMatches,
+  PaginatedMatchHighlights,
+} from '../types';
+import { createHighlightsQuery, getHighlightsCollection } from './highlights';
 
 const router = express.Router();
 
@@ -116,6 +121,37 @@ router.post('/highlights', async (request, response, next) => {
       return;
     }
     response.status(200).json(highlight);
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.get('/highlights', async (request, response, next) => {
+  try {
+    const page = Number(request.query.page) || 1;
+    const itemsPerPage = Number(request.query.itemsPerPage) || 10;
+    const highlightsCollection = getHighlightsCollection();
+    const query = createHighlightsQuery(request.query);
+    const cursor = highlightsCollection.find(query).sort({ createdAt: -1 });
+    const totalPromise = cursor.count();
+    const highlightsPromise = cursor
+      .skip((page - 1) * itemsPerPage)
+      .limit(itemsPerPage)
+      .toArray();
+    const [total, highlights] = await Promise.all([
+      totalPromise,
+      highlightsPromise,
+    ]);
+
+    const paginatedHighlights: PaginatedMatchHighlights = {
+      info: {
+        total: total,
+        itemsPerPage: itemsPerPage,
+        page: page,
+      },
+      results: highlights,
+    };
+    response.status(200).json(paginatedHighlights);
   } catch (error) {
     next(error);
   }
