@@ -5,6 +5,19 @@
   box-sizing: border-box;
 }
 
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: none;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-text);
+  opacity: 0.5;
+}
+
 :root {
   /* Colors */
   --color-inactive: #2b2b2d;
