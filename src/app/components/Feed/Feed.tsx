@@ -58,7 +58,7 @@ function Feed({ username, onHighlightClick }: FeedProps): JSX.Element {
           layout="full"
         />
       ))}
-      {highlights?.results.length === 0 && (
+      {highlights?.results.length && (
         <p className={classes.noMatches}>No highlights found</p>
       )}
       <button

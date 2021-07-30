@@ -34,7 +34,7 @@ function Highlight({
         />
         <section className={classes.info}>
           {layout === 'full' && (
-            <p>
+            <div>
               {matchIsActive && (
                 <div className={classes.info__active}>
                   <svg width={12} height={12}>
@@ -43,7 +43,7 @@ function Highlight({
                   Match is active
                 </div>
               )}
-            </p>
+            </div>
           )}
 
           <p>{toTimeAgo(new Date(timestamp))}</p>
