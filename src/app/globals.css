@@ -46,6 +46,7 @@
 
 html {
   font-size: var(--font-size);
+  user-select: none;
 }
 
 body {
