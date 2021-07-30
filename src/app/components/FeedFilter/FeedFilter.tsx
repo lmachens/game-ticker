@@ -15,6 +15,7 @@ function FeedFilter({
     <div className={classes.container}>
       {filters.map((filter) => (
         <FeedFilterElement
+          key={filter}
           active={selectedFilter === filter}
           onClick={() => onFilterChange(filter)}
         >
