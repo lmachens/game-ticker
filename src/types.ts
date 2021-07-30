@@ -13,7 +13,10 @@ export type MatchHighlight = {
 export type MatchHighlightClient = {
   _id: string;
   matchId: string;
-} & Omit<MatchHighlight, '_id' | 'matchId' | 'createdAt'>;
+} & Omit<MatchHighlight, '_id' | 'matchId'>;
+
+export type PaginatedMatchHighlightsClient = Pagination<MatchHighlightClient>;
+export type PaginatedMatchHighlights = Pagination<MatchHighlight>;
 
 export type Match = {
   _id: ObjectId;
@@ -25,7 +28,8 @@ export type Match = {
 
 export type MatchClient = {
   _id: string;
-} & Omit<Match, '_id'>;
+  highlights: { highlightId: string }[];
+} & Omit<Match, '_id' | 'highlights'>;
 
 export type Pagination<T> = {
   info: {
