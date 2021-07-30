@@ -8,7 +8,7 @@
   color: var(--color-text);
   padding: 0.6em;
   transition: all 0.2s;
-  font: var(--font-family-secondary);
+  font-family: var(--font-family-secondary);
 }
 
 .active {
