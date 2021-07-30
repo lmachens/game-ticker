@@ -13,6 +13,7 @@
 }
 
 .header_username {
+  font-family: var(--font-family-primary);
   color: var(--color-text-primary);
   align-self: end;
   font-size: 1.2em;
@@ -46,6 +47,6 @@
 
 .stats__name {
   font-size: 0.7em;
-  font-family: var(--font-family-secondary);
+  font-family: var(--font-family-primary);
   color: var(--color-text-secondary);
 }

@@ -37,8 +37,8 @@
 
   /* Fonts */
   --font-size: 100%;
-  --font-family-primary: 'DM Sans', sans-serif;
-  --font-family-secondary: 'Anton', sans-serif;
+  --font-family-primary: 'Anton', sans-serif;
+  --font-family-secondary: 'DM Sans', sans-serif;
 
   /* Misc */
   --border-radius-primary: 1em;
@@ -52,7 +52,7 @@ html {
 
 body {
   margin: 0;
-  font-family: var(--font-family-primary);
+  font-family: var(--font-family-secondary);
   background: var(--color-shade-first);
   color: var(--color-text-secondary);
 }
@@ -77,4 +77,5 @@ h3,
 h4,
 h5 {
   margin: 0;
+  font-weight: normal;
 }

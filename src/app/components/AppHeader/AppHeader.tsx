@@ -16,7 +16,7 @@ function AppHeader({ className }: AppHeaderProps): JSX.Element {
     <header className={classNames(classes.header, className)}>
       <img alt="" src={logoSrc} className={classes.logo} />
       <h1 className={classes.title} onMouseDown={dragMoveWindow}>
-        Game Ticker
+        Game <span className={classes.ticker}>Ticker</span>
       </h1>
       <button className={classes.button} onClick={minimizeWindow}>
         <svg viewBox="0 0 10 10" stroke="currentColor">
