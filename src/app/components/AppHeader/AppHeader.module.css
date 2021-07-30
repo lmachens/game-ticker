@@ -20,7 +20,7 @@
 }
 
 .ticker {
-  color: #f09f12;
+  color: var(--gradient-primary-from);
 }
 
 .button {
