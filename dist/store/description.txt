@@ -1,0 +1,9 @@
+# The social network for Gamers! 
+
+Automatically share highlights and comments on your favorite games with your friends. 
+
+## Features
+
+- Play and let Game Ticker automatically capture your highlights.
+- Spectate your friends match in a live-ticker. You won't miss any highlight!
+- Share your highlights with your friends.
