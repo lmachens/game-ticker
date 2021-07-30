@@ -1,6 +1,6 @@
 import useCurrentUser from '../../hooks/useCurrentUser';
 import Avatar from '../Avatar/Avatar';
-import defaultAvatar from './defaultAvatar.svg';
+import defaultAvatar from './defaultAvatar.png';
 import classes from './User.module.css';
 
 function openLoginDialog() {
