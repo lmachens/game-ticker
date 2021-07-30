@@ -6,6 +6,7 @@ import type { Profile } from '../types';
 import MatchDetails from './components/MatchDetails/MatchDetails';
 import User from './components/User/User';
 import Ads from './components/Ads/Ads';
+import Sidebar from './components/Sidebar/Sidebar';
 
 function App(): JSX.Element {
   const [targetMatchId, setTargetMatchId] = useState<string | null>(null);
@@ -19,6 +20,7 @@ function App(): JSX.Element {
   return (
     <div className={classes.container}>
       <AppHeader className={classes.header} />
+      <Sidebar />
       <main className={classes.main}>
         <header className={classes.options}>
           {(targetMatchId || username) && (
