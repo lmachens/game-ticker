@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import useFetch from '../../hooks/useFetch';
 import { getHighlights } from '../../utils/api';
 import classes from './Feed.module.css';
+import FeedFilter from '../FeedFilter/FeedFilter';
 import Highlight from '../Highlight/Highlight';
 
 type FeedProps = {
@@ -43,30 +44,37 @@ function Feed({ username, onHighlightClick }: FeedProps): JSX.Element {
   const hasMorePages = info.page * info.itemsPerPage < info.total;
   return (
     <section className={classes.container}>
-      <button
-        disabled={page === 1}
-        onClick={() => setQuery({ ...query, page: 1 })}
-      >
-        Back to top
-      </button>
-      {results.map((highlight) => (
-        <Highlight
-          key={highlight._id}
-          highlight={highlight}
-          onHighlightClick={onHighlightClick}
-          matchIsActive={true}
-          layout="full"
-        />
-      ))}
-      {highlights?.results.length === 0 && (
-        <p className={classes.noMatches}>No highlights found</p>
+      <FeedFilter selectedFilter="Newest" onFilterChange={console.log} />
+      {page > 1 && (
+        <button
+          className={classes.button}
+          onClick={() => setQuery({ ...query, page: 1 })}
+        >
+          Most recent
+        </button>
       )}
-      <button
-        disabled={!hasMorePages}
-        onClick={() => setQuery({ ...query, page: page + 1 })}
-      >
-        Load more
-      </button>
+      <div className={classes.items}>
+        {results.map((highlight) => (
+          <Highlight
+            key={highlight._id}
+            highlight={highlight}
+            onHighlightClick={onHighlightClick}
+            matchIsActive={true}
+            layout="full"
+          />
+        ))}
+      </div>
+      {highlights?.results.length === 0 && (
+        <p className={classes.noMatches}>No matches found</p>
+      )}
+      {hasMorePages && (
+        <button
+          className={classes.button}
+          onClick={() => setQuery({ ...query, page: page + 1 })}
+        >
+          Next
+        </button>
+      )}
     </section>
   );
 }

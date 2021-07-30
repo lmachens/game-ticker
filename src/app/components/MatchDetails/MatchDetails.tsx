@@ -1,9 +1,9 @@
 import classes from './MatchDetails.module.css';
-import VideoHighlight from '../VideoHighlight/VideoHighlight';
 import useFetch from '../../hooks/useFetch';
 import { useEffect, useState } from 'react';
 import { getHighlights, getMatch } from '../../utils/api';
 import useGameInfo from '../../hooks/useGameInfo';
+import Highlight from '../Highlight/Highlight';
 
 type MatchDetailsProps = {
   matchId: string;
@@ -53,11 +53,13 @@ function MatchDetails({ matchId }: MatchDetailsProps): JSX.Element {
         <p>{match?.username}</p>
       </header>
       {highlights?.results.map((highlight) => (
-        <article key={highlight.timestamp} className={classes.highlight}>
-          <VideoHighlight src={highlight.videoSrc} />
-          <p>{highlight.events.join(', ')}</p>
-          <p>{highlight.timestamp}</p>
-        </article>
+        <Highlight
+          key={highlight._id}
+          layout="half"
+          highlight={highlight}
+          onHighlightClick={console.log}
+          matchIsActive={true}
+        />
       ))}
       {errorMessage && <strong>{errorMessage}</strong>}
     </section>

@@ -1,5 +1,4 @@
 .container {
   display: flex;
-  justify-content: space-evenly;
   background-color: var(--color-shade-third);
 }
