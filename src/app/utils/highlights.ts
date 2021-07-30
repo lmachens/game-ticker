@@ -1,5 +1,5 @@
 import { MatchClient } from '../../types';
-import { postMatch, postMatchHighlight } from './api';
+import { postHighlight, postMatch } from './api';
 import { onGameLaunched } from './games';
 
 type ActiveMatch = MatchClient | null;
@@ -112,14 +112,13 @@ export function startCaptureHighlights(): void {
       }
 
       const highlight = {
+        matchId: activeMatch._id,
         videoSrc: cloudinaryURL,
         events: events,
         timestamp: timestamp,
       };
-      const updatedMatch = await postMatchHighlight(highlight, activeMatch._id);
 
-      activeMatch = updatedMatch;
-      console.log('updatedMatch', updatedMatch);
+      await postHighlight(highlight);
     } catch (error) {
       console.error(error);
     }
@@ -129,8 +128,6 @@ export function startCaptureHighlights(): void {
     console.log('onGameLaunched', classId);
     await getHighlightsAndTurnOn(classId);
     activeMatch = await postMatch(classId);
-
-    console.log('activeMatch', activeMatch);
   });
 
   overwolf.games.onGameInfoUpdated.addListener(async (event) => {

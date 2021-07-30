@@ -31,13 +31,16 @@ Content-Type: application/json
 
 ### Add highlight to existing match
 @matchId = {{insertNewMatch.response.body.$._id}}
-POST {{baseUrl}}/matches/{{matchId}}/highlights HTTP/1.1
+POST {{baseUrl}}/highlights HTTP/1.1
 Content-Type: application/json
 
 {
+    "matchId": "{{matchId}}",
     "timestamp": 360,
     "events": ["kill"],
-    "videoSrc": "https://cloudinary.com/video/1"
+    "videoSrc": "https://cloudinary.com/video/1",
+    "username": "monaOver9000",
+    "avatar": "https://ddragon.leagueoflegends.com/cdn/11.15.1/img/profileicon/588.png"
 }
 
 ### Add highlight to existing match should fail due to invalid matchId
@@ -85,3 +88,6 @@ GET {{baseUrl}}/matches/{{matchId}} HTTP/1.1
 
 ### Fails if matchId is invalid
 GET {{baseUrl}}/matches/abc HTTP/1.1
+
+### Return highlights
+GET {{baseUrl}}/highlights HTTP/1.1

@@ -31,11 +31,11 @@ function App(): JSX.Element {
         {targetMatchId ? (
           <MatchDetails matchId={targetMatchId} />
         ) : (
-          <Feed username={username} onMatchClick={setTargetMatchId} />
+          <Feed username={username} onHighlightClick={setTargetMatchId} />
         )}
       </main>
       <aside className={classes.aside}>
-        <User onClick={(user) => setUsername(user.username)} />
+        <User onUserClick={setUsername} />
         <Ads />
       </aside>
     </div>

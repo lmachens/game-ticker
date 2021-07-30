@@ -1,27 +1,33 @@
 import { MatchClient, QueryOptions } from '../../../types';
 import { useEffect, useState } from 'react';
 import useFetch from '../../hooks/useFetch';
-import { getMatches } from '../../utils/api';
-import MatchItem from '../MatchItem/MatchItem';
+import { getHighlights } from '../../utils/api';
 import classes from './Feed.module.css';
+import Highlight from '../Highlight/Highlight';
 
 type FeedProps = {
   username: MatchClient['username'] | null;
-  onMatchClick: (matchId: string) => void;
+  onHighlightClick: (matchId: string) => void;
 };
-function Feed({ username, onMatchClick }: FeedProps): JSX.Element {
+function Feed({ username, onHighlightClick }: FeedProps): JSX.Element {
   const [query, setQuery] = useState<QueryOptions>({
     page: 1,
     itemsPerPage: 10,
   });
+
+  const { data: highlights } = useFetch(() => getHighlights(query), {
+    invalidateOn: [query],
+    refreshInterval: 60000,
+  });
+
   const { page } = query;
 
   useEffect(() => {
-    if (username)
+    if (username) {
       setQuery((query) => {
         return { ...query, page: 1, username };
       });
-    if (!username) {
+    } else {
       setQuery((query) => {
         const currentQuery = { ...query };
         delete currentQuery.username;
@@ -30,15 +36,10 @@ function Feed({ username, onMatchClick }: FeedProps): JSX.Element {
     }
   }, [username]);
 
-  const { data: matches } = useFetch(() => getMatches(query), {
-    invalidateOn: [query],
-    refreshInterval: 60000,
-  });
-
-  if (!matches) {
+  if (!highlights) {
     return <div>Loading...</div>;
   }
-  const { info, results } = matches;
+  const { info, results } = highlights;
   const hasMorePages = info.page * info.itemsPerPage < info.total;
   return (
     <section className={classes.container}>
@@ -48,15 +49,17 @@ function Feed({ username, onMatchClick }: FeedProps): JSX.Element {
       >
         Back to top
       </button>
-      {results.map((match) => (
-        <MatchItem
-          key={match._id}
-          match={match}
-          onClick={() => onMatchClick(match._id)}
+      {results.map((highlight) => (
+        <Highlight
+          key={highlight._id}
+          highlight={highlight}
+          onHighlightClick={onHighlightClick}
+          matchIsActive={true}
+          layout="full"
         />
       ))}
-      {matches?.results.length === 0 && (
-        <p className={classes.noMatches}>No matches found</p>
+      {highlights?.results.length === 0 && (
+        <p className={classes.noMatches}>No highlights found</p>
       )}
       <button
         disabled={!hasMorePages}
