@@ -36,20 +36,9 @@ export function ensureMatchesSchema(): Promise<Document> {
           createdAt: {
             bsonType: 'date',
           },
-          highlights: {
-            bsonType: 'array',
-            items: {
-              bsonType: 'object',
-              properties: {
-                highlightId: {
-                  bsonType: 'objectId',
-                },
-              },
-            },
-          },
         },
         additionalProperties: false,
-        required: ['gameId', 'username', 'createdAt', 'highlights'],
+        required: ['gameId', 'username', 'createdAt'],
       },
     },
   });

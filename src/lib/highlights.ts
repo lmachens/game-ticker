@@ -56,6 +56,7 @@ export function ensureHighlightsSchema(): Promise<Document> {
           'timestamp',
           'events',
           'videoSrc',
+          'createdAt',
           'username',
           'avatar',
         ],
