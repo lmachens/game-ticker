@@ -1,6 +1,6 @@
-import Settings from './Settings';
-import Info from './Info';
-import Home from './Home';
-import Favorites from './Favorites';
+import SettingsIcon from './SettingsIcon';
+import InfoIcon from './InfoIcon';
+import HomeIcon from './HomeIcon';
+import FavoritesIcon from './FavoritesIcon';
 
-export { Settings, Info, Home, Favorites };
+export { SettingsIcon, InfoIcon, HomeIcon, FavoritesIcon };

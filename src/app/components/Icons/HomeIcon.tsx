@@ -1,6 +1,6 @@
-import SVG, { SVGProps } from '../SVG/SVG';
+import SVG, { SVGProps } from '../IconSvg/IconSvg';
 
-function IconHome(props: Omit<SVGProps, 'children'>): JSX.Element {
+function HomeIcon(props: Omit<SVGProps, 'children'>): JSX.Element {
   return (
     <SVG {...props}>
       <>
@@ -11,4 +11,4 @@ function IconHome(props: Omit<SVGProps, 'children'>): JSX.Element {
   );
 }
 
-export default IconHome;
+export default HomeIcon;

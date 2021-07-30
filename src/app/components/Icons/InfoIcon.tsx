@@ -1,6 +1,6 @@
-import SVG, { SVGProps } from '../SVG/SVG';
+import SVG, { SVGProps } from '../IconSvg/IconSvg';
 
-function IconInfo(props: Omit<SVGProps, 'children'>): JSX.Element {
+function InfoIcon(props: Omit<SVGProps, 'children'>): JSX.Element {
   return (
     <SVG {...props}>
       <>
@@ -11,4 +11,4 @@ function IconInfo(props: Omit<SVGProps, 'children'>): JSX.Element {
   );
 }
 
-export default IconInfo;
+export default InfoIcon;
