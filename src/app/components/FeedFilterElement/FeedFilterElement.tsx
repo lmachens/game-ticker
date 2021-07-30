@@ -1,22 +1,23 @@
-import { useState } from 'react';
-import { classNames } from '../../utils/styles';
 import classes from './FeedFilterElement.module.css';
 
 type FeedFilterElementProps = {
   children?: React.ReactNode;
+  active?: boolean;
+  onClick?: () => void;
 };
 
-function FeedFilterElement({ children }: FeedFilterElementProps): JSX.Element {
-  const [active, setActive] = useState(false);
+function FeedFilterElement({
+  children,
+  active,
+  onClick,
+}: FeedFilterElementProps): JSX.Element {
   return (
-    <button
-      className={classNames(classes.button, active && classes.active)}
-      onClick={() => {
-        setActive(!active);
-      }}
-    >
-      {children}
-    </button>
+    <div className={classes.container}>
+      <button className={classes.button} onClick={onClick}>
+        {children}
+      </button>
+      {active && <div className={classes.active}></div>}
+    </div>
   );
 }
 
