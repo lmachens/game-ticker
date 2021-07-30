@@ -35,7 +35,7 @@ function App(): JSX.Element {
         )}
       </main>
       <aside className={classes.aside}>
-        <User onUserClick={setUsername} />
+        <User onClick={(user) => setUsername(user.username)} />
         <Ads />
       </aside>
     </div>
