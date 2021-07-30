@@ -21,6 +21,7 @@ const User = ({ onClick }: UserProps): JSX.Element => {
       onClick={currentUser ? () => onClick(currentUser) : undefined}
     >
       <UserInfo
+        onClick={currentUser ? () => onClick(currentUser) : undefined}
         avatarSrc={currentUser?.avatar || defaultAvatar}
         username={
           currentUser?.displayName || currentUser?.username || 'Game Ticker'

@@ -2,6 +2,7 @@
   display: grid;
   grid-template-columns: auto 1fr;
   gap: 0.2em 0.5em;
+  cursor: pointer;
 }
 
 .avatar {
@@ -16,4 +17,8 @@
 .status {
   align-self: start;
   font-family: var(--font-family-secondary);
+}
+
+.container:hover .username {
+  text-decoration: underline;
 }
