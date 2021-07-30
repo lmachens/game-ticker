@@ -4,9 +4,7 @@
 }
 
 .header {
-  padding: 1em;
-  background: var(--color-shade-first);
-  border-radius: var(--border-radius-secondary);
+  background-color: var(--color-shade-second);
 }
 
 .highlight {
