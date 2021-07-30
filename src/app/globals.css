@@ -1,5 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Anton&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Anton&family=DM+Sans&display=swap');
 *,
 *::after,
 *::before {
@@ -8,12 +7,19 @@
 
 :root {
   /* Colors */
-  --color-primary: #2b2b2d;
-  --color-highlight: #fe804b;
-  --gradient-primary: linear-gradient(#fe804b, #fb31b3);
-  --color-shade-first: #212124;
+  --color-inactive: #2b2b2d;
+  --color-alert: #b61313;
+  --gradient-primary-from: #fe804b;
+  --gradient-primary-to: #fb31b3;
+  --gradient-primary: linear-gradient(
+    var(--gradient-primary-from),
+    var(--gradient-primary-to)
+  );
+  --color-shade-first: #080809;
   --color-shade-second: #101012;
-  --color-font: #c6c6c6;
+  --color-shade-third: #212124;
+  --color-text: #c6c6c6;
+  --color-button: #fff;
 
   /* Fonts */
   --font-size: 100%;
@@ -33,7 +39,7 @@ body {
   margin: 0;
   font-family: var(--font-family-primary);
   background: var(--color-shade-first);
-  color: var(--color-font);
+  color: var(--color-text);
 }
 
 a {
@@ -43,7 +49,7 @@ a {
 
 button {
   background-color: var(--gradient-primary);
-  color: white;
+  color: var(--color-button);
   border: none;
   padding: 0.5em 1em;
 }
