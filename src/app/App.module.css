@@ -24,6 +24,11 @@
   background-color: var(--color-shade-second);
 }
 
+.options {
+  display: flex;
+  justify-content: space-between;
+}
+
 .back {
   border-radius: var(--border-radius-primary);
   margin-bottom: 1em;

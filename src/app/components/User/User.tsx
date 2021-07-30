@@ -1,33 +1,52 @@
+import { Profile } from '../../../types';
 import useCurrentUser from '../../hooks/useCurrentUser';
-import defaultAvatar from './defaultAvatar.svg';
+import UserInfo from '../UserInfo/UserInfo';
+import defaultAvatar from './defaultAvatar.png';
 import classes from './User.module.css';
 
 function openLoginDialog() {
   overwolf.profile.openLoginDialog();
 }
 
-const User = (): JSX.Element => {
-  const { currentUser, errorMessage } = useCurrentUser();
+type UserProps = {
+  onClick: (user: Profile) => void;
+};
+
+const User = ({ onClick }: UserProps): JSX.Element => {
+  const { currentUser } = useCurrentUser();
 
   return (
-    <section className={classes.container}>
-      <div className={classes.header}>
-        <img
-          src={currentUser?.avatar || defaultAvatar}
-          className={classes.avatar}
-          alt=""
-        />
-        <h1 className={classes.username}>
-          {currentUser?.displayName || currentUser?.username || 'Game Ticker'}
-        </h1>
-      </div>
-      {currentUser === null && (
-        <aside className={classes.login}>
-          For full functionality, please login.{' '}
-          <button onClick={openLoginDialog}>Login</button>
-        </aside>
-      )}
-      {errorMessage && <aside className={classes.error}>{errorMessage}</aside>}
+    <section
+      className={classes.container}
+      onClick={currentUser ? () => onClick(currentUser) : undefined}
+    >
+      <UserInfo
+        onClick={currentUser ? () => onClick(currentUser) : undefined}
+        avatarSrc={currentUser?.avatar || defaultAvatar}
+        username={
+          currentUser?.displayName || currentUser?.username || 'Game Ticker'
+        }
+        status={
+          !currentUser ? (
+            <>
+              For full functionality, please{' '}
+              <button onClick={openLoginDialog} className={classes.login}>
+                Login
+              </button>
+            </>
+          ) : (
+            'Start playing a match'
+          )
+        }
+      />
+      <section className={classes.stats}>
+        <strong>12</strong>
+        <div className={classes.stats__name}>Matches</div>
+        <strong>26</strong>
+        <div className={classes.stats__name}>Highlights</div>
+        <strong>43</strong>
+        <div className={classes.stats__name}>Likes</div>
+      </section>
     </section>
   );
 };

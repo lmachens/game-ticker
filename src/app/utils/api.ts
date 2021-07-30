@@ -2,6 +2,7 @@ import {
   MatchClient,
   MatchHighlight,
   PaginatedMatchesClient,
+  QueryOptions,
 } from '../../types';
 import { getCurrentUser } from './user';
 
@@ -32,15 +33,19 @@ function createPostOptions(data: BodyInit): RequestInit {
   return postOptions;
 }
 
-export async function getMatches({
-  page,
-  itemsPerPage,
-}: {
-  page: number;
-  itemsPerPage: number;
-}): Promise<PaginatedMatchesClient> {
+export async function getMatches(
+  query: QueryOptions
+): Promise<PaginatedMatchesClient> {
+  const { page, itemsPerPage, ...rest } = query;
+  const searchParams = new URLSearchParams({
+    page: page.toString(),
+    itemsPerPage: itemsPerPage.toString(),
+    ...rest,
+  });
+  const queryString = searchParams.toString();
+
   const matches = await fetchJSON<PaginatedMatchesClient>(
-    `/api/matches?page=${page}&${itemsPerPage}`
+    `/api/matches?${queryString}`
   );
   matches.results = matches.results.map((match) => ({
     ...match,

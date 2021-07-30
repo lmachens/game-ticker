@@ -1,24 +1,44 @@
+@import url('https://fonts.googleapis.com/css2?family=Anton&family=DM+Sans&display=swap');
 *,
 *::after,
 *::before {
   box-sizing: border-box;
 }
 
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: none;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-text);
+  opacity: 0.5;
+}
+
 :root {
   /* Colors */
-  --color-primary: #68fe9c;
-  --color-secondary: #e2e2e2;
-  --color-shade-first: #060606;
-  --color-shade-second: rgb(27, 31, 36, 0.4);
-  --color-shade-third: rgb(27, 31, 36, 0.4);
-  --color-shade-fourth: rgb(27, 31, 36, 0.4);
-  --color-shade-fifth: rgb(27, 31, 36, 0.4);
+  --color-inactive: #2b2b2d;
   --color-alert: #b61313;
+  --gradient-primary-from: #fe804b;
+  --gradient-primary-to: #fb31b3;
+  --gradient-primary: linear-gradient(
+    -90deg,
+    var(--gradient-primary-from),
+    var(--gradient-primary-to)
+  );
+  --color-shade-first: #080809;
+  --color-shade-second: #101012;
+  --color-shade-third: #212124;
+  --color-text-primary: #fff;
+  --color-text-secondary: #c6c6c6;
 
   /* Fonts */
-  --font-size: 115%;
-  --font-family-primary: 'Roboto', sans-serif;
-  --font-family-secondary: 'Lato', sans-serif;
+  --font-size: 100%;
+  --font-family-primary: 'Anton', sans-serif;
+  --font-family-secondary: 'DM Sans', sans-serif;
 
   /* Misc */
   --border-radius-primary: 1em;
@@ -27,14 +47,15 @@
 
 html {
   font-size: var(--font-size);
+  user-select: none;
 }
 
 body {
   margin: 0;
-  font-family: var(--font-family-primary);
+  font-family: var(--font-family-secondary);
   background: var(--color-shade-first);
-  color: var(--color-secondary);
   background-image: url('background.jpg');
+  color: var(--color-text-secondary);
 }
 
 a {
@@ -43,12 +64,19 @@ a {
 }
 
 button {
-  background-color: var(--color-primary);
-  color: var(--color-shade-first);
+  background: var(--gradient-primary);
+  color: var(--color-text-primary);
   border: none;
   padding: 0.5em 1em;
+  cursor: pointer;
 }
 
-p {
+p,
+h1,
+h2,
+h3,
+h4,
+h5 {
   margin: 0;
+  font-weight: normal;
 }

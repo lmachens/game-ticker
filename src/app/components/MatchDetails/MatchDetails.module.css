@@ -5,7 +5,7 @@
 
 .header {
   padding: 1em;
-  background: var(--color-shade-fourth);
+  background: var(--color-shade-first);
   border-radius: var(--border-radius-secondary);
 }
 
@@ -13,6 +13,6 @@
   composes: grid-column-space-between from '../../utils.module.css';
   align-items: center;
   padding: 1em;
-  background: var(--color-shade-fifth);
+  background: var(--color-shade-third);
   border-radius: var(--border-radius-secondary);
 }

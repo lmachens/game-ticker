@@ -1,0 +1,19 @@
+.container {
+  display: flex;
+  flex-direction: column;
+}
+
+.button {
+  background: transparent;
+  color: var(--color-text);
+  padding: 0.6em;
+  transition: all 0.2s;
+  font-family: var(--font-family-secondary);
+}
+
+.active {
+  background: var(--gradient-primary);
+  width: 100%;
+  height: 3px;
+  align-self: baseline;
+}
