@@ -6,6 +6,7 @@
   display: grid;
   grid-template-columns: auto 1fr;
   gap: 0.2em 0.5em;
+  cursor: pointer;
 }
 
 .header__avatar {
@@ -17,6 +18,10 @@
   color: var(--color-text-primary);
   align-self: end;
   font-size: 1.2em;
+}
+
+.header:hover .header_username {
+  text-decoration: underline;
 }
 
 .header_status {
