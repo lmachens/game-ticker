@@ -16,11 +16,11 @@ const User = ({ onClick }: UserProps): JSX.Element => {
   const { currentUser } = useCurrentUser();
 
   return (
-    <section
-      className={classes.container}
-      onClick={currentUser ? () => onClick(currentUser) : undefined}
-    >
-      <header className={classes.header}>
+    <section className={classes.container}>
+      <header
+        className={classes.header}
+        onClick={currentUser ? () => onClick(currentUser) : undefined}
+      >
         <Avatar
           className={classes.header__avatar}
           src={currentUser?.avatar || defaultAvatar}

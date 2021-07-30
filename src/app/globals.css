@@ -5,6 +5,19 @@
   box-sizing: border-box;
 }
 
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: none;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-text);
+  opacity: 0.5;
+}
+
 :root {
   /* Colors */
   --color-inactive: #2b2b2d;
@@ -12,19 +25,20 @@
   --gradient-primary-from: #fe804b;
   --gradient-primary-to: #fb31b3;
   --gradient-primary: linear-gradient(
+    -90deg,
     var(--gradient-primary-from),
     var(--gradient-primary-to)
   );
   --color-shade-first: #080809;
   --color-shade-second: #101012;
   --color-shade-third: #212124;
-  --color-text: #c6c6c6;
-  --color-button: #fff;
+  --color-text-primary: #fff;
+  --color-text-secondary: #c6c6c6;
 
   /* Fonts */
   --font-size: 100%;
-  --font-family-primary: 'DM Sans', sans-serif;
-  --font-family-secondary: 'Anton', sans-serif;
+  --font-family-primary: 'Anton', sans-serif;
+  --font-family-secondary: 'DM Sans', sans-serif;
 
   /* Misc */
   --border-radius-primary: 1em;
@@ -33,13 +47,14 @@
 
 html {
   font-size: var(--font-size);
+  user-select: none;
 }
 
 body {
   margin: 0;
-  font-family: var(--font-family-primary);
+  font-family: var(--font-family-secondary);
   background: var(--color-shade-first);
-  color: var(--color-text);
+  color: var(--color-text-secondary);
 }
 
 a {
@@ -48,8 +63,8 @@ a {
 }
 
 button {
-  background-color: var(--gradient-primary);
-  color: var(--color-button);
+  background: var(--gradient-primary);
+  color: var(--color-text-primary);
   border: none;
   padding: 0.5em 1em;
   cursor: pointer;
@@ -62,4 +77,5 @@ h3,
 h4,
 h5 {
   margin: 0;
+  font-weight: normal;
 }
