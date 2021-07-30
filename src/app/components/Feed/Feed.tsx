@@ -17,11 +17,16 @@ function Feed({ username, onMatchClick }: FeedProps): JSX.Element {
   const { page } = query;
 
   useEffect(() => {
-    if (username) setQuery({ ...query, page: 1, username });
+    if (username)
+      setQuery((query) => {
+        return { ...query, page: 1, username };
+      });
     if (!username) {
-      const currentQuery = { ...query };
-      delete currentQuery.username;
-      setQuery({ ...currentQuery, page: 1 });
+      setQuery((query) => {
+        const currentQuery = { ...query };
+        delete currentQuery.username;
+        return { ...currentQuery, page: 1 };
+      });
     }
   }, [username]);
 
