@@ -1,10 +1,58 @@
 .container {
-  composes: grid-column-space-between from '../../utils.module.css';
-  background: #c4c4c4;
-  color: black;
-  padding: 1em;
+  display: grid;
+  gap: 0.5em;
 }
 
-.container + .container {
-  margin-top: 1em;
+.header {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.info {
+  justify-self: end;
+  font-size: 0.8em;
+  text-align: right;
+}
+
+.more {
+  display: grid;
+  grid-template-columns: repeat(3, auto) 1fr;
+  gap: 1em;
+}
+
+.info__active > svg {
+  margin-right: 0.5em;
+}
+
+.social {
+  color: var(--color-text);
+  background: none;
+  display: grid;
+  gap: 1em;
+  padding: 0;
+  grid-auto-flow: column;
+  align-items: center;
+}
+
+.more__match {
+  justify-self: end;
+  border-radius: var(--border-radius-primary);
+  background: var(--color-primary);
+  color: var(--color-text);
+  display: grid;
+  place-content: center;
+  padding: 0.5em 1em;
+}
+
+.half {
+  grid-template-columns: 2fr auto;
+}
+
+.half .header {
+  grid-column: 1 / 3;
+}
+
+.half .more {
+  grid-template-columns: auto;
+  align-content: center;
 }
