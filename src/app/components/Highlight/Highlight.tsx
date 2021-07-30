@@ -1,4 +1,4 @@
-import { MatchHighlight } from '../../../types';
+import { MatchHighlightClient } from '../../../types';
 import { classNames } from '../../utils/styles';
 import VideoHighlight from '../VideoHighlight/VideoHighlight';
 import classes from './Highlight.module.css';
@@ -12,21 +12,25 @@ import defaultAvatarSrc from '../User/defaultAvatar.png';
 type HighlightProps = {
   matchIsActive: boolean;
   layout: 'full' | 'half';
-} & MatchHighlight;
+  onHighlightClick: (matchId: string) => void;
+  highlight: Omit<MatchHighlightClient, '_id'>;
+};
 
 function Highlight({
   matchIsActive,
   layout,
-  timestamp,
-  videoSrc,
+  onHighlightClick,
+  highlight,
 }: HighlightProps): JSX.Element {
+  const { matchId, timestamp, videoSrc, username, avatar } = highlight;
+
   return (
     <article className={classNames(classes.container, classes[layout])}>
       <header className={classes.header}>
         <UserInfo
-          username="AlexisOver9000"
+          username={username}
           status="Fortnite"
-          avatarSrc={defaultAvatarSrc}
+          avatarSrc={avatar || defaultAvatarSrc}
         />
         <section className={classes.info}>
           {layout === 'full' && (
@@ -61,7 +65,11 @@ function Highlight({
           360
         </button>
         {layout === 'full' && (
-          <a className={classes.more__match} href="#">
+          <a
+            className={classes.more__match}
+            href="#"
+            onClick={() => onHighlightClick(matchId)}
+          >
             Go to match
           </a>
         )}

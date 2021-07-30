@@ -2,8 +2,8 @@ import { MatchClient, QueryOptions } from '../../../types';
 import { useEffect, useState } from 'react';
 import useFetch from '../../hooks/useFetch';
 import { getHighlights } from '../../utils/api';
-import SummaryHighlightItem from '../SummaryHighlightItem/SummaryHighlightItem';
 import classes from './Feed.module.css';
+import Highlight from '../Highlight/Highlight';
 
 type FeedProps = {
   username: MatchClient['username'] | null;
@@ -50,11 +50,12 @@ function Feed({ username, onHighlightClick }: FeedProps): JSX.Element {
         Back to top
       </button>
       {results.map((highlight) => (
-        <SummaryHighlightItem
+        <Highlight
           key={highlight._id}
-          events={highlight.events}
-          timestamp={highlight.timestamp}
-          onClick={() => onHighlightClick(highlight.matchId)}
+          highlight={highlight}
+          onHighlightClick={() => onHighlightClick}
+          matchIsActive={true}
+          layout="full"
         />
       ))}
       {highlights?.results.length === 0 && (
