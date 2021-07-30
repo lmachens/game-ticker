@@ -1,3 +1,4 @@
 .container {
   display: grid;
+  background-color: var(--color-shade-second);
 }

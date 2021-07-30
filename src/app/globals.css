@@ -30,8 +30,8 @@
     var(--gradient-primary-to)
   );
   --color-shade-first: #080809;
-  --color-shade-second: #101012;
-  --color-shade-third: #212124;
+  --color-shade-second: #101012aa;
+  --color-shade-third: #212124aa;
   --color-text-primary: #fff;
   --color-text-secondary: #c6c6c6;
 
