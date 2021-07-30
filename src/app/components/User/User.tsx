@@ -1,6 +1,6 @@
 import { Profile } from '../../../types';
 import useCurrentUser from '../../hooks/useCurrentUser';
-import Avatar from '../Avatar/Avatar';
+import UserInfo from '../UserInfo/UserInfo';
 import defaultAvatar from './defaultAvatar.png';
 import classes from './User.module.css';
 
@@ -22,17 +22,14 @@ const User = ({ onUserClick }: UserProps): JSX.Element => {
         currentUser ? () => onUserClick(currentUser.username) : undefined
       }
     >
-      <header className={classes.header}>
-        <Avatar
-          className={classes.header__avatar}
-          src={currentUser?.avatar || defaultAvatar}
-          size="large"
-        />
-        <h2 className={classes.header_username}>
-          {currentUser?.displayName || currentUser?.username || 'Game Ticker'}
-        </h2>
-        <p className={classes.header_status}>
-          {!currentUser ? (
+      <UserInfo
+        onClick={currentUser ? () => onClick(currentUser) : undefined}
+        avatarSrc={currentUser?.avatar || defaultAvatar}
+        username={
+          currentUser?.displayName || currentUser?.username || 'Game Ticker'
+        }
+        status={
+          !currentUser ? (
             <>
               For full functionality, please{' '}
               <button onClick={openLoginDialog} className={classes.login}>
@@ -41,9 +38,9 @@ const User = ({ onUserClick }: UserProps): JSX.Element => {
             </>
           ) : (
             'Start playing a match'
-          )}
-        </p>
-      </header>
+          )
+        }
+      />
       <section className={classes.stats}>
         <strong>12</strong>
         <div className={classes.stats__name}>Matches</div>
