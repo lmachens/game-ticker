@@ -1,6 +1,7 @@
 import { classNames } from '../../utils/styles';
 import classes from './Sidebar.module.css';
 import { SettingsIcon, InfoIcon, HomeIcon, FavoritesIcon } from '../Icons';
+import Gradient from '../IconSvg/Gradient';
 
 function Sidebar(): JSX.Element {
   return (
@@ -15,6 +16,7 @@ function Sidebar(): JSX.Element {
         >
           <FavoritesIcon disabled />
         </a>
+        <Gradient />
       </section>
       <aside className={classes.flex}>
         <a
