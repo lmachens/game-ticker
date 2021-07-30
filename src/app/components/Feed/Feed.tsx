@@ -53,7 +53,7 @@ function Feed({ username, onHighlightClick }: FeedProps): JSX.Element {
         <Highlight
           key={highlight._id}
           highlight={highlight}
-          onHighlightClick={() => onHighlightClick}
+          onHighlightClick={onHighlightClick}
           matchIsActive={true}
           layout="full"
         />
