@@ -9,3 +9,8 @@
 .container + .container {
   margin-top: 1em;
 }
+
+.name {
+  margin: 0;
+  font-family: var(--font-family-primary);
+}

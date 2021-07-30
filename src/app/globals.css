@@ -1,9 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=Anton&family=DM+Sans&display=swap');
+
 *,
 *::after,
 *::before {
   box-sizing: border-box;
 }
-
 :root {
   /* Colors */
   --color-primary: #68fe9c;
@@ -17,8 +18,8 @@
 
   /* Fonts */
   --font-size: 115%;
-  --font-family-primary: 'Roboto', sans-serif;
-  --font-family-secondary: 'Lato', sans-serif;
+  --font-family-primary: 'Anton', sans-serif;
+  --font-family-secondary: 'DM Sans', sans-serif;
 
   /* Misc */
   --border-radius-primary: 1em;
@@ -31,7 +32,6 @@ html {
 
 body {
   margin: 0;
-  font-family: var(--font-family-primary);
   background: var(--color-shade-first);
   color: var(--color-secondary);
   background-image: url('background.jpg');
@@ -43,12 +43,13 @@ a {
 }
 
 button {
-  background-color: var(--color-primary);
-  color: var(--color-shade-first);
+  background: linear-gradient(70deg, #fe804b, #fb31b3);
+  color: var(---color-secondary);
   border: none;
   padding: 0.5em 1em;
 }
 
 p {
   margin: 0;
+  font-family: var(--font-family-secondary);
 }

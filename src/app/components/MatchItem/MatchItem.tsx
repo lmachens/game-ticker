@@ -11,7 +11,7 @@ function MatchItem({ match, onClick }: MatchItemProps): JSX.Element {
 
   return (
     <article className={classes.container} onClick={onClick}>
-      <p>{match.username}</p>
+      <p className={classes.name}>{match.username}</p>
       <p>{gameInfo?.Label}</p>
       <p>{match.highlights.length}</p>
     </article>
