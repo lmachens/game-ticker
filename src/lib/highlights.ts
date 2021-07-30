@@ -43,9 +43,22 @@ export function ensureHighlightsSchema(): Promise<Document> {
           createdAt: {
             bsonType: 'date',
           },
+          username: {
+            bsonType: 'string',
+          },
+          avatar: {
+            bsonType: 'string',
+          },
         },
         additionalProperties: false,
-        required: ['matchId', 'timestamp', 'events', 'videoSrc'],
+        required: [
+          'matchId',
+          'timestamp',
+          'events',
+          'videoSrc',
+          'username',
+          'avatar',
+        ],
       },
     },
   });
