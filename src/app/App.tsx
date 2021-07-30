@@ -9,7 +9,6 @@ import Ads from './components/Ads/Ads';
 function App(): JSX.Element {
   const [targetMatchId, setTargetMatchId] = useState<string | null>(null);
 
-  console.log(targetMatchId);
   return (
     <div className={classes.container}>
       <AppHeader className={classes.header} />

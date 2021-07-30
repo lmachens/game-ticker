@@ -118,9 +118,7 @@ export function startCaptureHighlights(): void {
         timestamp: timestamp,
       };
 
-      const createdHighlight = await postHighlight(highlight);
-
-      console.log('createdHighlight', createdHighlight);
+      await postHighlight(highlight);
     } catch (error) {
       console.error(error);
     }
@@ -130,8 +128,6 @@ export function startCaptureHighlights(): void {
     console.log('onGameLaunched', classId);
     await getHighlightsAndTurnOn(classId);
     activeMatch = await postMatch(classId);
-
-    console.log('activeMatch', activeMatch);
   });
 
   overwolf.games.onGameInfoUpdated.addListener(async (event) => {
