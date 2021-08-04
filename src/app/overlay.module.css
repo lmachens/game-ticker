@@ -1,0 +1,10 @@
+.container {
+  height: 100vh;
+  display: grid;
+  grid-template-rows: auto auto 1fr auto;
+}
+
+.container > main,
+.container > aside {
+  padding: 1em;
+}
