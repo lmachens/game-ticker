@@ -1,6 +1,8 @@
 .container {
   display: grid;
   gap: 0.5em;
+  padding: 1em;
+  background-color: var(--color-shade-second);
 }
 
 .header {
@@ -41,6 +43,10 @@
   display: grid;
   place-content: center;
   padding: 0.5em 1em;
+}
+
+.more__match:hover {
+  text-decoration: underline;
 }
 
 .half {

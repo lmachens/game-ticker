@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { getHighlights, getMatch } from '../../utils/api';
 import useGameInfo from '../../hooks/useGameInfo';
 import Highlight from '../Highlight/Highlight';
+import UserInfo from '../UserInfo/UserInfo';
 
 type MatchDetailsProps = {
   matchId: string;
@@ -49,13 +50,16 @@ function MatchDetails({ matchId }: MatchDetailsProps): JSX.Element {
   return (
     <section className={classes.container}>
       <header className={classes.header}>
-        <p>{gameInfo?.Label}</p>
-        <p>{match?.username}</p>
+        <UserInfo
+          username={match?.username || ''}
+          status={gameInfo?.Label}
+          avatarSrc="https://ddragon.leagueoflegends.com/cdn/11.15.1/img/profileicon/588.png"
+        />
       </header>
       {highlights?.results.map((highlight) => (
         <Highlight
           key={highlight._id}
-          layout="half"
+          layout="full"
           highlight={highlight}
           onHighlightClick={console.log}
           matchIsActive={true}
