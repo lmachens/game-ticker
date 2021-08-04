@@ -14,7 +14,6 @@ waitForOverwolf().then(async () => {
   }
 
   restoreWindow(WINDOWS.DESKTOP);
-  restoreWindow(WINDOWS.OVERLAY);
 
   onAppLaunchTriggered(async () => {
     const ingame = await isIngame();
