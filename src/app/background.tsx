@@ -9,7 +9,10 @@ console.log('Starting background process');
 waitForOverwolf().then(async () => {
   startCaptureHighlights();
 
-  restoreWindow(WINDOWS.DEVELOPMENT);
+  if (localStorage.getItem('DEBUG') === 'true') {
+    restoreWindow(WINDOWS.DEVELOPMENT);
+  }
+
   restoreWindow(WINDOWS.DESKTOP);
 
   onAppLaunchTriggered(async () => {
