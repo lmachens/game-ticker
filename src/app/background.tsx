@@ -8,8 +8,13 @@ import { restoreWindow, WINDOWS } from './utils/windows';
 console.log('Starting background process');
 waitForOverwolf().then(async () => {
   startCaptureHighlights();
+
+  if (localStorage.getItem('DEBUG') === 'true') {
+    restoreWindow(WINDOWS.DEVELOPMENT);
+  }
+
+  restoreWindow(WINDOWS.DESKTOP);
   restoreWindow(WINDOWS.OVERLAY);
-  restoreWindow(WINDOWS.DEVELOPMENT);
 
   onAppLaunchTriggered(async () => {
     const ingame = await isIngame();

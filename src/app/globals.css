@@ -30,8 +30,8 @@
     var(--gradient-primary-to)
   );
   --color-shade-first: #080809;
-  --color-shade-second: #101012;
-  --color-shade-third: #212124;
+  --color-shade-second: #101012b6;
+  --color-shade-third: #212124aa;
   --color-text-primary: #fff;
   --color-text-secondary: #c6c6c6;
 
@@ -68,6 +68,13 @@ button {
   border: none;
   padding: 0.5em 1em;
   cursor: pointer;
+  outline: none;
+}
+
+button:disabled {
+  background: var(--color-inactive);
+  color: var(--color-text-secondary);
+  cursor: default;
 }
 
 p,

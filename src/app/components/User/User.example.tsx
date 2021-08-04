@@ -3,7 +3,7 @@ import User from './User';
 
 export const StandardUser: Example = () => (
   <User
-    onClick={() => {
+    onUserClick={() => {
       console.log('clicked');
     }}
   />

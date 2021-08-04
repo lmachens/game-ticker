@@ -7,6 +7,10 @@ import { connectToMongoDb } from './lib/db';
 import router from './lib/router';
 import helmet from 'helmet';
 import { ensureMatchesIndexes, ensureMatchesSchema } from './lib/matches';
+import {
+  ensureHighlightsIndexes,
+  ensureHighlightsSchema,
+} from './lib/highlights';
 
 const { PORT, MONGODB_URI, REQUEST_ORIGIN } = process.env;
 
@@ -53,6 +57,8 @@ connectToMongoDb(MONGODB_URI).then(async () => {
   console.log('Connected to MongoDB');
   await ensureMatchesIndexes();
   await ensureMatchesSchema();
+  await ensureHighlightsIndexes();
+  await ensureHighlightsSchema();
 
   app.listen(PORT, () => {
     console.log(`Server listening at http://localhost:${PORT}`);

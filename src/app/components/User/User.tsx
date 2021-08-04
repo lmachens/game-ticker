@@ -9,19 +9,23 @@ function openLoginDialog() {
 }
 
 type UserProps = {
-  onClick: (user: Profile) => void;
+  onUserClick: (user: Profile['username']) => void;
 };
 
-const User = ({ onClick }: UserProps): JSX.Element => {
+const User = ({ onUserClick }: UserProps): JSX.Element => {
   const { currentUser } = useCurrentUser();
 
   return (
     <section
       className={classes.container}
-      onClick={currentUser ? () => onClick(currentUser) : undefined}
+      onClick={
+        currentUser ? () => onUserClick(currentUser.username) : undefined
+      }
     >
       <UserInfo
-        onClick={currentUser ? () => onClick(currentUser) : undefined}
+        onClick={
+          currentUser ? () => onUserClick(currentUser.username) : undefined
+        }
         avatarSrc={currentUser?.avatar || defaultAvatar}
         username={
           currentUser?.displayName || currentUser?.username || 'Game Ticker'
